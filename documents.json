@@ -1,159 +1,45 @@
 {
-  "updated": "2026-04-08T10:32:36.505501+00:00",
-  "total": 10,
-  "new_this_run": 0,
+  "last_updated": "2026-04-08T13:35:37.673492",
   "documents": [
     {
-      "id": "nss2022",
       "title": "National Security Strategy of Japan (2022)",
-      "category": "seguridad",
-      "source": "Kantei",
+      "organization": "Kantei",
       "date": "2022-12-16",
-      "desc": "Marco estratégico integrado: diplomacia, defensa, ciberseguridad, inteligencia y seguridad económica.",
-      "url": "https://www.cas.go.jp/jp/siryou/221216anzenhoshou/nss-e.pdf",
-      "tags": [
-        "nss",
-        "national security strategy",
-        "cyber",
-        "economic security"
-      ],
-      "isStrategic": true
+      "category": "Estratégico",
+      "description": "Marco estratégico integrado",
+      "url": "https://www.cas.go.jp/jp/siryou/221216anzenhoshou/nss-e.pdf"
     },
     {
-      "id": "nds2022",
       "title": "National Defense Strategy (2022)",
-      "category": "defensa",
-      "source": "MOD",
+      "organization": "MOD",
       "date": "2022-12-16",
-      "desc": "Estrategia de defensa nacional: objetivos, capacidades y arquitectura de fuerza.",
-      "url": "https://www.mod.go.jp/en/d_policy/index.html",
-      "tags": [
-        "national defense strategy",
-        "capabilities",
-        "alliance"
-      ],
-      "isStrategic": true
+      "category": "Estratégico",
+      "description": "Estrategia de defensa nacional",
+      "url": "https://www.mod.go.jp/j/policy/agenda/guideline/strategy/index.html"
     },
     {
-      "id": "dbp2022",
       "title": "Defense Buildup Program (2022)",
-      "category": "defensa",
-      "source": "MOD",
+      "organization": "MOD",
       "date": "2022-12-16",
-      "desc": "Programa de refuerzo de capacidades con partidas presupuestarias y plazos.",
-      "url": "https://www.mod.go.jp/en/d_policy/index.html",
-      "tags": [
-        "defense buildup",
-        "budget",
-        "procurement"
-      ],
-      "isStrategic": true
+      "category": "Estratégico",
+      "description": "Programa de refuerzo de capacidades",
+      "url": "https://www.mod.go.jp/j/policy/agenda/guideline/plan/index.html"
     },
     {
-      "id": "esa2022",
       "title": "Economic Security Promotion Act",
-      "category": "economica",
-      "source": "METI",
+      "organization": "METI",
       "date": "2022-05-11",
-      "desc": "Cadenas de suministro, infraestructura crítica y tecnologías estratégicas.",
-      "url": "https://www.meti.go.jp/english/policy/economy/economic_security/index.html",
-      "tags": [
-        "economic security",
-        "supply chain",
-        "critical infrastructure"
-      ],
-      "isStrategic": true
+      "category": "Estratégico",
+      "description": "Cadenas de suministro y tecnologías estratégicas",
+      "url": "https://www.meti.go.jp/policy/economy/economic_security/index.html"
     },
     {
-      "id": "bb2025",
       "title": "Diplomatic Bluebook 2025",
-      "category": "exterior",
-      "source": "MOFA",
+      "organization": "MOFA",
       "date": "2025-03-01",
-      "desc": "Síntesis de política exterior, alianzas y prioridades diplomáticas de Japón.",
-      "url": "https://www.mofa.go.jp/policy/other/bluebook/2025/en_html/chapter3/c030101.html",
-      "tags": [
-        "bluebook",
-        "foreign policy",
-        "alliances",
-        "diplomacy"
-      ],
-      "isStrategic": true
-    },
-    {
-      "id": "doj2024",
-      "title": "Defense of Japan 2024 (White Paper)",
-      "category": "defensa",
-      "source": "MOD",
-      "date": "2024-07-12",
-      "desc": "Libro Blanco anual 2024: entorno de seguridad, capacidades y política de defensa.",
-      "url": "https://www.mod.go.jp/en/publ/w_paper/wp2024/DOJ2024_EN_Reference.pdf",
-      "tags": [
-        "white paper",
-        "annual report",
-        "2024"
-      ],
-      "isStrategic": true
-    },
-    {
-      "id": "fy2026bgt",
-      "title": "FY2026 Defense Budget Overview",
-      "category": "defensa",
-      "source": "MOD",
-      "date": "2025-12-26",
-      "desc": "Presupuesto de defensa FY2026 con asignaciones por categoría.",
-      "url": "https://www.mod.go.jp/en/d_act/d_budget/pdf/fy2026_20251226a.pdf",
-      "tags": [
-        "budget",
-        "fy2026",
-        "defense spending"
-      ],
-      "isStrategic": false
-    },
-    {
-      "id": "bp2026",
-      "title": "Basic Policy 2026",
-      "category": "economica",
-      "source": "Kantei",
-      "date": "2026-02-17",
-      "desc": "Política básica 2026: inversiones estratégicas y resiliencia económica.",
-      "url": "https://japan.kantei.go.jp/105/decisions/2026/_00001.html",
-      "tags": [
-        "basic policy",
-        "2026",
-        "economic resilience"
-      ],
-      "isStrategic": false
-    },
-    {
-      "id": "eco2025",
-      "title": "Council for Economic Security — Nov 2025",
-      "category": "economica",
-      "source": "Kantei",
-      "date": "2025-11-06",
-      "desc": "Sesión del consejo de seguridad económica.",
-      "url": "https://japan.kantei.go.jp/104/actions/202511/07keizaianpo.html",
-      "tags": [
-        "economic security",
-        "council",
-        "resilience"
-      ],
-      "isStrategic": false
-    },
-    {
-      "id": "cyber2025",
-      "title": "Cybersecurity Strategy 2025",
-      "category": "seguridad",
-      "source": "NISC",
-      "date": "2025-06-01",
-      "desc": "Active Cyber Defense, protección de infraestructura crítica y coordinación nacional.",
-      "url": "https://www.nisc.go.jp/eng/index.html",
-      "tags": [
-        "cyber",
-        "active cyber defense",
-        "critical infrastructure"
-      ],
-      "isStrategic": true
+      "category": "Estratégico",
+      "description": "Política exterior y alianzas",
+      "url": "https://www.mofa.go.jp/policy/other/bluebook/index.html"
     }
   ]
 }

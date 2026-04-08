@@ -11,7 +11,7 @@ from pathlib import Path
 import urllib.request, urllib.error
 from html.parser import HTMLParser
 
-OUTPUT = Path(__file__).parent / "data" / "documents.json"
+OUTPUT = Path(__file__).parent / "documents.json"
 
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (compatible; JapanStrategyMonitor/3.0)",

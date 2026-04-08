@@ -13,155 +13,165 @@
       padding: 40px 20px;
     }
     .container { max-width: 1200px; margin: 0 auto; }
-    h1 {
-      font-size: 2.5em;
-      margin-bottom: 10px;
-      color: #58a6ff;
-    }
-    .subtitle {
-      color: #8b949e;
+    header { margin-bottom: 40px; }
+    h1 { font-size: 2.5em; color: #58a6ff; margin-bottom: 10px; }
+    .subtitle { color: #8b949e; font-size: 1.1em; }
+    
+    .controls {
+      display: flex;
+      gap: 20px;
       margin-bottom: 30px;
-      font-size: 1.1em;
-    }
-    .last-updated {
+      flex-wrap: wrap;
       background: #161b22;
-      padding: 12px 20px;
+      padding: 20px;
       border-radius: 6px;
-      margin-bottom: 30px;
-      border-left: 3px solid #58a6ff;
+      border: 1px solid #30363d;
     }
+    .search-box {
+      flex: 1;
+      min-width: 250px;
+    }
+    input, select {
+      width: 100%;
+      padding: 10px 15px;
+      background: #0d1117;
+      border: 1px solid #30363d;
+      border-radius: 6px;
+      color: #c9d1d9;
+      font-size: 1em;
+    }
+    input:focus, select:focus {
+      outline: none;
+      border-color: #58a6ff;
+    }
+    .filter-box { width: 200px; }
+
+    .last-updated {
+      font-size: 0.9em;
+      color: #8b949e;
+      margin-bottom: 20px;
+    }
+
     .doc-card {
       background: #161b22;
       border: 1px solid #30363d;
       border-radius: 6px;
       padding: 20px;
       margin-bottom: 20px;
-      transition: all 0.2s;
+      transition: transform 0.2s;
     }
-    .doc-card:hover {
-      border-color: #58a6ff;
-      transform: translateY(-2px);
-    }
-    .doc-title {
-      font-size: 1.3em;
-      color: #58a6ff;
-      margin-bottom: 8px;
-      font-weight: 600;
-    }
-    .doc-meta {
-      display: flex;
-      gap: 15px;
-      margin-bottom: 10px;
-      font-size: 0.9em;
-    }
+    .doc-card:hover { transform: translateY(-2px); border-color: #58a6ff; }
+    .doc-title { font-size: 1.3em; color: #58a6ff; margin-bottom: 10px; font-weight: 600; }
+    .doc-meta { display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap; }
     .badge {
-      background: #21262d;
-      padding: 4px 10px;
+      padding: 4px 12px;
       border-radius: 12px;
-      font-size: 0.85em;
-      border: 1px solid #30363d;
+      font-size: 0.8em;
+      font-weight: 500;
+      border: 1px solid transparent;
     }
-    .badge.org { color: #f0883e; border-color: #f0883e40; }
-    .badge.date { color: #a371f7; border-color: #a371f740; }
-    .badge.cat { color: #3fb950; border-color: #3fb95040; }
-    .doc-description {
-      color: #8b949e;
-      margin-bottom: 12px;
-    }
+    .badge-org { background: #23863620; color: #3fb950; border-color: #3fb95040; }
+    .badge-cat { background: #1f6feb20; color: #58a6ff; border-color: #58a6ff40; }
+    .badge-date { background: #a371f720; color: #a371f7; border-color: #a371f740; }
+    
+    .doc-desc { color: #8b949e; margin-bottom: 15px; line-height: 1.5; }
     .doc-link {
+      display: inline-block;
       color: #58a6ff;
       text-decoration: none;
-      display: inline-block;
       padding: 8px 16px;
-      border: 1px solid #58a6ff;
+      border: 1px solid #30363d;
       border-radius: 6px;
-      margin-top: 8px;
       font-size: 0.9em;
     }
-    .doc-link:hover {
-      background: #58a6ff;
-      color: #0d1117;
-    }
-    .loading {
-      text-align: center;
-      padding: 40px;
-      color: #58a6ff;
-    }
-    .error {
-      background: #da3633;
-      color: white;
-      padding: 15px;
-      border-radius: 6px;
-      margin-bottom: 20px;
-    }
+    .doc-link:hover { background: #21262d; border-color: #8b949e; }
+    
+    .no-results { text-align: center; padding: 40px; color: #8b949e; }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Japan Strategy Monitor</h1>
-    <p class="subtitle">Monitoreo de documentos estratégicos del gobierno de Japón</p>
-    
-    <div id="last-updated" class="last-updated">
-      <strong>Última actualización:</strong> <span id="update-time">Cargando...</span>
+    <header>
+      <h1>Japan Strategy Monitor</h1>
+      <p class="subtitle">Defensa, Política Exterior, Seguridad Económica y Derechos (Género/LGBT+)</p>
+    </header>
+
+    <div class="controls">
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Buscar documentos por título o descripción...">
+      </div>
+      <div class="filter-box">
+        <select id="categoryFilter">
+          <option value="all">Todas las categorías</option>
+          <option value="Defensa">Defensa</option>
+          <option value="Política Exterior">Política Exterior</option>
+          <option value="Seguridad Económica">Seguridad Económica</option>
+          <option value="Género/LGBT+">Género/LGBT+</option>
+        </select>
+      </div>
     </div>
-    
-    <div id="documents">
-      <div class="loading">🔄 Cargando documentos...</div>
-    </div>
+
+    <div id="lastUpdated" class="last-updated"></div>
+    <div id="docList"></div>
   </div>
 
   <script>
-    async function loadDocuments() {
-      const docsContainer = document.getElementById('documents');
-      const updateTimeEl = document.getElementById('update-time');
-      
+    let allDocuments = [];
+
+    async function fetchData() {
       try {
         const response = await fetch('documents.json');
-        if (!response.ok) throw new Error('No se pudo cargar documents.json');
-        
         const data = await response.json();
+        allDocuments = data.documents;
         
-        // Actualizar fecha
-        if (data.last_updated) {
-          const date = new Date(data.last_updated);
-          updateTimeEl.textContent = date.toLocaleString('es-ES', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit'
-          });
-        }
+        document.getElementById('lastUpdated').innerHTML = 
+          `Última actualización: ${new Date(data.last_updated).toLocaleString()}`;
         
-        // Renderizar documentos
-        if (data.documents && data.documents.length > 0) {
-          docsContainer.innerHTML = data.documents.map(doc => `
-            <div class="doc-card">
-              <h2 class="doc-title">${doc.title}</h2>
-              <div class="doc-meta">
-                <span class="badge org">${doc.organization}</span>
-                <span class="badge date">${doc.date}</span>
-                <span class="badge cat">${doc.category}</span>
-              </div>
-              ${doc.description ? `<p class="doc-description">${doc.description}</p>` : ''}
-              <a href="${doc.url}" target="_blank" class="doc-link">Ver documento →</a>
-            </div>
-          `).join('');
-        } else {
-          docsContainer.innerHTML = '<p class="loading">No hay documentos disponibles</p>';
-        }
-      } catch (error) {
-        console.error('Error:', error);
-        docsContainer.innerHTML = `
-          <div class="error">
-            ⚠️ Error al cargar documentos. Por favor, intenta de nuevo más tarde.
-          </div>
-        `;
+        renderDocuments(allDocuments);
+      } catch (e) {
+        document.getElementById('docList').innerHTML = '<p class="no-results">Error al cargar datos.</p>';
       }
     }
-    
-    // Cargar al inicio
-    loadDocuments();
+
+    function renderDocuments(docs) {
+      const container = document.getElementById('docList');
+      if (docs.length === 0) {
+        container.innerHTML = '<p class="no-results">No se encontraron documentos.</p>';
+        return;
+      }
+
+      container.innerHTML = docs.map(doc => `
+        <div class="doc-card" data-category="${doc.category}">
+          <h2 class="doc-title">${doc.title}</h2>
+          <div class="doc-meta">
+            <span class="badge badge-org">${doc.organization}</span>
+            <span class="badge badge-cat">${doc.category}</span>
+            <span class="badge badge-date">${doc.date}</span>
+          </div>
+          <p class="doc-desc">${doc.description || ''}</p>
+          <a href="${doc.url}" target="_blank" class="doc-link">Ver Documento →</a>
+        </div>
+      `).join('');
+    }
+
+    function filterDocs() {
+      const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+      const category = document.getElementById('categoryFilter').value;
+
+      const filtered = allDocuments.filter(doc => {
+        const matchesSearch = doc.title.toLowerCase().includes(searchTerm) || 
+                             (doc.description && doc.description.toLowerCase().includes(searchTerm));
+        const matchesCategory = category === 'all' || doc.category === category;
+        return matchesSearch && matchesCategory;
+      });
+
+      renderDocuments(filtered);
+    }
+
+    document.getElementById('searchInput').addEventListener('input', filterDocs);
+    document.getElementById('categoryFilter').addEventListener('change', filterDocs);
+
+    fetchData();
   </script>
 </body>
 </html>

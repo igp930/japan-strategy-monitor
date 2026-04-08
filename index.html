@@ -16,7 +16,7 @@
     header { margin-bottom: 40px; }
     h1 { font-size: 2.5em; color: #58a6ff; margin-bottom: 10px; }
     .subtitle { color: #8b949e; font-size: 1.1em; }
-    
+
     .controls {
       display: flex;
       gap: 20px;
@@ -45,13 +45,11 @@
       border-color: #58a6ff;
     }
     .filter-box { width: 200px; }
-
     .last-updated {
       font-size: 0.9em;
       color: #8b949e;
       margin-bottom: 20px;
     }
-
     .doc-card {
       background: #161b22;
       border: 1px solid #30363d;
@@ -73,7 +71,8 @@
     .badge-org { background: #23863620; color: #3fb950; border-color: #3fb95040; }
     .badge-cat { background: #1f6feb20; color: #58a6ff; border-color: #58a6ff40; }
     .badge-date { background: #a371f720; color: #a371f7; border-color: #a371f740; }
-    
+    .badge-hist { background: #8b949e20; color: #8b949e; border-color: #8b949e40; }
+
     .doc-desc { color: #8b949e; margin-bottom: 15px; line-height: 1.5; }
     .doc-link {
       display: inline-block;
@@ -85,7 +84,7 @@
       font-size: 0.9em;
     }
     .doc-link:hover { background: #21262d; border-color: #8b949e; }
-    
+
     .no-results { text-align: center; padding: 40px; color: #8b949e; }
   </style>
 </head>
@@ -107,6 +106,7 @@
           <option value="Política Exterior">Política Exterior</option>
           <option value="Seguridad Económica">Seguridad Económica</option>
           <option value="Género/LGBT+">Género/LGBT+</option>
+          <option value="Archivo Histórico">Archivo Histórico</option>
         </select>
       </div>
     </div>
@@ -117,10 +117,9 @@
 
   <script>
     let allDocuments = [];
-
     async function fetchData() {
       try {
-        const response = await fetch('documents.json');
+        const response = await fetch('documents.json?t=' + Date.now());
         const data = await response.json();
         allDocuments = data.documents;
         
@@ -140,18 +139,21 @@
         return;
       }
 
-      container.innerHTML = docs.map(doc => `
-        <div class="doc-card" data-category="${doc.category}">
-          <h2 class="doc-title">${doc.title}</h2>
-          <div class="doc-meta">
-            <span class="badge badge-org">${doc.organization}</span>
-            <span class="badge badge-cat">${doc.category}</span>
-            <span class="badge badge-date">${doc.date}</span>
+      container.innerHTML = docs.map(doc => {
+        const badgeClass = doc.category === 'Archivo Histórico' ? 'badge-hist' : 'badge-cat';
+        return `
+          <div class="doc-card" data-category="${doc.category}">
+            <h2 class="doc-title">${doc.title}</h2>
+            <div class="doc-meta">
+              <span class="badge badge-org">${doc.organization}</span>
+              <span class="badge ${badgeClass}">${doc.category}</span>
+              <span class="badge badge-date">${doc.date}</span>
+            </div>
+            <p class="doc-desc">${doc.description || ''}</p>
+            <a href="${doc.url}" target="_blank" class="doc-link">Ver Documento →</a>
           </div>
-          <p class="doc-desc">${doc.description || ''}</p>
-          <a href="${doc.url}" target="_blank" class="doc-link">Ver Documento →</a>
-        </div>
-      `).join('');
+        `;
+      }).join('');
     }
 
     function filterDocs() {
@@ -160,7 +162,7 @@
 
       const filtered = allDocuments.filter(doc => {
         const matchesSearch = doc.title.toLowerCase().includes(searchTerm) || 
-                             (doc.description && doc.description.toLowerCase().includes(searchTerm));
+                              (doc.description && doc.description.toLowerCase().includes(searchTerm));
         const matchesCategory = category === 'all' || doc.category === category;
         return matchesSearch && matchesCategory;
       });

@@ -1,44 +1,52 @@
 {
-  "last_updated": "2026-04-08T13:35:37.673492",
+  "last_updated": "2026-04-08T14:40:22.323855",
   "documents": [
     {
       "title": "National Security Strategy of Japan (2022)",
       "organization": "Kantei",
       "date": "2022-12-16",
-      "category": "Estratégico",
-      "description": "Marco estratégico integrado",
+      "category": "Defensa",
+      "description": "Marco estratégico integrado de seguridad nacional.",
       "url": "https://www.cas.go.jp/jp/siryou/221216anzenhoshou/nss-e.pdf"
     },
     {
-      "title": "National Defense Strategy (2022)",
-      "organization": "MOD",
-      "date": "2022-12-16",
-      "category": "Estratégico",
-      "description": "Estrategia de defensa nacional",
-      "url": "https://www.mod.go.jp/j/policy/agenda/guideline/strategy/index.html"
+      "title": "Fifth Basic Plan for Gender Equality",
+      "organization": "Cabinet Office",
+      "date": "2020-12-25",
+      "category": "Género/LGBT+",
+      "description": "Plan fundamental para promover la igualdad de género en Japón.",
+      "url": "https://www.gender.go.jp/about_danjo/basic_plans/5th/index.html"
     },
     {
-      "title": "Defense Buildup Program (2022)",
-      "organization": "MOD",
-      "date": "2022-12-16",
-      "category": "Estratégico",
-      "description": "Programa de refuerzo de capacidades",
-      "url": "https://www.mod.go.jp/j/policy/agenda/guideline/plan/index.html"
+      "title": "Act on Promotion of Public Understanding of LGBTQ+",
+      "organization": "Kantei",
+      "date": "2023-06-23",
+      "category": "Género/LGBT+",
+      "description": "Ley para promover la comprensión pública de la diversidad sexual.",
+      "url": "https://www.cas.go.jp/jp/hourei/index.html"
     },
     {
       "title": "Economic Security Promotion Act",
       "organization": "METI",
       "date": "2022-05-11",
-      "category": "Estratégico",
-      "description": "Cadenas de suministro y tecnologías estratégicas",
+      "category": "Seguridad Económica",
+      "description": "Protección de cadenas de suministro y tecnologías críticas.",
       "url": "https://www.meti.go.jp/policy/economy/economic_security/index.html"
+    },
+    {
+      "title": "National Defense Strategy (2022)",
+      "organization": "MOD",
+      "date": "2022-12-16",
+      "category": "Defensa",
+      "description": "Estrategia de defensa nacional a medio y largo plazo.",
+      "url": "https://www.mod.go.jp/j/policy/agenda/guideline/strategy/index.html"
     },
     {
       "title": "Diplomatic Bluebook 2025",
       "organization": "MOFA",
       "date": "2025-03-01",
-      "category": "Estratégico",
-      "description": "Política exterior y alianzas",
+      "category": "Política Exterior",
+      "description": "Informe anual sobre la política exterior y situación internacional.",
       "url": "https://www.mofa.go.jp/policy/other/bluebook/index.html"
     }
   ]

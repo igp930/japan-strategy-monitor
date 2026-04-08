@@ -1,1 +1,167 @@
-<!DOCTYPE html><html lang=es><head><meta charset=UTF-8><title>Japan Strategy Monitor</title><style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:system-ui,sans-serif;padding:20px;background:#f5f5f5}.doc{background:white;padding:20px;margin:10px 0;border-radius:8px;box-shadow:0 2px 4px rgba(0,0,0,0.1)}h1{margin-bottom:20px}#status{padding:10px;background:#e8f5e9;border-radius:4px;margin-bottom:10px}</style></head><body><h1>Japan Strategy Monitor</h1><div id=status>Cargando documentos...</div><div id=results></div><script>const fallbackDocs=[{id:'nss2022',title:'National Security Strategy of Japan (2022)',category:'seguridad',source:'Kantei',date:'2022-12-16',desc:'Marco estratégico integrado',url:'https://www.cas.go.jp/jp/siryou/221216anzenhoshou/nss-e.pdf',isStrategic:true},{id:'nds2022',title:'National Defense Strategy (2022)',category:'defensa',source:'MOD',date:'2022-12-16',desc:'Estrategia de defensa nacional',url:'https://www.mod.go.jp/en/d_policy/index.html',isStrategic:true},{id:'dbp2022',title:'Defense Buildup Program (2022)',category:'defensa',source:'MOD',date:'2022-12-16',desc:'Programa de refuerzo de capacidades',url:'https://www.mod.go.jp/en/d_policy/index.html',isStrategic:true},{id:'esa2022',title:'Economic Security Promotion Act',category:'economica',source:'METI',date:'2022-05-11',desc:'Cadenas de suministro',url:'https://www.meti.go.jp/english/policy/economy/economic_security/index.html',isStrategic:true},{id:'bb2025',title:'Diplomatic Bluebook 2025',category:'exterior',source:'MOFA',date:'2025-03-01',desc:'Política exterior',url:'https://www.mofa.go.jp/policy/other/bluebook/2025/en_html/chapter3/c030101.html',isStrategic:true},{id:'doj2024',title:'Defense of Japan 2024',category:'defensa',source:'MOD',date:'2024-07-12',desc:'Libro Blanco',url:'https://www.mod.go.jp/en/publ/w_paper/wp2024/DOJ2024_EN_Reference.pdf',isStrategic:true},{id:'fy2026bgt',title:'FY2026 Defense Budget',category:'defensa',source:'MOD',date:'2025-12-26',desc:'Presupuesto FY2026',url:'https://www.mod.go.jp/en/d_act/d_budget/pdf/fy2026_20251226a.pdf',isStrategic:false},{id:'bp2026',title:'Basic Policy 2026',category:'economica',source:'Kantei',date:'2026-02-17',desc:'Política básica',url:'https://japan.kantei.go.jp/105/decisions/2026/_00001.html',isStrategic:false},{id:'eco2025',title:'Council for Economic Security',category:'economica',source:'Kantei',date:'2025-11-06',desc:'Consejo económico',url:'https://japan.kantei.go.jp/104/actions/202511/07keizaianpo.html',isStrategic:false},{id:'cyber2025',title:'Cybersecurity Strategy 2025',category:'seguridad',source:'NISC',date:'2025-06-01',desc:'Active Cyber Defense',url:'https://www.nisc.go.jp/eng/index.html',isStrategic:true}];function render(docs,source){document.getElementById('results').innerHTML=docs.map(d=>`<div class=doc><h2>${d.title}</h2><p><strong>${d.source}</strong> · ${d.date} ${d.isStrategic?'· Estratégico':''}</p><p>${d.desc||d.description||''}</p><p><a href="${d.url}" target=_blank>Ver documento →</a></p></div>`).join('');document.getElementById('status').textContent=`Mostrando ${docs.length} documentos (fuente: ${source})`;console.log('Loaded',docs.length,'documents from',source)}fetch('documents.json').then(r=>r.json()).then(data=>{if(data.documents&&data.documents.length>0){render(data.documents,'JSON actualizado - última actualización: '+(data.updated||'desconocida'))}else{render(fallbackDocs,'corpus base')}}).catch(()=>{render(fallbackDocs,'corpus base (JSON no disponible)')});</script></body></html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Japan Strategy Monitor</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      background: #0d1117;
+      color: #c9d1d9;
+      padding: 40px 20px;
+    }
+    .container { max-width: 1200px; margin: 0 auto; }
+    h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+      color: #58a6ff;
+    }
+    .subtitle {
+      color: #8b949e;
+      margin-bottom: 30px;
+      font-size: 1.1em;
+    }
+    .last-updated {
+      background: #161b22;
+      padding: 12px 20px;
+      border-radius: 6px;
+      margin-bottom: 30px;
+      border-left: 3px solid #58a6ff;
+    }
+    .doc-card {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 6px;
+      padding: 20px;
+      margin-bottom: 20px;
+      transition: all 0.2s;
+    }
+    .doc-card:hover {
+      border-color: #58a6ff;
+      transform: translateY(-2px);
+    }
+    .doc-title {
+      font-size: 1.3em;
+      color: #58a6ff;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+    .doc-meta {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 10px;
+      font-size: 0.9em;
+    }
+    .badge {
+      background: #21262d;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 0.85em;
+      border: 1px solid #30363d;
+    }
+    .badge.org { color: #f0883e; border-color: #f0883e40; }
+    .badge.date { color: #a371f7; border-color: #a371f740; }
+    .badge.cat { color: #3fb950; border-color: #3fb95040; }
+    .doc-description {
+      color: #8b949e;
+      margin-bottom: 12px;
+    }
+    .doc-link {
+      color: #58a6ff;
+      text-decoration: none;
+      display: inline-block;
+      padding: 8px 16px;
+      border: 1px solid #58a6ff;
+      border-radius: 6px;
+      margin-top: 8px;
+      font-size: 0.9em;
+    }
+    .doc-link:hover {
+      background: #58a6ff;
+      color: #0d1117;
+    }
+    .loading {
+      text-align: center;
+      padding: 40px;
+      color: #58a6ff;
+    }
+    .error {
+      background: #da3633;
+      color: white;
+      padding: 15px;
+      border-radius: 6px;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Japan Strategy Monitor</h1>
+    <p class="subtitle">Monitoreo de documentos estratégicos del gobierno de Japón</p>
+    
+    <div id="last-updated" class="last-updated">
+      <strong>Última actualización:</strong> <span id="update-time">Cargando...</span>
+    </div>
+    
+    <div id="documents">
+      <div class="loading">🔄 Cargando documentos...</div>
+    </div>
+  </div>
+
+  <script>
+    async function loadDocuments() {
+      const docsContainer = document.getElementById('documents');
+      const updateTimeEl = document.getElementById('update-time');
+      
+      try {
+        const response = await fetch('documents.json');
+        if (!response.ok) throw new Error('No se pudo cargar documents.json');
+        
+        const data = await response.json();
+        
+        // Actualizar fecha
+        if (data.last_updated) {
+          const date = new Date(data.last_updated);
+          updateTimeEl.textContent = date.toLocaleString('es-ES', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+          });
+        }
+        
+        // Renderizar documentos
+        if (data.documents && data.documents.length > 0) {
+          docsContainer.innerHTML = data.documents.map(doc => `
+            <div class="doc-card">
+              <h2 class="doc-title">${doc.title}</h2>
+              <div class="doc-meta">
+                <span class="badge org">${doc.organization}</span>
+                <span class="badge date">${doc.date}</span>
+                <span class="badge cat">${doc.category}</span>
+              </div>
+              ${doc.description ? `<p class="doc-description">${doc.description}</p>` : ''}
+              <a href="${doc.url}" target="_blank" class="doc-link">Ver documento →</a>
+            </div>
+          `).join('');
+        } else {
+          docsContainer.innerHTML = '<p class="loading">No hay documentos disponibles</p>';
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        docsContainer.innerHTML = `
+          <div class="error">
+            ⚠️ Error al cargar documentos. Por favor, intenta de nuevo más tarde.
+          </div>
+        `;
+      }
+    }
+    
+    // Cargar al inicio
+    loadDocuments();
+  </script>
+</body>
+</html>

@@ -1,35 +1,44 @@
-name: Japan Strategy Monitor — Scraper
+name: Japan Strategy Monitor - Scraper
 
 on:
   schedule:
-    - cron: "0 */6 * * *"  # cada 6 horas
-  workflow_dispatch:       # también ejecutable a mano desde GitHub
+    - cron: '0 */6 * * *'  # Cada 6 horas
+  workflow_dispatch:  # Ejecutable manualmente desde GitHub
 
 permissions:
-  contents: write
+  contents: write  # Necesario para commit y push
 
 jobs:
   scrape:
     runs-on: ubuntu-latest
+    
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-
-      - name: Install dependencies
-        run: pip install requests beautifulsoup4 lxml
-
-      - name: Run scraper
-        run: python scraper.py
-
-      - name: Commit and push data
-        run: |
-          git config user.name  "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add documents.json
-          git diff --cached --quiet || git commit -m "chore: update documents $(date -u +%Y-%m-%dT%H:%M:%SZ)"
-          git push
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+    
+    - name: Install dependencies
+      run: |
+        pip install requests beautifulsoup4
+    
+    - name: Run scraper
+      run: |
+        python scraper.py
+    
+    - name: Check for changes
+      id: git-check
+      run: |
+        git diff --exit-code documents.json || echo "changed=true" >> $GITHUB_OUTPUT
+    
+    - name: Commit and push if changed
+      if: steps.git-check.outputs.changed == 'true'
+      run: |
+        git config --global user.name 'GitHub Actions Bot'
+        git config --global user.email 'actions@github.com'
+        git add documents.json
+        git commit -m "[auto] Update documents.json - $(date +'%Y-%m-%d %H:%M')"
+        git push

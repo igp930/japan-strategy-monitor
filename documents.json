@@ -1,68 +1,44 @@
 {
-  "last_updated": "2026-04-10T22:07:44.119559",
+  "last_updated": "2026-04-10T22:20:19.262489",
   "documents": [
     {
       "title": "Defense of Japan 2024 (White Paper)",
       "organization": "MOD",
       "date": "2024-07-12",
       "category": "Defensa",
-      "description": "Edición más reciente del Libro Blanco de Defensa.",
+      "description": "Latest Defense White Paper.",
       "url": "https://www.mod.go.jp/en/publ/w_paper/wp2024/DOJ2024_Full_1016.pdf"
-    },
-    {
-      "title": "Defense of Japan 2023 (White Paper)",
-      "organization": "MOD",
-      "date": "2023-07-28",
-      "category": "Defensa",
-      "description": "Libro Blanco 2023.",
-      "url": "https://www.mod.go.jp/en/publ/w_paper/wp2023/DOJ2023_Full_1016.pdf"
-    },
-    {
-      "title": "Defense of Japan 2022 (White Paper)",
-      "organization": "MOD",
-      "date": "2022-07-22",
-      "category": "Archivo Histórico",
-      "description": "Libro Blanco 2022.",
-      "url": "https://www.mod.go.jp/en/publ/w_paper/wp2022/DOJ2022_Full_1016.pdf"
-    },
-    {
-      "title": "Defense of Japan 2021 (White Paper)",
-      "organization": "MOD",
-      "date": "2021-07-13",
-      "category": "Archivo Histórico",
-      "description": "Libro Blanco 2021.",
-      "url": "https://www.mod.go.jp/en/publ/w_paper/wp2021/DOJ2021_Full_1016.pdf"
     },
     {
       "title": "Diplomatic Bluebook 2024",
       "organization": "MOFA",
       "date": "2024-04-16",
       "category": "Política Exterior",
-      "description": "Informe anual sobre política exterior 2024.",
+      "description": "Annual report on foreign policy 2024.",
       "url": "https://www.mofa.go.jp/policy/other/bluebook/2024/pdf/pdfs/2024_all.pdf"
+    },
+    {
+      "title": "Defense of Japan 2023 (White Paper)",
+      "organization": "MOD",
+      "date": "2023-07-28",
+      "category": "Defensa",
+      "description": "Annual report 2023.",
+      "url": "https://www.mod.go.jp/en/publ/w_paper/wp2023/DOJ2023_Full_1016.pdf"
     },
     {
       "title": "Diplomatic Bluebook 2023",
       "organization": "MOFA",
-      "date": "2023-04-14",
+      "date": "2023-04-15",
       "category": "Política Exterior",
-      "description": "Informe anual 2023.",
+      "description": "Annual report on foreign policy 2023.",
       "url": "https://www.mofa.go.jp/policy/other/bluebook/2023/pdf/pdfs/2023_all.pdf"
-    },
-    {
-      "title": "Diplomatic Bluebook 2022",
-      "organization": "MOFA",
-      "date": "2022-04-22",
-      "category": "Archivo Histórico",
-      "description": "Informe anual 2022.",
-      "url": "https://www.mofa.go.jp/policy/other/bluebook/2022/pdf/pdfs/2022_all.pdf"
     },
     {
       "title": "National Security Strategy of Japan (2022)",
       "organization": "Kantei",
       "date": "2022-12-16",
       "category": "Estrategia",
-      "description": "Documento cumbre de seguridad actual.",
+      "description": "Core security strategy document.",
       "url": "https://www.cas.go.jp/jp/siryou/221216anzenhoshou/nss-e.pdf"
     },
     {
@@ -70,32 +46,48 @@
       "organization": "MOD",
       "date": "2022-12-16",
       "category": "Estrategia",
-      "description": "Sustituye a las NDPG anteriores.",
-      "url": "https://www.mod.go.jp/j/policy/agenda/guideline/strategy/index.html"
+      "description": "Updated defense strategy.",
+      "url": "https://www.mod.go.jp/en/d_act/d_policy/pdf/strategy20221216_en.pdf"
+    },
+    {
+      "title": "Defense Buildup Program (2022)",
+      "organization": "MOD",
+      "date": "2022-12-16",
+      "category": "Estrategia",
+      "description": "Long-term defense procurement and force structure.",
+      "url": "https://www.mod.go.jp/en/d_act/d_policy/pdf/program20221216_en.pdf"
+    },
+    {
+      "title": "Defense of Japan 2022 (White Paper)",
+      "organization": "MOD",
+      "date": "2022-07-22",
+      "category": "Defensa",
+      "description": "Annual report 2022.",
+      "url": "https://www.mod.go.jp/en/publ/w_paper/wp2022/DOJ2022_EN_Full_02.pdf"
     },
     {
       "title": "Economic Security Promotion Act (2022)",
       "organization": "Legislación",
       "date": "2022-05-11",
       "category": "Seguridad Económica",
-      "description": "Marco legal para la resiliencia.",
+      "description": "Legal framework for resilience.",
       "url": "https://www.meti.go.jp/policy/economy/economic_security/index.html"
+    },
+    {
+      "title": "Diplomatic Bluebook 2022",
+      "organization": "MOFA",
+      "date": "2022-04-12",
+      "category": "Política Exterior",
+      "description": "Annual report on foreign policy 2022.",
+      "url": "https://www.mofa.go.jp/policy/other/bluebook/2022/pdf/pdfs/2022_all.pdf"
     },
     {
       "title": "Fifth Basic Plan for Gender Equality (2020)",
       "organization": "Gabinete",
       "date": "2020-12-25",
-      "category": "Género",
-      "description": "Plan fundamental vigente.",
+      "category": "Archivo Histórico",
+      "description": "Fundamental plan for gender equality.",
       "url": "https://www.gender.go.jp/about_danjo/basic_plans/5th/index.html"
-    },
-    {
-      "title": "Basic Act for Gender Equal Society (1999)",
-      "organization": "Legislación",
-      "date": "1999-06-23",
-      "category": "Género",
-      "description": "Ley fundamental histórica.",
-      "url": "https://www.japaneselawtranslation.go.jp/en/laws/view/2526/en"
     }
   ]
 }

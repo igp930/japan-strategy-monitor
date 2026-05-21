@@ -6,20 +6,31 @@
   <title>Japan Strategy Monitor</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
+
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
       background: #0d1117;
       color: #c9d1d9;
       padding: 40px 20px;
     }
+
     .container { max-width: 1200px; margin: 0 auto; }
     header { margin-bottom: 40px; }
-    h1 { font-size: 2.5em; color: #58a6ff; margin-bottom: 10px; }
-    .subtitle { color: #8b949e; font-size: 1.1em; }
+
+    h1 {
+      font-size: 2.5em;
+      color: #58a6ff;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      color: #8b949e;
+      font-size: 1.1em;
+    }
 
     .controls {
       display: flex;
-      gap: 20px;
+      gap: 16px;
       margin-bottom: 30px;
       flex-wrap: wrap;
       background: #161b22;
@@ -27,10 +38,10 @@
       border-radius: 6px;
       border: 1px solid #30363d;
     }
-    .search-box {
-      flex: 1;
-      min-width: 250px;
-    }
+
+    .search-box { flex: 2; min-width: 250px; }
+    .filter-box { flex: 1; min-width: 170px; }
+
     input, select {
       width: 100%;
       padding: 10px 15px;
@@ -40,16 +51,18 @@
       color: #c9d1d9;
       font-size: 1em;
     }
+
     input:focus, select:focus {
       outline: none;
       border-color: #58a6ff;
     }
-    .filter-box { width: 200px; }
+
     .last-updated {
       font-size: 0.9em;
       color: #8b949e;
       margin-bottom: 20px;
     }
+
     .doc-card {
       background: #161b22;
       border: 1px solid #30363d;
@@ -58,9 +71,31 @@
       margin-bottom: 20px;
       transition: transform 0.2s;
     }
-    .doc-card:hover { transform: translateY(-2px); border-color: #58a6ff; }
-    .doc-title { font-size: 1.3em; color: #58a6ff; margin-bottom: 10px; font-weight: 600; }
-    .doc-meta { display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap; }
+
+    .doc-card:hover {
+      transform: translateY(-2px);
+      border-color: #58a6ff;
+    }
+
+    .doc-card.lang-ja {
+      border-left: 3px solid #e3b341;
+    }
+
+    .doc-title {
+      font-size: 1.3em;
+      color: #58a6ff;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .doc-meta {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 15px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
     .badge {
       padding: 4px 12px;
       border-radius: 12px;
@@ -68,12 +103,19 @@
       font-weight: 500;
       border: 1px solid transparent;
     }
-    .badge-org { background: #23863620; color: #3fb950; border-color: #3fb95040; }
-    .badge-cat { background: #1f6feb20; color: #58a6ff; border-color: #58a6ff40; }
+
+    .badge-org  { background: #23863620; color: #3fb950; border-color: #3fb95040; }
+    .badge-cat  { background: #1f6feb20; color: #58a6ff; border-color: #58a6ff40; }
     .badge-date { background: #a371f720; color: #a371f7; border-color: #a371f740; }
     .badge-hist { background: #8b949e20; color: #8b949e; border-color: #8b949e40; }
+    .badge-ja   { background: #e3b34120; color: #e3b341; border-color: #e3b34140; font-weight: 700; }
 
-    .doc-desc { color: #8b949e; margin-bottom: 15px; line-height: 1.5; }
+    .doc-desc {
+      color: #8b949e;
+      margin-bottom: 15px;
+      line-height: 1.5;
+    }
+
     .doc-link {
       display: inline-block;
       color: #58a6ff;
@@ -83,30 +125,67 @@
       border-radius: 6px;
       font-size: 0.9em;
     }
-    .doc-link:hover { background: #21262d; border-color: #8b949e; }
 
-    .no-results { text-align: center; padding: 40px; color: #8b949e; }
+    .doc-link:hover {
+      background: #21262d;
+      border-color: #8b949e;
+    }
+
+    .no-results {
+      text-align: center;
+      padding: 40px;
+      color: #8b949e;
+    }
+
+    .tag-novigente {
+      background: #dc3545;
+      color: white;
+      padding: 2px 8px;
+      border-radius: 3px;
+      font-size: 0.75rem;
+      margin-left: 8px;
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <header>
       <h1>Japan Strategy Monitor</h1>
-      <p class="subtitle">Defensa, Política Exterior, Seguridad Económica y Derechos (Género/LGBT+)</p>
+      <p class="subtitle">Defensa, Política Exterior, Seguridad Económica, Derechos y documentos históricos desde 2010</p>
     </header>
 
     <div class="controls">
       <div class="search-box">
-        <input type="text" id="searchInput" placeholder="Buscar documentos por título o descripción...">
+        <input type="text" id="searchInput" placeholder="Buscar documentos por título o descripción..." aria-label="Buscar documentos por título o descripción...">
       </div>
+
       <div class="filter-box">
-        <select id="categoryFilter">
+        <select id="categoryFilter" aria-label="Filtrar por categoría">
           <option value="all">Todas las categorías</option>
           <option value="Defensa">Defensa</option>
           <option value="Política Exterior">Política Exterior</option>
+          <option value="Estrategia">Estrategia</option>
           <option value="Seguridad Económica">Seguridad Económica</option>
+          <option value="Ciberseguridad">Ciberseguridad</option>
+          <option value="Cooperación Internacional">Cooperación Internacional</option>
+          <option value="Inteligencia">Inteligencia</option>
           <option value="Género/LGBT+">Género/LGBT+</option>
-          <option value="Archivo Histórico">Archivo Histórico</option>
+        </select>
+      </div>
+
+      <div class="filter-box">
+        <select id="langFilter" aria-label="Filtrar por idioma">
+          <option value="all">Todos los idiomas</option>
+          <option value="en">Inglés / Otros</option>
+          <option value="ja">日本語（japonés）</option>
+        </select>
+      </div>
+
+      <div class="filter-box">
+        <select id="statusFilter" aria-label="Filtrar por vigencia">
+          <option value="all">Vigente e histórico</option>
+          <option value="vigente">Solo vigentes</option>
+          <option value="no_vigente">Solo no vigentes</option>
         </select>
       </div>
     </div>
@@ -117,39 +196,62 @@
 
   <script>
     let allDocuments = [];
+
     async function fetchData() {
       try {
         const response = await fetch('documents.json?t=' + Date.now());
         const data = await response.json();
         allDocuments = data.documents;
-        
-        document.getElementById('lastUpdated').innerHTML = 
-          `Última actualización: ${new Date(data.last_updated).toLocaleString()}`;
-        
+
+        document.getElementById('lastUpdated').textContent =
+          'Última actualización: ' + new Date(data.last_updated).toLocaleString();
+
         renderDocuments(allDocuments);
       } catch (e) {
-        document.getElementById('docList').innerHTML = '<p class="no-results">Error al cargar datos.</p>';
+        document.getElementById('docList').innerHTML =
+          '<p class="no-results">Error al cargar datos.</p>';
       }
+    }
+
+    function normalizeCategories(doc) {
+      if (Array.isArray(doc.categories)) return doc.categories;
+      if (doc.category) return [doc.category];
+      return [];
     }
 
     function renderDocuments(docs) {
       const container = document.getElementById('docList');
+
       if (docs.length === 0) {
         container.innerHTML = '<p class="no-results">No se encontraron documentos.</p>';
         return;
       }
 
       container.innerHTML = docs.map(doc => {
-        const badgeClass = doc.category === 'Archivo Histórico' ? 'badge-hist' : 'badge-cat';
+        const isJa = doc.lang === 'ja';
+        const categories = normalizeCategories(doc);
+
+        const categoryBadges = categories.map(cat => {
+          const badgeClass = ['Archivo Histórico'].includes(cat) ? 'badge-hist' : 'badge-cat';
+          return `<span class="badge ${badgeClass}">${cat}</span>`;
+        }).join('');
+
+        const langBadge = isJa ? '<span class="badge badge-ja">🇯🇵 日本語</span>' : '';
+        const statusTag = doc.status === 'no_vigente'
+          ? '<span class="tag-novigente">No vigente</span>'
+          : '';
+
         return `
-          <div class="doc-card" data-category="${doc.category}">
-          <h2 class="doc-title">${doc.title}${doc.status === 'no_vigente' ? '<span style="background: #dc3545; color: white; padding: 2px 8px; border-radius: 3px; font-size: 0.75rem; margin-left: 8px;">No vigente</span>' : ''}</h2>            <div class="doc-meta">
+          <div class="doc-card${isJa ? ' lang-ja' : ''}" data-lang="${isJa ? 'ja' : 'en'}" data-status="${doc.status}">
+            <h2 class="doc-title">${doc.title}${statusTag}</h2>
+            <div class="doc-meta">
               <span class="badge badge-org">${doc.organization}</span>
-              <span class="badge ${badgeClass}">${doc.category}</span>
+              ${categoryBadges}
               <span class="badge badge-date">${doc.date}</span>
+              ${langBadge}
             </div>
             <p class="doc-desc">${doc.description || ''}</p>
-            <a href="${doc.url}" target="_blank" class="doc-link">Ver Documento →</a>
+            <a href="${doc.url}" target="_blank" rel="noopener noreferrer" class="doc-link">Ver Documento →</a>
           </div>
         `;
       }).join('');
@@ -157,13 +259,28 @@
 
     function filterDocs() {
       const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-      const category = document.getElementById('categoryFilter').value;
+      const category   = document.getElementById('categoryFilter').value;
+      const lang       = document.getElementById('langFilter').value;
+      const status     = document.getElementById('statusFilter').value;
 
       const filtered = allDocuments.filter(doc => {
-        const matchesSearch = doc.title.toLowerCase().includes(searchTerm) || 
-                              (doc.description && doc.description.toLowerCase().includes(searchTerm));
-        const matchesCategory = category === 'all' || doc.category === category;
-        return matchesSearch && matchesCategory;
+        const categories = normalizeCategories(doc);
+        const docLang = doc.lang === 'ja' ? 'ja' : 'en';
+
+        const matchesSearch =
+          doc.title.toLowerCase().includes(searchTerm) ||
+          (doc.description && doc.description.toLowerCase().includes(searchTerm));
+
+        const matchesCategory =
+          category === 'all' || categories.includes(category);
+
+        const matchesLang =
+          lang === 'all' || docLang === lang;
+
+        const matchesStatus =
+          status === 'all' || doc.status === status;
+
+        return matchesSearch && matchesCategory && matchesLang && matchesStatus;
       });
 
       renderDocuments(filtered);
@@ -171,9 +288,59 @@
 
     document.getElementById('searchInput').addEventListener('input', filterDocs);
     document.getElementById('categoryFilter').addEventListener('change', filterDocs);
+    document.getElementById('langFilter').addEventListener('change', filterDocs);
+    document.getElementById('statusFilter').addEventListener('change', filterDocs);
 
     fetchData();
   </script>
-  <!-- Force cache refresh 2026-05-21 -->
 </body>
 </html>
+documents.json
+Aquí no te pego las 80+ entradas completas porque sería muy largo, pero esta es la estructura correcta que debes usar a partir de ahora: categories como lista, no category como string.
+
+json
+{
+  "last_updated": "2026-05-21T07:12:00",
+  "documents": [
+    {
+      "title": "National Security Strategy of Japan (2022)",
+      "organization": "Kantei",
+      "date": "2022-12-16",
+      "categories": ["Estrategia", "Defensa", "Política Exterior"],
+      "description": "Supreme national security document revised Dec 2022.",
+      "url": "https://www.cas.go.jp/jp/siryou/221216anzenhoshou/nss-e.pdf",
+      "status": "vigente",
+      "lang": "en"
+    },
+    {
+      "title": "国家安全保障戦略（2022年）",
+      "organization": "Kantei",
+      "date": "2022-12-16",
+      "categories": ["Estrategia", "Defensa", "Política Exterior"],
+      "description": "2022年12月改定の国家安全保障戦略（日本語版）。",
+      "url": "https://www.cas.go.jp/jp/siryou/221216anzenhoshou/nss-j.pdf",
+      "status": "vigente",
+      "lang": "ja"
+    },
+    {
+      "title": "Economic Security Promotion Act (2022)",
+      "organization": "Legislación",
+      "date": "2022-05-11",
+      "categories": ["Seguridad Económica", "Estrategia"],
+      "description": "Legal framework for economic security.",
+      "url": "https://www.meti.go.jp/policy/economy/economic_security/index.html",
+      "status": "vigente",
+      "lang": "en"
+    },
+    {
+      "title": "Defense of Japan 2025 (White Paper)",
+      "organization": "MOD",
+      "date": "2025-07-14",
+      "categories": ["Defensa", "Estrategia"],
+      "description": "Latest Defense White Paper 2025.",
+      "url": "https://www.mod.go.jp/j/press/wp/wp2025/pdf/DOJ2025_Digest_EN.pdf",
+      "status": "vigente",
+      "lang": "en"
+    }
+  ]
+}

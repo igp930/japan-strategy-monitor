@@ -6,155 +6,55 @@
   <title>Japan Strategy Monitor</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
       background: #0d1117;
       color: #c9d1d9;
       padding: 40px 20px;
     }
-
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    header {
-      margin-bottom: 40px;
-    }
-
-    h1 {
-      font-size: 2.5em;
-      color: #58a6ff;
-      margin-bottom: 10px;
-    }
-
-    .subtitle {
-      color: #8b949e;
-      font-size: 1.1em;
-    }
-
+    .container { max-width: 1200px; margin: 0 auto; }
+    header { margin-bottom: 40px; }
+    h1 { font-size: 2.5em; color: #58a6ff; margin-bottom: 10px; }
+    .subtitle { color: #8b949e; font-size: 1.1em; }
     .controls {
-      display: flex;
-      gap: 16px;
-      margin-bottom: 30px;
-      flex-wrap: wrap;
-      background: #161b22;
-      padding: 20px;
-      border-radius: 6px;
-      border: 1px solid #30363d;
+      display: flex; gap: 16px; margin-bottom: 30px; flex-wrap: wrap;
+      background: #161b22; padding: 20px; border-radius: 6px; border: 1px solid #30363d;
     }
-
     .search-box { flex: 2; min-width: 250px; }
     .filter-box { flex: 1; min-width: 170px; }
-
     input, select {
-      width: 100%;
-      padding: 10px 15px;
-      background: #0d1117;
-      border: 1px solid #30363d;
-      border-radius: 6px;
-      color: #c9d1d9;
-      font-size: 1em;
+      width: 100%; padding: 10px 15px; background: #0d1117; border: 1px solid #30363d;
+      border-radius: 6px; color: #c9d1d9; font-size: 1em;
     }
-
-    input:focus, select:focus {
-      outline: none;
-      border-color: #58a6ff;
-    }
-
-    .last-updated {
-      font-size: 0.9em;
-      color: #8b949e;
-      margin-bottom: 20px;
-    }
-
+    input:focus, select:focus { outline: none; border-color: #58a6ff; }
+    .last-updated { font-size: 0.9em; color: #8b949e; margin-bottom: 20px; }
     .doc-card {
-      background: #161b22;
-      border: 1px solid #30363d;
-      border-radius: 6px;
-      padding: 20px;
-      margin-bottom: 20px;
-      transition: transform 0.2s, border-color 0.2s;
+      background: #161b22; border: 1px solid #30363d; border-radius: 6px;
+      padding: 20px; margin-bottom: 20px; transition: transform 0.2s, border-color 0.2s;
     }
-
-    .doc-card:hover {
-      transform: translateY(-2px);
-      border-color: #58a6ff;
-    }
-
-    .doc-card.lang-ja {
-      border-left: 3px solid #e3b341;
-    }
-
-    .doc-title {
-      font-size: 1.3em;
-      color: #58a6ff;
-      margin-bottom: 10px;
-      font-weight: 600;
-      line-height: 1.35;
-    }
-
-    .doc-meta {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 15px;
-      flex-wrap: wrap;
-      align-items: center;
-    }
-
+    .doc-card:hover { transform: translateY(-2px); border-color: #58a6ff; }
+    .doc-card.lang-ja { border-left: 3px solid #e3b341; }
+    .doc-title { font-size: 1.3em; color: #58a6ff; margin-bottom: 10px; font-weight: 600; line-height: 1.35; }
+    .doc-meta { display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap; align-items: center; }
     .badge {
-      padding: 4px 12px;
-      border-radius: 12px;
-      font-size: 0.8em;
-      font-weight: 500;
-      border: 1px solid transparent;
-      white-space: nowrap;
+      padding: 4px 12px; border-radius: 12px; font-size: 0.8em; font-weight: 500;
+      border: 1px solid transparent; white-space: nowrap;
     }
-
     .badge-org  { background: #23863620; color: #3fb950; border-color: #3fb95040; }
     .badge-cat  { background: #1f6feb20; color: #58a6ff; border-color: #58a6ff40; }
     .badge-date { background: #a371f720; color: #a371f7; border-color: #a371f740; }
     .badge-ja   { background: #e3b34120; color: #e3b341; border-color: #e3b34140; font-weight: 700; }
-
-    .doc-desc {
-      color: #8b949e;
-      margin-bottom: 15px;
-      line-height: 1.5;
-    }
-
+    .doc-desc { color: #8b949e; margin-bottom: 15px; line-height: 1.5; }
     .doc-link {
-      display: inline-block;
-      color: #58a6ff;
-      text-decoration: none;
-      padding: 8px 16px;
-      border: 1px solid #30363d;
-      border-radius: 6px;
-      font-size: 0.9em;
+      display: inline-block; color: #58a6ff; text-decoration: none; padding: 8px 16px;
+      border: 1px solid #30363d; border-radius: 6px; font-size: 0.9em;
     }
-
-    .doc-link:hover {
-      background: #21262d;
-      border-color: #8b949e;
-    }
-
-    .no-results {
-      text-align: center;
-      padding: 40px;
-      color: #8b949e;
-    }
-
+    .doc-link:hover { background: #21262d; border-color: #8b949e; }
+    .no-results { text-align: center; padding: 40px; color: #8b949e; }
     .tag-novigente {
-      display: inline-block;
-      background: #da3633;
-      color: white;
-      padding: 2px 8px;
-      border-radius: 4px;
-      font-size: 0.75rem;
-      margin-left: 8px;
-      vertical-align: middle;
+      display: inline-block; background: #da3633; color: white; padding: 2px 8px;
+      border-radius: 4px; font-size: 0.75rem; margin-left: 8px; vertical-align: middle;
     }
-
     @media (max-width: 700px) {
       body { padding: 24px 14px; }
       h1 { font-size: 2em; }
@@ -171,14 +71,8 @@
 
     <div class="controls">
       <div class="search-box">
-        <input
-          type="text"
-          id="searchInput"
-          placeholder="Buscar documentos por título o descripción..."
-          aria-label="Buscar documentos por título o descripción..."
-        >
+        <input type="text" id="searchInput" placeholder="Buscar documentos por título o descripción..." aria-label="Buscar documentos por título o descripción...">
       </div>
-
       <div class="filter-box">
         <select id="categoryFilter" aria-label="Filtrar por categoría">
           <option value="all">Todas las categorías</option>
@@ -192,7 +86,6 @@
           <option value="Género/LGBT+">Género/LGBT+</option>
         </select>
       </div>
-
       <div class="filter-box">
         <select id="langFilter" aria-label="Filtrar por idioma">
           <option value="all">Todos los idiomas</option>
@@ -200,7 +93,6 @@
           <option value="ja">日本語（japonés）</option>
         </select>
       </div>
-
       <div class="filter-box">
         <select id="statusFilter" aria-label="Filtrar por vigencia">
           <option value="all">Vigente e histórico</option>
@@ -227,45 +119,31 @@
       try {
         const response = await fetch("documents.json?t=" + Date.now(), { cache: "no-store" });
         if (!response.ok) throw new Error("No se pudo cargar documents.json");
-
         const data = await response.json();
         allDocuments = Array.isArray(data.documents) ? data.documents : [];
-
         document.getElementById("lastUpdated").textContent =
           "Última actualización: " + new Date(data.last_updated).toLocaleString();
-
         renderDocuments(allDocuments);
       } catch (error) {
-        document.getElementById("docList").innerHTML =
-          '<p class="no-results">Error al cargar datos.</p>';
+        document.getElementById("docList").innerHTML = '<p class="no-results">Error al cargar datos.</p>';
         console.error(error);
       }
     }
 
     function renderDocuments(docs) {
       const container = document.getElementById("docList");
-
       if (!docs.length) {
         container.innerHTML = '<p class="no-results">No se encontraron documentos.</p>';
         return;
       }
-
       container.innerHTML = docs.map(doc => {
         const isJa = doc.lang === "ja";
         const categories = normalizeCategories(doc);
-
         const categoryBadges = categories.map(cat =>
-          `<span class="badge badge-cat">${escapeHtml(cat)}</span>`
-        ).join("");
-
-        const langBadge = isJa
-          ? '<span class="badge badge-ja">🇯🇵 日本語</span>'
-          : "";
-
+          `<span class="badge badge-cat">${escapeHtml(cat)}</span>`).join("");
+        const langBadge = isJa ? '<span class="badge badge-ja">🇯🇵 日本語</span>' : "";
         const statusTag = doc.status === "no_vigente"
-          ? '<span class="tag-novigente">No vigente</span>'
-          : "";
-
+          ? '<span class="tag-novigente">No vigente</span>' : "";
         return `
           <article class="doc-card${isJa ? " lang-ja" : ""}">
             <h2 class="doc-title">${escapeHtml(doc.title || "")}${statusTag}</h2>
@@ -277,8 +155,7 @@
             </div>
             <p class="doc-desc">${escapeHtml(doc.description || "")}</p>
             <a href="${escapeAttribute(doc.url || "#")}" target="_blank" rel="noopener noreferrer" class="doc-link">Ver Documento →</a>
-          </article>
-        `;
+          </article>`;
       }).join("");
     }
 
@@ -287,36 +164,24 @@
       const category = document.getElementById("categoryFilter").value;
       const lang = document.getElementById("langFilter").value;
       const status = document.getElementById("statusFilter").value;
-
       const filtered = allDocuments.filter(doc => {
         const categories = normalizeCategories(doc);
         const docLang = doc.lang === "ja" ? "ja" : "en";
-
         const matchesSearch =
           (doc.title || "").toLowerCase().includes(searchTerm) ||
           (doc.description || "").toLowerCase().includes(searchTerm);
-
-        const matchesCategory =
-          category === "all" || categories.includes(category);
-
-        const matchesLang =
-          lang === "all" || docLang === lang;
-
-        const matchesStatus =
-          status === "all" || doc.status === status;
-
+        const matchesCategory = category === "all" || categories.includes(category);
+        const matchesLang = lang === "all" || docLang === lang;
+        const matchesStatus = status === "all" || doc.status === status;
         return matchesSearch && matchesCategory && matchesLang && matchesStatus;
       });
-
       renderDocuments(filtered);
     }
 
     function escapeHtml(str) {
       return String(str)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
+        .replaceAll("&", "&amp;").replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;").replaceAll('"', "&quot;")
         .replaceAll("'", "&#39;");
     }
 

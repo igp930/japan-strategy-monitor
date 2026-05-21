@@ -143,8 +143,7 @@
         const badgeClass = doc.category === 'Archivo Histórico' ? 'badge-hist' : 'badge-cat';
         return `
           <div class="doc-card" data-category="${doc.category}">
-            <h2 class="doc-title">${doc.title}</h2>
-            <div class="doc-meta">
+          <h2 class="doc-title">${doc.title}${doc.status === 'no_vigente' ? '<span style="background: #dc3545; color: white; padding: 2px 8px; border-radius: 3px; font-size: 0.75rem; margin-left: 8px;">No vigente</span>' : ''}</h2>            <div class="doc-meta">
               <span class="badge badge-org">${doc.organization}</span>
               <span class="badge ${badgeClass}">${doc.category}</span>
               <span class="badge badge-date">${doc.date}</span>

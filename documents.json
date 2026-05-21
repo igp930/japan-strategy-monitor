@@ -1,16 +1,29 @@
 {
-  "last_updated": "2026-05-21T08:18:31.365130+00:00",
+  "last_updated": "2026-05-21T09:32:34.257676+00:00",
   "documents": [
     {
-      "title": "Cybersecurity Strategy (2025)",
-      "organization": "NISC",
-      "date": "2025-12-01",
+      "title": "第6次男女共同参画基本計画",
+      "organization": "Gabinete",
+      "date": "2026-03-13",
       "categories": [
-        "Ciberseguridad",
+        "Género/LGBT+",
         "Estrategia"
       ],
-      "description": "Fourth national cybersecurity strategy.",
-      "url": "https://www.cyber.go.jp/pdf/policy/kihon-s/cs_strategy2025_abstract_english.pdf",
+      "description": "第6次男女共同参画基本計画。",
+      "url": "https://www.gender.go.jp/about_danjo/basic_plans/6th/index.html",
+      "status": "vigente",
+      "lang": "ja"
+    },
+    {
+      "title": "Sixth Basic Plan for Gender Equality (2026)",
+      "organization": "Gabinete",
+      "date": "2026-03-13",
+      "categories": [
+        "Género/LGBT+",
+        "Estrategia"
+      ],
+      "description": "Current national basic plan for gender equality.",
+      "url": "https://www.gender.go.jp/about_danjo/basic_plans/6th/pdf/setumei-eng.pdf",
       "status": "vigente",
       "lang": "en"
     },
@@ -28,14 +41,15 @@
       "lang": "ja"
     },
     {
-      "title": "Diplomatic Bluebook 2025",
-      "organization": "MOFA",
-      "date": "2025-09-30",
+      "title": "Cybersecurity Strategy (2025)",
+      "organization": "NISC",
+      "date": "2025-12-01",
       "categories": [
-        "Política Exterior"
+        "Ciberseguridad",
+        "Estrategia"
       ],
-      "description": "Annual report on Japan's foreign policy 2025.",
-      "url": "https://www.mofa.go.jp/policy/other/bluebook/2025/pdf/pdfs/2025_all.pdf",
+      "description": "Fourth national cybersecurity strategy.",
+      "url": "https://www.cyber.go.jp/pdf/policy/kihon-s/cs_strategy2025_abstract_english.pdf",
       "status": "vigente",
       "lang": "en"
     },
@@ -48,6 +62,31 @@
       ],
       "description": "2025年版外交青書（日本語版）。",
       "url": "https://www.mofa.go.jp/mofaj/gaiko/bluebook/2025/index.html",
+      "status": "vigente",
+      "lang": "ja"
+    },
+    {
+      "title": "Diplomatic Bluebook 2025",
+      "organization": "MOFA",
+      "date": "2025-09-30",
+      "categories": [
+        "Política Exterior"
+      ],
+      "description": "Annual report on Japan's foreign policy 2025.",
+      "url": "https://www.mofa.go.jp/policy/other/bluebook/2025/pdf/pdfs/2025_all.pdf",
+      "status": "vigente",
+      "lang": "en"
+    },
+    {
+      "title": "防衛白書2025",
+      "organization": "MOD",
+      "date": "2025-07-14",
+      "categories": [
+        "Defensa",
+        "Estrategia"
+      ],
+      "description": "令和7年版防衛白書（日本語版）。",
+      "url": "https://www.mod.go.jp/j/press/wp/wp2025/index.html",
       "status": "vigente",
       "lang": "ja"
     },
@@ -65,17 +104,43 @@
       "lang": "en"
     },
     {
-      "title": "防衛白書2025",
+      "title": "Defense of Japan 2025 (White Paper)",
       "organization": "MOD",
-      "date": "2025-07-14",
+      "date": "2025-07-01",
       "categories": [
         "Defensa",
         "Estrategia"
       ],
-      "description": "令和7年版防衛白書（日本語版）。",
-      "url": "https://www.mod.go.jp/j/press/wp/wp2025/index.html",
+      "description": "Annual Defense White Paper 2025.",
+      "url": "https://www.mod.go.jp/j/press/wp/wp2025/pdf/DOJ2025_Digest_CH.pdf",
       "status": "vigente",
-      "lang": "ja"
+      "lang": "en"
+    },
+    {
+      "title": "Defense of Japan 2025 (White Paper)",
+      "organization": "MOD",
+      "date": "2025-07-01",
+      "categories": [
+        "Defensa",
+        "Estrategia"
+      ],
+      "description": "Annual Defense White Paper 2025.",
+      "url": "https://www.mod.go.jp/j/press/wp/wp2025/pdf/DOJ2025_EN_Full.pdf",
+      "status": "vigente",
+      "lang": "en"
+    },
+    {
+      "title": "Defense of Japan 2025 (White Paper)",
+      "organization": "MOD",
+      "date": "2025-07-01",
+      "categories": [
+        "Defensa",
+        "Estrategia"
+      ],
+      "description": "Annual Defense White Paper 2025.",
+      "url": "https://www.mod.go.jp/j/press/wp/wp2025/pdf/DOJ2025_EN_Reference.pdf",
+      "status": "vigente",
+      "lang": "en"
     },
     {
       "title": "White Paper on Development Cooperation 2024",
@@ -105,19 +170,6 @@
       "lang": "en"
     },
     {
-      "title": "Defense of Japan 2024 (White Paper)",
-      "organization": "MOD",
-      "date": "2024-07-12",
-      "categories": [
-        "Defensa",
-        "Estrategia"
-      ],
-      "description": "Annual Defense White Paper 2024.",
-      "url": "https://www.mod.go.jp/en/publ/w_paper/wp2024/DOJ2024_EN_Full.pdf",
-      "status": "vigente",
-      "lang": "en"
-    },
-    {
       "title": "防衛白書2024",
       "organization": "MOD",
       "date": "2024-07-12",
@@ -131,14 +183,28 @@
       "lang": "ja"
     },
     {
-      "title": "Diplomatic Bluebook 2024",
-      "organization": "MOFA",
-      "date": "2024-04-16",
+      "title": "Defense of Japan 2024 (White Paper)",
+      "organization": "MOD",
+      "date": "2024-07-12",
       "categories": [
-        "Política Exterior"
+        "Defensa",
+        "Estrategia"
       ],
-      "description": "Annual report on Japan's foreign policy 2024.",
-      "url": "https://www.mofa.go.jp/policy/other/bluebook/2024/pdf/pdfs/2024_all.pdf",
+      "description": "Annual Defense White Paper 2024.",
+      "url": "https://www.mod.go.jp/en/publ/w_paper/wp2024/DOJ2024_EN_Full.pdf",
+      "status": "vigente",
+      "lang": "en"
+    },
+    {
+      "title": "Defense of Japan 2024 (White Paper)",
+      "organization": "MOD",
+      "date": "2024-07-01",
+      "categories": [
+        "Defensa",
+        "Estrategia"
+      ],
+      "description": "Annual Defense White Paper 2024.",
+      "url": "https://www.mod.go.jp/en/publ/w_paper/wp_2024.html",
       "status": "vigente",
       "lang": "en"
     },
@@ -155,15 +221,14 @@
       "lang": "ja"
     },
     {
-      "title": "Defense of Japan 2023 (White Paper)",
-      "organization": "MOD",
-      "date": "2023-07-28",
+      "title": "Diplomatic Bluebook 2024",
+      "organization": "MOFA",
+      "date": "2024-04-16",
       "categories": [
-        "Defensa",
-        "Estrategia"
+        "Política Exterior"
       ],
-      "description": "Annual Defense White Paper 2023.",
-      "url": "https://www.mod.go.jp/en/publ/w_paper/wp2023/DOJ2023_EN_Full.pdf",
+      "description": "Annual report on Japan's foreign policy 2024.",
+      "url": "https://www.mofa.go.jp/policy/other/bluebook/2024/pdf/pdfs/2024_all.pdf",
       "status": "vigente",
       "lang": "en"
     },
@@ -181,14 +246,28 @@
       "lang": "ja"
     },
     {
-      "title": "Diplomatic Bluebook 2023",
-      "organization": "MOFA",
-      "date": "2023-04-15",
+      "title": "Defense of Japan 2023 (White Paper)",
+      "organization": "MOD",
+      "date": "2023-07-28",
       "categories": [
-        "Política Exterior"
+        "Defensa",
+        "Estrategia"
       ],
-      "description": "Annual report on Japan's foreign policy 2023.",
-      "url": "https://www.mofa.go.jp/policy/other/bluebook/2023/pdf/pdfs/2023_all.pdf",
+      "description": "Annual Defense White Paper 2023.",
+      "url": "https://www.mod.go.jp/en/publ/w_paper/wp2023/DOJ2023_EN_Full.pdf",
+      "status": "vigente",
+      "lang": "en"
+    },
+    {
+      "title": "Defense of Japan 2023 (White Paper)",
+      "organization": "MOD",
+      "date": "2023-07-01",
+      "categories": [
+        "Defensa",
+        "Estrategia"
+      ],
+      "description": "Annual Defense White Paper 2023.",
+      "url": "https://www.mod.go.jp/en/publ/w_paper/wp_2023.html",
       "status": "vigente",
       "lang": "en"
     },
@@ -201,6 +280,31 @@
       ],
       "description": "2023年版外交青書（日本語版）。",
       "url": "https://www.mofa.go.jp/mofaj/gaiko/bluebook/2023/index.html",
+      "status": "vigente",
+      "lang": "ja"
+    },
+    {
+      "title": "Diplomatic Bluebook 2023",
+      "organization": "MOFA",
+      "date": "2023-04-15",
+      "categories": [
+        "Política Exterior"
+      ],
+      "description": "Annual report on Japan's foreign policy 2023.",
+      "url": "https://www.mofa.go.jp/policy/other/bluebook/2023/pdf/pdfs/2023_all.pdf",
+      "status": "vigente",
+      "lang": "en"
+    },
+    {
+      "title": "「自由で開かれたインド太平洋」のための新たなプラン（2023年）",
+      "organization": "MOFA",
+      "date": "2023-03-20",
+      "categories": [
+        "Política Exterior",
+        "Estrategia"
+      ],
+      "description": "FOIP（自由で開かれたインド太平洋）の新構想（日本語版）。",
+      "url": "https://www.mofa.go.jp/mofaj/files/100477004.pdf",
       "status": "vigente",
       "lang": "ja"
     },
@@ -218,15 +322,42 @@
       "lang": "en"
     },
     {
-      "title": "「自由で開かれたインド太平洋」のための新たなプラン（2023年）",
-      "organization": "MOFA",
-      "date": "2023-03-20",
+      "title": "防衛力整備計画（2022年）",
+      "organization": "MOD",
+      "date": "2022-12-16",
       "categories": [
-        "Política Exterior",
-        "Estrategia"
+        "Estrategia",
+        "Defensa"
       ],
-      "description": "FOIP（自由で開かれたインド太平洋）の新構想（日本語版）。",
-      "url": "https://www.mofa.go.jp/mofaj/files/100477004.pdf",
+      "description": "2022年12月策定の防衛力整備計画（日本語版）。",
+      "url": "https://www.mod.go.jp/j/policy/agenda/guideline/plan/pdf/program.pdf",
+      "status": "vigente",
+      "lang": "ja"
+    },
+    {
+      "title": "国家防衛戦略（2022年）",
+      "organization": "MOD",
+      "date": "2022-12-16",
+      "categories": [
+        "Estrategia",
+        "Defensa"
+      ],
+      "description": "2022年12月策定の国家防衛戦略（日本語版）。",
+      "url": "https://www.mod.go.jp/j/policy/agenda/guideline/strategy/pdf/strategy.pdf",
+      "status": "vigente",
+      "lang": "ja"
+    },
+    {
+      "title": "国家安全保障戦略（2022年）",
+      "organization": "Kantei",
+      "date": "2022-12-16",
+      "categories": [
+        "Estrategia",
+        "Defensa",
+        "Política Exterior"
+      ],
+      "description": "2022年12月改定の国家安全保障戦略（日本語版）。",
+      "url": "https://www.cas.go.jp/jp/siryou/221216anzenhoshou/nss-j.pdf",
       "status": "vigente",
       "lang": "ja"
     },
@@ -245,20 +376,6 @@
       "lang": "en"
     },
     {
-      "title": "国家安全保障戦略（2022年）",
-      "organization": "Kantei",
-      "date": "2022-12-16",
-      "categories": [
-        "Estrategia",
-        "Defensa",
-        "Política Exterior"
-      ],
-      "description": "2022年12月改定の国家安全保障戦略（日本語版）。",
-      "url": "https://www.cas.go.jp/jp/siryou/221216anzenhoshou/nss-j.pdf",
-      "status": "vigente",
-      "lang": "ja"
-    },
-    {
       "title": "National Defense Strategy (2022)",
       "organization": "MOD",
       "date": "2022-12-16",
@@ -272,19 +389,6 @@
       "lang": "en"
     },
     {
-      "title": "国家防衛戦略（2022年）",
-      "organization": "MOD",
-      "date": "2022-12-16",
-      "categories": [
-        "Estrategia",
-        "Defensa"
-      ],
-      "description": "2022年12月策定の国家防衛戦略（日本語版）。",
-      "url": "https://www.mod.go.jp/j/policy/agenda/guideline/strategy/pdf/strategy.pdf",
-      "status": "vigente",
-      "lang": "ja"
-    },
-    {
       "title": "Defense Buildup Program (2022)",
       "organization": "MOD",
       "date": "2022-12-16",
@@ -294,32 +398,6 @@
       ],
       "description": "Long-term defense procurement plan Dec 2022.",
       "url": "https://www.mod.go.jp/j/policy/agenda/guideline/plan/pdf/program_en.pdf",
-      "status": "vigente",
-      "lang": "en"
-    },
-    {
-      "title": "防衛力整備計画（2022年）",
-      "organization": "MOD",
-      "date": "2022-12-16",
-      "categories": [
-        "Estrategia",
-        "Defensa"
-      ],
-      "description": "2022年12月策定の防衛力整備計画（日本語版）。",
-      "url": "https://www.mod.go.jp/j/policy/agenda/guideline/plan/pdf/program.pdf",
-      "status": "vigente",
-      "lang": "ja"
-    },
-    {
-      "title": "Defense of Japan 2022 (White Paper)",
-      "organization": "MOD",
-      "date": "2022-07-22",
-      "categories": [
-        "Defensa",
-        "Estrategia"
-      ],
-      "description": "Annual Defense White Paper 2022.",
-      "url": "https://www.mod.go.jp/en/publ/w_paper/wp2022/DOJ2022_EN_Full_02.pdf",
       "status": "vigente",
       "lang": "en"
     },
@@ -337,15 +415,28 @@
       "lang": "ja"
     },
     {
-      "title": "Economic Security Promotion Act (2022)",
-      "organization": "Legislación",
-      "date": "2022-05-11",
+      "title": "Defense of Japan 2022 (White Paper)",
+      "organization": "MOD",
+      "date": "2022-07-22",
       "categories": [
-        "Seguridad Económica",
+        "Defensa",
         "Estrategia"
       ],
-      "description": "Legal framework for economic security.",
-      "url": "https://www.meti.go.jp/policy/economy/economic_security/index.html",
+      "description": "Annual Defense White Paper 2022.",
+      "url": "https://www.mod.go.jp/en/publ/w_paper/wp2022/DOJ2022_EN_Full_02.pdf",
+      "status": "vigente",
+      "lang": "en"
+    },
+    {
+      "title": "Defense of Japan 2022 (White Paper)",
+      "organization": "MOD",
+      "date": "2022-07-01",
+      "categories": [
+        "Defensa",
+        "Estrategia"
+      ],
+      "description": "Annual Defense White Paper 2022.",
+      "url": "https://www.mod.go.jp/en/publ/w_paper/wp_2022.html",
       "status": "vigente",
       "lang": "en"
     },
@@ -363,14 +454,15 @@
       "lang": "ja"
     },
     {
-      "title": "Diplomatic Bluebook 2022",
-      "organization": "MOFA",
-      "date": "2022-04-12",
+      "title": "Economic Security Promotion Act (2022)",
+      "organization": "Legislación",
+      "date": "2022-05-11",
       "categories": [
-        "Política Exterior"
+        "Seguridad Económica",
+        "Estrategia"
       ],
-      "description": "Annual report on Japan's foreign policy 2022.",
-      "url": "https://www.mofa.go.jp/policy/other/bluebook/2022/pdf/pdfs/2022_all.pdf",
+      "description": "Legal framework for economic security.",
+      "url": "https://www.meti.go.jp/policy/economy/economic_security/index.html",
       "status": "vigente",
       "lang": "en"
     },
@@ -387,16 +479,15 @@
       "lang": "ja"
     },
     {
-      "title": "Cybersecurity Strategy (2021)",
-      "organization": "NISC",
-      "date": "2021-09-28",
+      "title": "Diplomatic Bluebook 2022",
+      "organization": "MOFA",
+      "date": "2022-04-12",
       "categories": [
-        "Ciberseguridad",
-        "Estrategia"
+        "Política Exterior"
       ],
-      "description": "Third national cybersecurity strategy.",
-      "url": "https://www.cyber.go.jp/pdf/policy/kihon-s/cs-senryaku2021-en-booklet.pdf",
-      "status": "no_vigente",
+      "description": "Annual report on Japan's foreign policy 2022.",
+      "url": "https://www.mofa.go.jp/policy/other/bluebook/2022/pdf/pdfs/2022_all.pdf",
+      "status": "vigente",
       "lang": "en"
     },
     {
@@ -413,15 +504,15 @@
       "lang": "ja"
     },
     {
-      "title": "Defense of Japan 2021 (White Paper)",
-      "organization": "MOD",
-      "date": "2021-07-13",
+      "title": "Cybersecurity Strategy (2021)",
+      "organization": "NISC",
+      "date": "2021-09-28",
       "categories": [
-        "Defensa",
+        "Ciberseguridad",
         "Estrategia"
       ],
-      "description": "Annual Defense White Paper 2021.",
-      "url": "https://www.mod.go.jp/en/publ/w_paper/wp2021/DOJ2021_Digest_EN.pdf",
+      "description": "Third national cybersecurity strategy.",
+      "url": "https://www.cyber.go.jp/pdf/policy/kihon-s/cs-senryaku2021-en-booklet.pdf",
       "status": "no_vigente",
       "lang": "en"
     },
@@ -439,14 +530,28 @@
       "lang": "ja"
     },
     {
-      "title": "Diplomatic Bluebook 2021",
-      "organization": "MOFA",
-      "date": "2021-04-20",
+      "title": "Defense of Japan 2021 (White Paper)",
+      "organization": "MOD",
+      "date": "2021-07-13",
       "categories": [
-        "Política Exterior"
+        "Defensa",
+        "Estrategia"
       ],
-      "description": "Annual report on Japan's foreign policy 2021.",
-      "url": "https://www.mofa.go.jp/policy/other/bluebook/2021/pdf/pdfs/2021_all.pdf",
+      "description": "Annual Defense White Paper 2021.",
+      "url": "https://www.mod.go.jp/en/publ/w_paper/wp2021/DOJ2021_Digest_EN.pdf",
+      "status": "no_vigente",
+      "lang": "en"
+    },
+    {
+      "title": "Defense of Japan 2021 (White Paper)",
+      "organization": "MOD",
+      "date": "2021-07-01",
+      "categories": [
+        "Defensa",
+        "Estrategia"
+      ],
+      "description": "Annual Defense White Paper 2021.",
+      "url": "https://www.mod.go.jp/en/publ/w_paper/wp_2021.html",
       "status": "no_vigente",
       "lang": "en"
     },
@@ -463,6 +568,18 @@
       "lang": "ja"
     },
     {
+      "title": "Diplomatic Bluebook 2021",
+      "organization": "MOFA",
+      "date": "2021-04-20",
+      "categories": [
+        "Política Exterior"
+      ],
+      "description": "Annual report on Japan's foreign policy 2021.",
+      "url": "https://www.mofa.go.jp/policy/other/bluebook/2021/pdf/pdfs/2021_all.pdf",
+      "status": "no_vigente",
+      "lang": "en"
+    },
+    {
       "title": "Fifth Basic Plan for Gender Equality (2020)",
       "organization": "Gabinete",
       "date": "2020-12-25",
@@ -472,19 +589,6 @@
       ],
       "description": "Fifth national plan for gender equality.",
       "url": "https://www.gender.go.jp/about_danjo/basic_plans/5th/index.html",
-      "status": "no_vigente",
-      "lang": "en"
-    },
-    {
-      "title": "Defense of Japan 2020 (White Paper)",
-      "organization": "MOD",
-      "date": "2020-07-14",
-      "categories": [
-        "Defensa",
-        "Estrategia"
-      ],
-      "description": "Annual Defense White Paper 2020.",
-      "url": "https://www.mod.go.jp/en/publ/w_paper/wp2020/DOJ2020_Digest_EN.pdf",
       "status": "no_vigente",
       "lang": "en"
     },
@@ -502,14 +606,28 @@
       "lang": "ja"
     },
     {
-      "title": "Diplomatic Bluebook 2020",
-      "organization": "MOFA",
-      "date": "2020-05-19",
+      "title": "Defense of Japan 2020 (White Paper)",
+      "organization": "MOD",
+      "date": "2020-07-14",
       "categories": [
-        "Política Exterior"
+        "Defensa",
+        "Estrategia"
       ],
-      "description": "Annual report on Japan's foreign policy 2020.",
-      "url": "https://www.mofa.go.jp/policy/other/bluebook/2020/pdf/pdfs/2020_all.pdf",
+      "description": "Annual Defense White Paper 2020.",
+      "url": "https://www.mod.go.jp/en/publ/w_paper/wp2020/DOJ2020_Digest_EN.pdf",
+      "status": "no_vigente",
+      "lang": "en"
+    },
+    {
+      "title": "Defense of Japan 2020 (White Paper)",
+      "organization": "MOD",
+      "date": "2020-07-01",
+      "categories": [
+        "Defensa",
+        "Estrategia"
+      ],
+      "description": "Annual Defense White Paper 2020.",
+      "url": "https://www.mod.go.jp/en/publ/w_paper/wp_2020.html",
       "status": "no_vigente",
       "lang": "en"
     },
@@ -526,15 +644,14 @@
       "lang": "ja"
     },
     {
-      "title": "Defense of Japan 2019 (White Paper)",
-      "organization": "MOD",
-      "date": "2019-09-27",
+      "title": "Diplomatic Bluebook 2020",
+      "organization": "MOFA",
+      "date": "2020-05-19",
       "categories": [
-        "Defensa",
-        "Estrategia"
+        "Política Exterior"
       ],
-      "description": "Annual Defense White Paper 2019.",
-      "url": "https://www.mod.go.jp/en/publ/w_paper/wp2019/DOJ2019_Digest_EN.pdf",
+      "description": "Annual report on Japan's foreign policy 2020.",
+      "url": "https://www.mofa.go.jp/policy/other/bluebook/2020/pdf/pdfs/2020_all.pdf",
       "status": "no_vigente",
       "lang": "en"
     },
@@ -552,14 +669,28 @@
       "lang": "ja"
     },
     {
-      "title": "Diplomatic Bluebook 2019",
-      "organization": "MOFA",
-      "date": "2019-04-23",
+      "title": "Defense of Japan 2019 (White Paper)",
+      "organization": "MOD",
+      "date": "2019-09-27",
       "categories": [
-        "Política Exterior"
+        "Defensa",
+        "Estrategia"
       ],
-      "description": "Annual report on Japan's foreign policy 2019.",
-      "url": "https://www.mofa.go.jp/policy/other/bluebook/2019/pdf/pdfs/2019_all.pdf",
+      "description": "Annual Defense White Paper 2019.",
+      "url": "https://www.mod.go.jp/en/publ/w_paper/wp2019/DOJ2019_Digest_EN.pdf",
+      "status": "no_vigente",
+      "lang": "en"
+    },
+    {
+      "title": "Defense of Japan 2019 (White Paper)",
+      "organization": "MOD",
+      "date": "2019-07-01",
+      "categories": [
+        "Defensa",
+        "Estrategia"
+      ],
+      "description": "Annual Defense White Paper 2019.",
+      "url": "https://www.mod.go.jp/en/publ/w_paper/wp_2019.html",
       "status": "no_vigente",
       "lang": "en"
     },
@@ -576,15 +707,14 @@
       "lang": "ja"
     },
     {
-      "title": "National Defense Program Guidelines (2018)",
-      "organization": "MOD",
-      "date": "2018-12-18",
+      "title": "Diplomatic Bluebook 2019",
+      "organization": "MOFA",
+      "date": "2019-04-23",
       "categories": [
-        "Estrategia",
-        "Defensa"
+        "Política Exterior"
       ],
-      "description": "Previous defense planning document (replaced 2022).",
-      "url": "https://www.mod.go.jp/j/approach/agenda/guideline/2019/pdf/20181218_e.pdf",
+      "description": "Annual report on Japan's foreign policy 2019.",
+      "url": "https://www.mofa.go.jp/policy/other/bluebook/2019/pdf/pdfs/2019_all.pdf",
       "status": "no_vigente",
       "lang": "en"
     },
@@ -602,15 +732,15 @@
       "lang": "ja"
     },
     {
-      "title": "Defense of Japan 2018 (White Paper)",
+      "title": "National Defense Program Guidelines (2018)",
       "organization": "MOD",
-      "date": "2018-08-28",
+      "date": "2018-12-18",
       "categories": [
-        "Defensa",
-        "Estrategia"
+        "Estrategia",
+        "Defensa"
       ],
-      "description": "Annual Defense White Paper 2018.",
-      "url": "https://www.mod.go.jp/en/publ/w_paper/wp2018/DOJ2018_Full_1130.pdf",
+      "description": "Previous defense planning document (replaced 2022).",
+      "url": "https://www.mod.go.jp/j/approach/agenda/guideline/2019/pdf/20181218_e.pdf",
       "status": "no_vigente",
       "lang": "en"
     },
@@ -628,14 +758,15 @@
       "lang": "ja"
     },
     {
-      "title": "Diplomatic Bluebook 2018",
-      "organization": "MOFA",
-      "date": "2018-07-01",
+      "title": "Defense of Japan 2018 (White Paper)",
+      "organization": "MOD",
+      "date": "2018-08-28",
       "categories": [
-        "Política Exterior"
+        "Defensa",
+        "Estrategia"
       ],
-      "description": "Annual report on Japan's foreign policy 2018.",
-      "url": "https://www.mofa.go.jp/policy/other/bluebook/2018/html/index.html",
+      "description": "Annual Defense White Paper 2018.",
+      "url": "https://www.mod.go.jp/en/publ/w_paper/wp2018/DOJ2018_Full_1130.pdf",
       "status": "no_vigente",
       "lang": "en"
     },
@@ -652,15 +783,27 @@
       "lang": "ja"
     },
     {
-      "title": "Defense of Japan 2017 (White Paper)",
+      "title": "Diplomatic Bluebook 2018",
+      "organization": "MOFA",
+      "date": "2018-07-01",
+      "categories": [
+        "Política Exterior"
+      ],
+      "description": "Annual report on Japan's foreign policy 2018.",
+      "url": "https://www.mofa.go.jp/policy/other/bluebook/2018/html/index.html",
+      "status": "no_vigente",
+      "lang": "en"
+    },
+    {
+      "title": "Defense of Japan 2018 (White Paper)",
       "organization": "MOD",
-      "date": "2017-08-08",
+      "date": "2018-07-01",
       "categories": [
         "Defensa",
         "Estrategia"
       ],
-      "description": "Annual Defense White Paper 2017.",
-      "url": "https://www.mod.go.jp/en/publ/w_paper/wp2017/DOJ2017_Full_1218.pdf",
+      "description": "Annual Defense White Paper 2018.",
+      "url": "https://warp.da.ndl.go.jp/info:ndljp/pid/11591426/www.mod.go.jp/e/publ/w_paper/2018.html",
       "status": "no_vigente",
       "lang": "en"
     },
@@ -678,6 +821,31 @@
       "lang": "ja"
     },
     {
+      "title": "Defense of Japan 2017 (White Paper)",
+      "organization": "MOD",
+      "date": "2017-08-08",
+      "categories": [
+        "Defensa",
+        "Estrategia"
+      ],
+      "description": "Annual Defense White Paper 2017.",
+      "url": "https://www.mod.go.jp/en/publ/w_paper/wp2017/DOJ2017_Full_1218.pdf",
+      "status": "no_vigente",
+      "lang": "en"
+    },
+    {
+      "title": "外交青書2017",
+      "organization": "MOFA",
+      "date": "2017-07-01",
+      "categories": [
+        "Política Exterior"
+      ],
+      "description": "2017年版外交青書（日本語版）。",
+      "url": "https://www.mofa.go.jp/mofaj/gaiko/bluebook/2017/index.html",
+      "status": "no_vigente",
+      "lang": "ja"
+    },
+    {
       "title": "Diplomatic Bluebook 2017",
       "organization": "MOFA",
       "date": "2017-07-01",
@@ -690,15 +858,15 @@
       "lang": "en"
     },
     {
-      "title": "Defense of Japan 2016 (White Paper)",
+      "title": "Defense of Japan 2017 (White Paper)",
       "organization": "MOD",
-      "date": "2016-08-02",
+      "date": "2017-07-01",
       "categories": [
         "Defensa",
         "Estrategia"
       ],
-      "description": "Annual Defense White Paper 2016.",
-      "url": "https://www.mod.go.jp/en/publ/w_paper/wp2016/DOJ2016_Full.pdf",
+      "description": "Annual Defense White Paper 2017.",
+      "url": "https://warp.da.ndl.go.jp/info:ndljp/pid/11591426/www.mod.go.jp/e/publ/w_paper/2017.html",
       "status": "no_vigente",
       "lang": "en"
     },
@@ -716,6 +884,31 @@
       "lang": "ja"
     },
     {
+      "title": "Defense of Japan 2016 (White Paper)",
+      "organization": "MOD",
+      "date": "2016-08-02",
+      "categories": [
+        "Defensa",
+        "Estrategia"
+      ],
+      "description": "Annual Defense White Paper 2016.",
+      "url": "https://www.mod.go.jp/en/publ/w_paper/wp2016/DOJ2016_Full.pdf",
+      "status": "no_vigente",
+      "lang": "en"
+    },
+    {
+      "title": "外交青書2016",
+      "organization": "MOFA",
+      "date": "2016-07-01",
+      "categories": [
+        "Política Exterior"
+      ],
+      "description": "2016年版外交青書（日本語版）。",
+      "url": "https://www.mofa.go.jp/mofaj/gaiko/bluebook/2016/index.html",
+      "status": "no_vigente",
+      "lang": "ja"
+    },
+    {
       "title": "Diplomatic Bluebook 2016",
       "organization": "MOFA",
       "date": "2016-07-01",
@@ -728,15 +921,15 @@
       "lang": "en"
     },
     {
-      "title": "Defense of Japan 2015 (White Paper)",
+      "title": "Defense of Japan 2016 (White Paper)",
       "organization": "MOD",
-      "date": "2015-07-21",
+      "date": "2016-07-01",
       "categories": [
         "Defensa",
         "Estrategia"
       ],
-      "description": "Annual Defense White Paper 2015.",
-      "url": "https://www.mod.go.jp/en/publ/w_paper/wp2015/DOJ2015_Full.pdf",
+      "description": "Annual Defense White Paper 2016.",
+      "url": "https://warp.da.ndl.go.jp/info:ndljp/pid/11591426/www.mod.go.jp/e/publ/w_paper/2016.html",
       "status": "no_vigente",
       "lang": "en"
     },
@@ -754,14 +947,15 @@
       "lang": "ja"
     },
     {
-      "title": "Diplomatic Bluebook 2015",
-      "organization": "MOFA",
-      "date": "2015-07-01",
+      "title": "Defense of Japan 2015 (White Paper)",
+      "organization": "MOD",
+      "date": "2015-07-21",
       "categories": [
-        "Política Exterior"
+        "Defensa",
+        "Estrategia"
       ],
-      "description": "Annual report on Japan's foreign policy 2015.",
-      "url": "https://www.mofa.go.jp/policy/other/bluebook/2015/html/index.html",
+      "description": "Annual Defense White Paper 2015.",
+      "url": "https://www.mod.go.jp/en/publ/w_paper/wp2015/DOJ2015_Full.pdf",
       "status": "no_vigente",
       "lang": "en"
     },
@@ -778,15 +972,27 @@
       "lang": "ja"
     },
     {
-      "title": "Defense of Japan 2014 (White Paper)",
+      "title": "Diplomatic Bluebook 2015",
+      "organization": "MOFA",
+      "date": "2015-07-01",
+      "categories": [
+        "Política Exterior"
+      ],
+      "description": "Annual report on Japan's foreign policy 2015.",
+      "url": "https://www.mofa.go.jp/policy/other/bluebook/2015/html/index.html",
+      "status": "no_vigente",
+      "lang": "en"
+    },
+    {
+      "title": "Defense of Japan 2015 (White Paper)",
       "organization": "MOD",
-      "date": "2014-08-05",
+      "date": "2015-07-01",
       "categories": [
         "Defensa",
         "Estrategia"
       ],
-      "description": "Annual Defense White Paper 2014.",
-      "url": "https://www.mod.go.jp/en/publ/w_paper/wp2014/DOJ2014_Full.pdf",
+      "description": "Annual Defense White Paper 2015.",
+      "url": "https://warp.da.ndl.go.jp/info:ndljp/pid/11591426/www.mod.go.jp/e/publ/w_paper/2015.html",
       "status": "no_vigente",
       "lang": "en"
     },
@@ -804,6 +1010,19 @@
       "lang": "ja"
     },
     {
+      "title": "Defense of Japan 2014 (White Paper)",
+      "organization": "MOD",
+      "date": "2014-08-05",
+      "categories": [
+        "Defensa",
+        "Estrategia"
+      ],
+      "description": "Annual Defense White Paper 2014.",
+      "url": "https://www.mod.go.jp/en/publ/w_paper/wp2014/DOJ2014_Full.pdf",
+      "status": "no_vigente",
+      "lang": "en"
+    },
+    {
       "title": "Diplomatic Bluebook 2014 (Summary)",
       "organization": "MOFA",
       "date": "2014-07-01",
@@ -816,43 +1035,15 @@
       "lang": "en"
     },
     {
-      "title": "National Security Strategy (2013)",
-      "organization": "Kantei",
-      "date": "2013-12-17",
-      "categories": [
-        "Estrategia",
-        "Defensa",
-        "Política Exterior"
-      ],
-      "description": "Japan's first-ever National Security Strategy (replaced by 2022 version).",
-      "url": "https://www.cas.go.jp/jp/siryou/131217anzenhoshou/nss-e.pdf",
-      "status": "no_vigente",
-      "lang": "en"
-    },
-    {
-      "title": "国家安全保障戦略（2013年）",
-      "organization": "Kantei",
-      "date": "2013-12-17",
-      "categories": [
-        "Estrategia",
-        "Defensa",
-        "Política Exterior"
-      ],
-      "description": "日本初の国家安全保障戦略（日本語版）。2022年に改廃。",
-      "url": "https://www.cas.go.jp/jp/siryou/131217anzenhoshou/nss-j.pdf",
-      "status": "no_vigente",
-      "lang": "ja"
-    },
-    {
-      "title": "National Defense Program Guidelines (2013)",
+      "title": "Defense of Japan 2014 (White Paper)",
       "organization": "MOD",
-      "date": "2013-12-17",
+      "date": "2014-07-01",
       "categories": [
-        "Estrategia",
-        "Defensa"
+        "Defensa",
+        "Estrategia"
       ],
-      "description": "NDPG for FY2014 and beyond (replaced by 2018 and 2022 revisions).",
-      "url": "https://www.mod.go.jp/j/approach/agenda/guideline/2014/pdf/20131217_e2.pdf",
+      "description": "Annual Defense White Paper 2014.",
+      "url": "https://warp.da.ndl.go.jp/info:ndljp/pid/11591426/www.mod.go.jp/e/publ/w_paper/2014.html",
       "status": "no_vigente",
       "lang": "en"
     },
@@ -870,15 +1061,43 @@
       "lang": "ja"
     },
     {
-      "title": "Defense of Japan 2013 (White Paper)",
-      "organization": "MOD",
-      "date": "2013-07-26",
+      "title": "国家安全保障戦略（2013年）",
+      "organization": "Kantei",
+      "date": "2013-12-17",
       "categories": [
+        "Estrategia",
         "Defensa",
-        "Estrategia"
+        "Política Exterior"
       ],
-      "description": "Annual Defense White Paper 2013.",
-      "url": "https://www.mod.go.jp/en/publ/w_paper/wp2013/DOJ2013_Full.pdf",
+      "description": "日本初の国家安全保障戦略（日本語版）。2022年に改廃。",
+      "url": "https://www.cas.go.jp/jp/siryou/131217anzenhoshou/nss-j.pdf",
+      "status": "no_vigente",
+      "lang": "ja"
+    },
+    {
+      "title": "National Security Strategy (2013)",
+      "organization": "Kantei",
+      "date": "2013-12-17",
+      "categories": [
+        "Estrategia",
+        "Defensa",
+        "Política Exterior"
+      ],
+      "description": "Japan's first-ever National Security Strategy.",
+      "url": "https://www.cas.go.jp/jp/siryou/131217anzenhoshou/nss-e.pdf",
+      "status": "no_vigente",
+      "lang": "en"
+    },
+    {
+      "title": "National Defense Program Guidelines (2013)",
+      "organization": "MOD",
+      "date": "2013-12-17",
+      "categories": [
+        "Estrategia",
+        "Defensa"
+      ],
+      "description": "NDPG for FY2014 and beyond.",
+      "url": "https://www.mod.go.jp/j/approach/agenda/guideline/2014/pdf/20131217_e2.pdf",
       "status": "no_vigente",
       "lang": "en"
     },
@@ -896,6 +1115,19 @@
       "lang": "ja"
     },
     {
+      "title": "Defense of Japan 2013 (White Paper)",
+      "organization": "MOD",
+      "date": "2013-07-26",
+      "categories": [
+        "Defensa",
+        "Estrategia"
+      ],
+      "description": "Annual Defense White Paper 2013.",
+      "url": "https://www.mod.go.jp/en/publ/w_paper/wp2013/DOJ2013_Full.pdf",
+      "status": "no_vigente",
+      "lang": "en"
+    },
+    {
       "title": "Diplomatic Bluebook 2013 (Summary)",
       "organization": "MOFA",
       "date": "2013-07-01",
@@ -904,19 +1136,6 @@
       ],
       "description": "Summary of Japan's foreign policy activities 2013.",
       "url": "https://www.mofa.go.jp/policy/other/bluebook/2013/html/index.html",
-      "status": "no_vigente",
-      "lang": "en"
-    },
-    {
-      "title": "Defense of Japan 2012 (White Paper)",
-      "organization": "MOD",
-      "date": "2012-07-31",
-      "categories": [
-        "Defensa",
-        "Estrategia"
-      ],
-      "description": "Annual Defense White Paper 2012.",
-      "url": "https://www.mod.go.jp/en/publ/w_paper/wp2012/DOJ2012_Full.pdf",
       "status": "no_vigente",
       "lang": "en"
     },
@@ -934,6 +1153,19 @@
       "lang": "ja"
     },
     {
+      "title": "Defense of Japan 2012 (White Paper)",
+      "organization": "MOD",
+      "date": "2012-07-31",
+      "categories": [
+        "Defensa",
+        "Estrategia"
+      ],
+      "description": "Annual Defense White Paper 2012.",
+      "url": "https://www.mod.go.jp/en/publ/w_paper/wp2012/DOJ2012_Full.pdf",
+      "status": "no_vigente",
+      "lang": "en"
+    },
+    {
       "title": "Diplomatic Bluebook 2012 (Summary)",
       "organization": "MOFA",
       "date": "2012-07-01",
@@ -942,19 +1174,6 @@
       ],
       "description": "Summary of Japan's foreign policy activities 2012.",
       "url": "https://www.mofa.go.jp/policy/other/bluebook/2012/html/index.html",
-      "status": "no_vigente",
-      "lang": "en"
-    },
-    {
-      "title": "Defense of Japan 2011 (White Paper)",
-      "organization": "MOD",
-      "date": "2011-08-02",
-      "categories": [
-        "Defensa",
-        "Estrategia"
-      ],
-      "description": "Annual Defense White Paper 2011.",
-      "url": "https://www.mod.go.jp/en/publ/w_paper/wp2011/DOJ2011_Full.pdf",
       "status": "no_vigente",
       "lang": "en"
     },
@@ -972,6 +1191,19 @@
       "lang": "ja"
     },
     {
+      "title": "Defense of Japan 2011 (White Paper)",
+      "organization": "MOD",
+      "date": "2011-08-02",
+      "categories": [
+        "Defensa",
+        "Estrategia"
+      ],
+      "description": "Annual Defense White Paper 2011.",
+      "url": "https://www.mod.go.jp/en/publ/w_paper/wp2011/DOJ2011_Full.pdf",
+      "status": "no_vigente",
+      "lang": "en"
+    },
+    {
       "title": "Diplomatic Bluebook 2011 (Summary)",
       "organization": "MOFA",
       "date": "2011-07-01",
@@ -984,19 +1216,6 @@
       "lang": "en"
     },
     {
-      "title": "National Defense Program Guidelines (2010)",
-      "organization": "MOD",
-      "date": "2010-12-17",
-      "categories": [
-        "Estrategia",
-        "Defensa"
-      ],
-      "description": "NDPG for FY2011 and beyond. Introduced 'Dynamic Defense Force' concept (replaced by 2013 revision).",
-      "url": "https://www.mod.go.jp/j/approach/agenda/guideline/2011/pdf/20101217_e.pdf",
-      "status": "no_vigente",
-      "lang": "en"
-    },
-    {
       "title": "防衛計画の大綱（2010年）",
       "organization": "MOD",
       "date": "2010-12-17",
@@ -1004,21 +1223,21 @@
         "Estrategia",
         "Defensa"
       ],
-      "description": "平成23年度以降に係る防衛計画の大綱（日本語版）。「動的防衛力」概念を初導入。2013年改廃。",
+      "description": "「動的防衛力」概念を初導入。2013年改廃。",
       "url": "https://www.mod.go.jp/j/approach/agenda/guideline/2011/pdf/20101217.pdf",
       "status": "no_vigente",
       "lang": "ja"
     },
     {
-      "title": "Defense of Japan 2010 (White Paper)",
+      "title": "National Defense Program Guidelines (2010)",
       "organization": "MOD",
-      "date": "2010-08-10",
+      "date": "2010-12-17",
       "categories": [
-        "Defensa",
-        "Estrategia"
+        "Estrategia",
+        "Defensa"
       ],
-      "description": "Annual Defense White Paper 2010.",
-      "url": "https://www.mod.go.jp/en/publ/w_paper/wp2010/DOJ2010_Full.pdf",
+      "description": "Introduced 'Dynamic Defense Force' concept.",
+      "url": "https://www.mod.go.jp/j/approach/agenda/guideline/2011/pdf/20101217_e.pdf",
       "status": "no_vigente",
       "lang": "en"
     },
@@ -1034,6 +1253,19 @@
       "url": "https://www.mod.go.jp/j/press/wp/wp2010/index.html",
       "status": "no_vigente",
       "lang": "ja"
+    },
+    {
+      "title": "Defense of Japan 2010 (White Paper)",
+      "organization": "MOD",
+      "date": "2010-08-10",
+      "categories": [
+        "Defensa",
+        "Estrategia"
+      ],
+      "description": "Annual Defense White Paper 2010.",
+      "url": "https://www.mod.go.jp/en/publ/w_paper/wp2010/DOJ2010_Full.pdf",
+      "status": "no_vigente",
+      "lang": "en"
     },
     {
       "title": "Diplomatic Bluebook 2010 (Summary)",

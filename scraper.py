@@ -180,27 +180,26 @@ def discover_gender_plans():
 
 
 def discover_defense_white_papers():
+    """Solo actúa si hay un año nuevo no cubierto por el corpus curado."""
     index_url = "https://www.mod.go.jp/en/publ/w_paper/index.html"
     try:
         soup = fetch_soup(index_url)
     except requests.RequestException:
         return
+    years_found = set()
     for a in soup.find_all("a", href=True):
-        text = " ".join(a.get_text(" ", strip=True).split())
-        href = a["href"]
-        blob = f"{text} {href}"
-        m = re.search(r"(20\d{2})", blob)
+        href = a["href"].lower()
+        # Solo PDFs principales: digest_en o en_full — ignorar html, CH, reference, WARP
+        if not re.search(r"wp\d{4}/doj\d{4}_(digest_en|en_full)\.pdf", href):
+            continue
+        m = re.search(r"(20\d{2})", href)
         if not m:
             continue
         year = int(m.group(1))
-        # Saltar años ya en el corpus curado O ya procesados en este run
-        if year < 2010 or year in COVERED_DEFENSE_WP:
+        if year < 2010 or year in COVERED_DEFENSE_WP or year in years_found:
             continue
-        # Solo aceptar PDFs principales (Digest o Full), no Reference ni CH
-        href_lower = href.lower()
-        if not any(k in href_lower for k in ["digest_en", "en_full", "w_paper/wp"]):
-            continue
-        full_url = urljoin(index_url, href)
+        years_found.add(year)
+        full_url = urljoin(index_url, a["href"])
         add_document(
             f"Defense of Japan {year} (White Paper)",
             "MOD", f"{year}-07-01",
@@ -209,8 +208,6 @@ def discover_defense_white_papers():
             full_url,
             wp_status(year), "en",
         )
-        # Marcar el año como cubierto para no procesar más URLs de ese año
-        COVERED_DEFENSE_WP.add(year)
 
 
 def discover_diplomatic_bluebooks():

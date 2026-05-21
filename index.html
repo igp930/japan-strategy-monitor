@@ -8,14 +8,20 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
       background: #0d1117;
       color: #c9d1d9;
       padding: 40px 20px;
     }
 
-    .container { max-width: 1200px; margin: 0 auto; }
-    header { margin-bottom: 40px; }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    header {
+      margin-bottom: 40px;
+    }
 
     h1 {
       font-size: 2.5em;
@@ -69,7 +75,7 @@
       border-radius: 6px;
       padding: 20px;
       margin-bottom: 20px;
-      transition: transform 0.2s;
+      transition: transform 0.2s, border-color 0.2s;
     }
 
     .doc-card:hover {
@@ -86,6 +92,7 @@
       color: #58a6ff;
       margin-bottom: 10px;
       font-weight: 600;
+      line-height: 1.35;
     }
 
     .doc-meta {
@@ -102,12 +109,12 @@
       font-size: 0.8em;
       font-weight: 500;
       border: 1px solid transparent;
+      white-space: nowrap;
     }
 
     .badge-org  { background: #23863620; color: #3fb950; border-color: #3fb95040; }
     .badge-cat  { background: #1f6feb20; color: #58a6ff; border-color: #58a6ff40; }
     .badge-date { background: #a371f720; color: #a371f7; border-color: #a371f740; }
-    .badge-hist { background: #8b949e20; color: #8b949e; border-color: #8b949e40; }
     .badge-ja   { background: #e3b34120; color: #e3b341; border-color: #e3b34140; font-weight: 700; }
 
     .doc-desc {
@@ -138,12 +145,20 @@
     }
 
     .tag-novigente {
-      background: #dc3545;
+      display: inline-block;
+      background: #da3633;
       color: white;
       padding: 2px 8px;
-      border-radius: 3px;
+      border-radius: 4px;
       font-size: 0.75rem;
       margin-left: 8px;
+      vertical-align: middle;
+    }
+
+    @media (max-width: 700px) {
+      body { padding: 24px 14px; }
+      h1 { font-size: 2em; }
+      .controls { padding: 16px; }
     }
   </style>
 </head>
@@ -156,7 +171,12 @@
 
     <div class="controls">
       <div class="search-box">
-        <input type="text" id="searchInput" placeholder="Buscar documentos por título o descripción..." aria-label="Buscar documentos por título o descripción...">
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Buscar documentos por título o descripción..."
+          aria-label="Buscar documentos por título o descripción..."
+        >
       </div>
 
       <div class="filter-box">
@@ -197,88 +217,93 @@
   <script>
     let allDocuments = [];
 
-    async function fetchData() {
-      try {
-        const response = await fetch('documents.json?t=' + Date.now());
-        const data = await response.json();
-        allDocuments = data.documents;
-
-        document.getElementById('lastUpdated').textContent =
-          'Última actualización: ' + new Date(data.last_updated).toLocaleString();
-
-        renderDocuments(allDocuments);
-      } catch (e) {
-        document.getElementById('docList').innerHTML =
-          '<p class="no-results">Error al cargar datos.</p>';
-      }
-    }
-
     function normalizeCategories(doc) {
       if (Array.isArray(doc.categories)) return doc.categories;
       if (doc.category) return [doc.category];
       return [];
     }
 
-    function renderDocuments(docs) {
-      const container = document.getElementById('docList');
+    async function fetchData() {
+      try {
+        const response = await fetch("documents.json?t=" + Date.now(), { cache: "no-store" });
+        if (!response.ok) throw new Error("No se pudo cargar documents.json");
 
-      if (docs.length === 0) {
+        const data = await response.json();
+        allDocuments = Array.isArray(data.documents) ? data.documents : [];
+
+        document.getElementById("lastUpdated").textContent =
+          "Última actualización: " + new Date(data.last_updated).toLocaleString();
+
+        renderDocuments(allDocuments);
+      } catch (error) {
+        document.getElementById("docList").innerHTML =
+          '<p class="no-results">Error al cargar datos.</p>';
+        console.error(error);
+      }
+    }
+
+    function renderDocuments(docs) {
+      const container = document.getElementById("docList");
+
+      if (!docs.length) {
         container.innerHTML = '<p class="no-results">No se encontraron documentos.</p>';
         return;
       }
 
       container.innerHTML = docs.map(doc => {
-        const isJa = doc.lang === 'ja';
+        const isJa = doc.lang === "ja";
         const categories = normalizeCategories(doc);
 
-        const categoryBadges = categories.map(cat => {
-          const badgeClass = ['Archivo Histórico'].includes(cat) ? 'badge-hist' : 'badge-cat';
-          return `<span class="badge ${badgeClass}">${cat}</span>`;
-        }).join('');
+        const categoryBadges = categories.map(cat =>
+          `<span class="badge badge-cat">${escapeHtml(cat)}</span>`
+        ).join("");
 
-        const langBadge = isJa ? '<span class="badge badge-ja">🇯🇵 日本語</span>' : '';
-        const statusTag = doc.status === 'no_vigente'
+        const langBadge = isJa
+          ? '<span class="badge badge-ja">🇯🇵 日本語</span>'
+          : "";
+
+        const statusTag = doc.status === "no_vigente"
           ? '<span class="tag-novigente">No vigente</span>'
-          : '';
+          : "";
 
         return `
-          <div class="doc-card${isJa ? ' lang-ja' : ''}" data-lang="${isJa ? 'ja' : 'en'}" data-status="${doc.status}">
-            <h2 class="doc-title">${doc.title}${statusTag}</h2>
+          <article class="doc-card${isJa ? " lang-ja" : ""}">
+            <h2 class="doc-title">${escapeHtml(doc.title || "")}${statusTag}</h2>
             <div class="doc-meta">
-              <span class="badge badge-org">${doc.organization}</span>
+              <span class="badge badge-org">${escapeHtml(doc.organization || "")}</span>
               ${categoryBadges}
-              <span class="badge badge-date">${doc.date}</span>
+              <span class="badge badge-date">${escapeHtml(doc.date || "")}</span>
               ${langBadge}
             </div>
-            <p class="doc-desc">${doc.description || ''}</p>
-            <a href="${doc.url}" target="_blank" rel="noopener noreferrer" class="doc-link">Ver Documento →</a>
-          </div>
+            <p class="doc-desc">${escapeHtml(doc.description || "")}</p>
+            <a href="${escapeAttribute(doc.url || "#")}" target="_blank" rel="noopener noreferrer" class="doc-link">Ver Documento →</a>
+          </article>
         `;
-      }).join('');
+      }).join("");
     }
 
     function filterDocs() {
-      const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-      const category   = document.getElementById('categoryFilter').value;
-      const lang       = document.getElementById('langFilter').value;
-      const status     = document.getElementById('statusFilter').value;
+      const searchTerm = document.getElementById("searchInput").value.toLowerCase().trim();
+      const category = document.getElementById("categoryFilter").value;
+      const lang = document.getElementById("langFilter").value;
+      const status = document.getElementById("statusFilter").value;
 
       const filtered = allDocuments.filter(doc => {
         const categories = normalizeCategories(doc);
-        const docLang = doc.lang === 'ja' ? 'ja' : 'en';
+        const docLang = doc.lang === "ja" ? "ja" : "en";
 
         const matchesSearch =
-          doc.title.toLowerCase().includes(searchTerm) ||
-          (doc.description && doc.description.toLowerCase().includes(searchTerm));
+          (doc.title || "").toLowerCase().includes(searchTerm) ||
+          (doc.description || "").toLowerCase().includes(searchTerm);
 
         const matchesCategory =
-          category === 'all' || categories.includes(category);
+          category === "all" || categories.includes(category);
 
         const matchesLang =
-          lang === 'all' || docLang === lang;
+          lang === "all" || docLang === lang;
 
         const matchesStatus =
-          status === 'all' || doc.status === status;
+          status === "all" || doc.status === status;
 
         return matchesSearch && matchesCategory && matchesLang && matchesStatus;
       });
@@ -286,61 +311,25 @@
       renderDocuments(filtered);
     }
 
-    document.getElementById('searchInput').addEventListener('input', filterDocs);
-    document.getElementById('categoryFilter').addEventListener('change', filterDocs);
-    document.getElementById('langFilter').addEventListener('change', filterDocs);
-    document.getElementById('statusFilter').addEventListener('change', filterDocs);
+    function escapeHtml(str) {
+      return String(str)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#39;");
+    }
+
+    function escapeAttribute(str) {
+      return String(str).replaceAll('"', "&quot;");
+    }
+
+    document.getElementById("searchInput").addEventListener("input", filterDocs);
+    document.getElementById("categoryFilter").addEventListener("change", filterDocs);
+    document.getElementById("langFilter").addEventListener("change", filterDocs);
+    document.getElementById("statusFilter").addEventListener("change", filterDocs);
 
     fetchData();
   </script>
 </body>
 </html>
-documents.json
-Aquí no te pego las 80+ entradas completas porque sería muy largo, pero esta es la estructura correcta que debes usar a partir de ahora: categories como lista, no category como string.
-
-json
-{
-  "last_updated": "2026-05-21T07:12:00",
-  "documents": [
-    {
-      "title": "National Security Strategy of Japan (2022)",
-      "organization": "Kantei",
-      "date": "2022-12-16",
-      "categories": ["Estrategia", "Defensa", "Política Exterior"],
-      "description": "Supreme national security document revised Dec 2022.",
-      "url": "https://www.cas.go.jp/jp/siryou/221216anzenhoshou/nss-e.pdf",
-      "status": "vigente",
-      "lang": "en"
-    },
-    {
-      "title": "国家安全保障戦略（2022年）",
-      "organization": "Kantei",
-      "date": "2022-12-16",
-      "categories": ["Estrategia", "Defensa", "Política Exterior"],
-      "description": "2022年12月改定の国家安全保障戦略（日本語版）。",
-      "url": "https://www.cas.go.jp/jp/siryou/221216anzenhoshou/nss-j.pdf",
-      "status": "vigente",
-      "lang": "ja"
-    },
-    {
-      "title": "Economic Security Promotion Act (2022)",
-      "organization": "Legislación",
-      "date": "2022-05-11",
-      "categories": ["Seguridad Económica", "Estrategia"],
-      "description": "Legal framework for economic security.",
-      "url": "https://www.meti.go.jp/policy/economy/economic_security/index.html",
-      "status": "vigente",
-      "lang": "en"
-    },
-    {
-      "title": "Defense of Japan 2025 (White Paper)",
-      "organization": "MOD",
-      "date": "2025-07-14",
-      "categories": ["Defensa", "Estrategia"],
-      "description": "Latest Defense White Paper 2025.",
-      "url": "https://www.mod.go.jp/j/press/wp/wp2025/pdf/DOJ2025_Digest_EN.pdf",
-      "status": "vigente",
-      "lang": "en"
-    }
-  ]
-}

@@ -193,9 +193,12 @@ def discover_defense_white_papers():
         if not m:
             continue
         year = int(m.group(1))
+        # Saltar años ya en el corpus curado O ya procesados en este run
         if year < 2010 or year in COVERED_DEFENSE_WP:
             continue
-        if "wp" not in href.lower() and "defense of japan" not in blob.lower():
+        # Solo aceptar PDFs principales (Digest o Full), no Reference ni CH
+        href_lower = href.lower()
+        if not any(k in href_lower for k in ["digest_en", "en_full", "w_paper/wp"]):
             continue
         full_url = urljoin(index_url, href)
         add_document(
@@ -206,6 +209,7 @@ def discover_defense_white_papers():
             full_url,
             wp_status(year), "en",
         )
+        # Marcar el año como cubierto para no procesar más URLs de ese año
         COVERED_DEFENSE_WP.add(year)
 
 
@@ -214,10 +218,10 @@ def discover_diplomatic_bluebooks():
     for year in range(2010, current_year + 1):
         if year in COVERED_BLUEBOOK:
             continue
+        # Probar primero el PDF completo; si no existe, la página HTML
         for candidate in [
-            f"https://www.mofa.go.jp/policy/other/bluebook/{year}/en_html/index.html",
-            f"https://www.mofa.go.jp/policy/other/bluebook/{year}/html/index.html",
             f"https://www.mofa.go.jp/policy/other/bluebook/{year}/pdf/pdfs/{year}_all.pdf",
+            f"https://www.mofa.go.jp/policy/other/bluebook/{year}/en_html/index.html",
         ]:
             try:
                 r = requests.get(candidate, headers=HEADERS, timeout=TIMEOUT)
@@ -231,7 +235,7 @@ def discover_diplomatic_bluebooks():
                         bb_status(year), "en",
                     )
                     COVERED_BLUEBOOK.add(year)
-                    break
+                    break  # Un solo hit por año
             except requests.RequestException:
                 pass
 

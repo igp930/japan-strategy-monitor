@@ -766,32 +766,13 @@ def main():
             print(f"Latest years detected: {latest_years}")
             
             # Actualizar constantes globales si se detectan años más recientes
-            global LATEST_DEFENSE_WP, LATEST_BLUEBOOK, LATEST_NIDS_CHINA
-            if latest_years.get("defense_wp", 0) > LATEST_DEFENSE_WP:
-                print(f"Updating LATEST_DEFENSE_WP: {LATEST_DEFENSE_WP} -> {latest_years['defense_wp']}")
-                LATEST_DEFENSE_WP = latest_years["defense_wp"]
-            if latest_years.get("bluebook", 0) > LATEST_BLUEBOOK:
-                print(f"Updating LATEST_BLUEBOOK: {LATEST_BLUEBOOK} -> {latest_years['bluebook']}")
-                LATEST_BLUEBOOK = latest_years["bluebook"]
-            if latest_years.get("nids_china", 0) > LATEST_NIDS_CHINA:
-                print(f"Updating LATEST_NIDS_CHINA: {LATEST_NIDS_CHINA} -> {latest_years['nids_china']}")
-                LATEST_NIDS_CHINA = latest_years["nids_china"]
-                
-            print("Auto-discovery completed successfully.")
-        except Exception as e:
-            print(f"Auto-discovery failed: {e}")
-            print("Continuing with manual corpus only.")
-
-    data = {
-        "last_updated": datetime.now(timezone.utc).isoformat(),
-        "documents": sorted(documents, key=lambda x: (x["date"], x["title"]), reverse=True),
-    }
-
-    with open("documents.json", "w", encoding="utf-8") as f:
-        json.dump(data, f, ensure_ascii=False, indent=2)
-
-    print(f"Generated documents.json with {len(data['documents'])} documents.")
-
-
-if __name__ == "__main__":
-    main()
+            # Ejecutar scrapers del auto_discoverer
+            all_docs = []
+            all_docs.extend(auto_discoverer.discover_defense_white_papers())
+            all_docs.extend(auto_discoverer.discover_diplomatic_bluebooks())
+            all_docs.extend(auto_discoverer.discover_nids_china_reports())
+            all_docs.extend(auto_discoverer.discover_oda_white_papers())
+            
+            # Obtener los años más recientes de los documentos descubiertos
+            latest_years = auto_discoverer.get_latest_years(all_docs)
+            print(f"Latest years detected: {latest_years}")

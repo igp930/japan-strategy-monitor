@@ -655,8 +655,22 @@ def add_existing_corpus():
          "url": "https://www.gender.go.jp/about_danjo/basic_plans/6th/pdf/setumei-eng.pdf",
          "status": "vigente", "lang": "en"},
 
+
+
         {"title": "第6次男女共同参画基本計画（2026年）", "organization": "Gabinete", "date": "2026-03-13",
+         
          "categories": ["Género/LGBT+", "Estrategia"],
+                 {"title": "Basic Plan for Promoting Understanding of Sexual Orientation and Gender Identity Diversity (2026)", "organization": "Gabinete", "date": "2026-06-16",
+                          "categories": ["Género/LGBT+"],
+                          "description": "First national basic plan under the LGBT Understanding Promotion Law.",
+                          "url": "https://www8.cao.go.jp/rikaizoshin/kihon/pdf/honbun.pdf",
+                          "status": "vigente", "lang": "en"},
+
+                 {"title": "性的指向及びジェンダーアイデンティティの多様性に関する国民の理解の増進に関する基本的な計画（2026年）", "organization": "Gabinete", "date": "2026-06-16",
+                          "categories": ["Género/LGBT+"],
+                          "description": "LGBT理解増進法に基づく初の基本計画。",
+                          "url": "https://www8.cao.go.jp/rikaizoshin/kihon/pdf/honbun.pdf",
+                          "status": "vigente", "lang": "ja"},
          "description": "第6次男女共同参画基本計画。現行版。",
          "url": "https://www.gender.go.jp/about_danjo/basic_plans/6th/index.html",
          "status": "vigente", "lang": "ja"},

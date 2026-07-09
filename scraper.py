@@ -755,16 +755,11 @@ def discover_diplomatic_bluebooks():
 
 def main():
     add_existing_corpus()
-    discover_defense_white_papers()
-    discover_diplomatic_bluebooks()
         
     # Auto-discovery: buscar nuevos documentos automáticamente
     if AUTO_DISCOVERY_ENABLED:
         print("\n=== Running auto-discovery ===")
         try:
-            latest_years = auto_discoverer.get_latest_years()
-            print(f"Latest years detected: {latest_years}")
-            
             # Actualizar constantes globales si se detectan años más recientes
             # Ejecutar scrapers del auto_discoverer
             all_docs = []
@@ -776,3 +771,32 @@ def main():
             # Obtener los años más recientes de los documentos descubiertos
             latest_years = auto_discoverer.get_latest_years(all_docs)
             print(f"Latest years detected: {latest_years}")
+
+            # Agregar documentos descubiertos al corpus global
+            for doc in all_docs:
+                                add_document(
+                                                        doc['title'],
+                                                        doc['organization'],
+                                                        f"{doc['year']}-01-01",
+                                                        [doc['category']],
+                                                        doc.get('description', ''),
+                                                        doc['url'],
+                                                        status="vigente",
+                                                        lang=doc['lang']
+                                                    )
+
+            print(f"\nAdded {len(all_docs)} documents from auto-discovery")
+
+        except Exception as e:
+            print(f"Error in auto-discovery: {e}")
+            print("Continuing with manual corpus only")
+
+    # Guardar documentos en documents.json
+    with open("documents.json", "w", encoding="utf-8") as f:
+                json.dump(documents, f, indent=4, ensure_ascii=False)
+
+    print(f"\n=== Saved {len(documents)} documents to documents.json ===")
+
+
+if __name__ == "__main__":
+        main()

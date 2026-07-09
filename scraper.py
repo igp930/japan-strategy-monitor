@@ -12,8 +12,10 @@ TIMEOUT = 30
 documents = []
 seen = set()
 
-LATEST_DEFENSE_WP = 2025
-LATEST_BLUEBOOK   = 2025
+LATEST_DEFENSE_WP = 2026
+LATEST_BLUEBOOK   = 2026
+LATEST_NIDS_CHINA = 2026
+
 
 def fetch_soup(url):
     r = requests.get(url, headers=HEADERS, timeout=TIMEOUT)
@@ -45,6 +47,9 @@ def wp_status(year):
 
 def bb_status(year):
     return "vigente" if year == LATEST_BLUEBOOK else "no_vigente"
+
+def nids_status(year):
+    return "vigente" if year == LATEST_NIDS_CHINA else "no_vigente"
 
 
 def add_existing_corpus():
@@ -375,7 +380,17 @@ def add_existing_corpus():
          "categories": ["Política Exterior"],
          "description": "Annual report on Japan's foreign policy 2025. Current edition.",
          "url": "https://www.mofa.go.jp/policy/other/bluebook/2025/pdf/pdfs/2025_all.pdf",
+                 {"title": "Diplomatic Bluebook 2026 (Summary)", "organization": "MOFA", "date": "2026-04-10",
+         "categories": ["Política Exterior"],
+         "description": "Summary of Japan's foreign policy 2025. Current edition.",
+         "url": "https://www.mofa.go.jp/files/101051330.pdf",
          "status": "vigente", "lang": "en"},
+        {"title": "外交青書2026", "organization": "MOFA", "date": "2026-04-10",
+         "categories": ["Política Exterior"],
+         "description": "2026年版外交青書（日本語版）。現行版。",
+         "url": "https://www.mofa.go.jp/mofaj/gaiko/bluebook/2026/index.html",
+         "status": "vigente", "lang": "ja"},
+"status": "vigente", "lang": "en"},
 
         {"title": "外交青書2025", "organization": "MOFA", "date": "2025-09-30",
          "categories": ["Política Exterior"],
@@ -593,12 +608,22 @@ def add_existing_corpus():
          "description": "Annual ODA white paper 2024. Current edition.",
          "url": "https://www.mofa.go.jp/policy/oda/white/2024/index.html",
          "status": "vigente", "lang": "en"},
+            {"title": "White Paper on Development Cooperation 2025", "organization": "MOFA", "date": "2026-03-14",
+                  "categories": ["Cooperación Internacional", "Politica Exterior"],
+                  "description": "Annual ODA white paper 2025. Current edition.",
+                  "url": "https://www.mofa.go.jp/policy/oda/white/2025/index.html",
+                  "status": "vigente", "lang": "en"},
 
         {"title": "NIDS China Security Report 2025", "organization": "NIDS", "date": "2024-12-16",
          "categories": ["Inteligencia", "Defensa", "Política Exterior"],
          "description": "Annual analysis of China's military trends. Current edition.",
          "url": "https://www.nids.mod.go.jp/english/publication/chinareport/index.html",
          "status": "vigente", "lang": "en"},
+            {"title": "NIDS China Security Report 2026", "organization": "NIDS", "date": "2025-12-16",
+                  "categories": ["Inteligencia", "Defensa", "Politica Exterior"],
+                  "description": "Imbalanced Partnerships: China, Russia, and North Korea. Current edition.",
+                  "url": "https://www.nids.mod.go.jp/english/publication/chinareport/index.html",
+                  "status": "vigente", "lang": "en"},
 
         {"title": "NIDS China Security Report 2024", "organization": "NIDS", "date": "2023-12-15",
          "categories": ["Inteligencia", "Defensa", "Política Exterior"],

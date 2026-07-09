@@ -387,6 +387,7 @@ def add_existing_corpus():
          "categories": ["Política Exterior"],
          "description": "Annual report on Japan's foreign policy 2025. Current edition.",
          "url": "https://www.mofa.go.jp/policy/other/bluebook/2025/pdf/pdfs/2025_all.pdf",
+                 "status": "vigente", "lang": "en"},
                  {"title": "Diplomatic Bluebook 2026 (Summary)", "organization": "MOFA", "date": "2026-04-10",
          "categories": ["Política Exterior"],
          "description": "Summary of Japan's foreign policy 2025. Current edition.",
@@ -397,7 +398,6 @@ def add_existing_corpus():
          "description": "2026年版外交青書（日本語版）。現行版。",
          "url": "https://www.mofa.go.jp/mofaj/gaiko/bluebook/2026/index.html",
          "status": "vigente", "lang": "ja"},
-"status": "vigente", "lang": "en"},
 
         {"title": "外交青書2025", "organization": "MOFA", "date": "2025-09-30",
          "categories": ["Política Exterior"],

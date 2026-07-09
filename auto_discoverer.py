@@ -308,6 +308,12 @@ def discover_oda_white_papers():
     
     # English version
     url_en = "https://www.mofa.go.jp/policy/oda/white/index.html"
+
+    # Note: Cybersecurity Strategy, FOIP, Economic Security, and Gender Equality documents
+# have stable URLs and are infrequently updated, so they are kept in the manual corpus.
+# If needed, similar scraper functions can be added here following the same pattern.
+
+
     try:
         soup = fetch_soup(url_en)
         for link in soup.find_all("a", href=True):

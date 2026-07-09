@@ -6,6 +6,13 @@ from urllib.parse import urljoin
 import requests
 from bs4 import BeautifulSoup
 
+try:
+    import auto_discoverer
+    AUTO_DISCOVERY_ENABLED = True
+except ImportError:
+    AUTO_DISCOVERY_ENABLED = False
+    print("Warning: auto_discoverer.py not found. Using manual corpus only.")
+
 HEADERS = {"User-Agent": "Mozilla/5.0 (compatible; JapanStrategyMonitor/2.0)"}
 TIMEOUT = 30
 
@@ -750,6 +757,30 @@ def main():
     add_existing_corpus()
     discover_defense_white_papers()
     discover_diplomatic_bluebooks()
+        
+    # Auto-discovery: buscar nuevos documentos automáticamente
+    if AUTO_DISCOVERY_ENABLED:
+        print("\n=== Running auto-discovery ===")
+        try:
+            latest_years = auto_discoverer.get_latest_years()
+            print(f"Latest years detected: {latest_years}")
+            
+            # Actualizar constantes globales si se detectan años más recientes
+            global LATEST_DEFENSE_WP, LATEST_BLUEBOOK, LATEST_NIDS_CHINA
+            if latest_years.get("defense_wp", 0) > LATEST_DEFENSE_WP:
+                print(f"Updating LATEST_DEFENSE_WP: {LATEST_DEFENSE_WP} -> {latest_years['defense_wp']}")
+                LATEST_DEFENSE_WP = latest_years["defense_wp"]
+            if latest_years.get("bluebook", 0) > LATEST_BLUEBOOK:
+                print(f"Updating LATEST_BLUEBOOK: {LATEST_BLUEBOOK} -> {latest_years['bluebook']}")
+                LATEST_BLUEBOOK = latest_years["bluebook"]
+            if latest_years.get("nids_china", 0) > LATEST_NIDS_CHINA:
+                print(f"Updating LATEST_NIDS_CHINA: {LATEST_NIDS_CHINA} -> {latest_years['nids_china']}")
+                LATEST_NIDS_CHINA = latest_years["nids_china"]
+                
+            print("Auto-discovery completed successfully.")
+        except Exception as e:
+            print(f"Auto-discovery failed: {e}")
+            print("Continuing with manual corpus only.")
 
     data = {
         "last_updated": datetime.now(timezone.utc).isoformat(),

@@ -588,15 +588,25 @@ def add_existing_corpus():
         {"title": "New Plan for Free and Open Indo-Pacific (2023)", "organization": "MOFA", "date": "2023-03-20",
          "categories": ["Política Exterior", "Estrategia"],
          "description": "Japan's updated FOIP vision. Current version.",
-         "url": "https://www.mofa.go.jp/files/100477153.pdf",
+        "status": "no_vigente", "lang": "en"},
+                 {"title": "Updated Free and Open Indo-Pacific (2026)", "organization": "MOFA", "date": "2026-05-02",
+                          "categories": ["Política Exterior", "Estrategia"],
+                          "description": "Updated FOIP vision for resilience and prosperity. Current version.",
+                          "url": "https://www.mofa.go.jp/files/101022859.pdf",
+                          "status": "vigente", "lang": "en"},
+
+                 {"title": "「自由で開かれたインド太平洋」の更新版（2026年）", "organization": "MOFA", "date": "2026-05-02",
+                          "categories": ["Política Exterior", "Estrategia"],
+                          "description": "より強靭で繁栄したインド太平洋地域を目指す更新版、現行版。",
+                          "url": "https://www.mofa.go.jp/mofaj/files/101022860.pdf",
+                          "status": "vigente", "lang": "ja"},
          "status": "vigente", "lang": "en"},
 
         {"title": "「自由で開かれたインド太平洋」のための新たなプラン（2023年）", "organization": "MOFA", "date": "2023-03-20",
          "categories": ["Política Exterior", "Estrategia"],
          "description": "FOIP（自由で開かれたインド太平洋）の新構想（日本語版）。現行版。",
          "url": "https://www.mofa.go.jp/mofaj/files/100477004.pdf",
-         "status": "vigente", "lang": "ja"},
-
+        "status": "no_vigente", "lang": "ja"},
         # ── Seguridad económica ───────────────────────────────────────────────
         {"title": "Economic Security Promotion Act (2022)", "organization": "Legislación", "date": "2022-05-11",
          "categories": ["Seguridad Económica", "Estrategia"],

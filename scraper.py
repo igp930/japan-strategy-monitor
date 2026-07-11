@@ -600,7 +600,6 @@ def add_existing_corpus():
                           "description": "より強靭で繁栄したインド太平洋地域を目指す更新版、現行版。",
                           "url": "https://www.mofa.go.jp/mofaj/files/101022860.pdf",
                           "status": "vigente", "lang": "ja"},
-         "status": "vigente", "lang": "en"},
 
         {"title": "「自由で開かれたインド太平洋」のための新たなプラン（2023年）", "organization": "MOFA", "date": "2023-03-20",
          "categories": ["Política Exterior", "Estrategia"],
@@ -674,10 +673,6 @@ def add_existing_corpus():
                           "description": "LGBT理解増進法に基づく初の基本計画。",
                           "url": "https://www8.cao.go.jp/rikaizoshin/kihon/pdf/honbun.pdf",
                           "status": "vigente", "lang": "ja"},
-         "description": "第6次男女共同参画基本計画。現行版。",
-         "url": "https://www.gender.go.jp/about_danjo/basic_plans/6th/index.html",
-         "status": "vigente", "lang": "ja"},
-
         {"title": "Fifth Basic Plan for Gender Equality (2020)", "organization": "Gabinete", "date": "2020-12-25",
          "categories": ["Género/LGBT+", "Estrategia"],
          "description": "Fifth national plan for gender equality. Replaced by Sixth Plan (2026).",

@@ -660,6 +660,9 @@ def add_existing_corpus():
         {"title": "第6次男女共同参画基本計画（2026年）", "organization": "Gabinete", "date": "2026-03-13",
          
          "categories": ["Género/LGBT+", "Estrategia"],
+                     "description": "第6次男女共同参画基本計画、現行版。",
+                     "url": "https://www.gender.go.jp/about_danjo/basic_plans/6th/index.html",
+                     "status": "vigente", "lang": "ja"},
                  {"title": "Basic Plan for Promoting Understanding of Sexual Orientation and Gender Identity Diversity (2026)", "organization": "Gabinete", "date": "2026-06-16",
                           "categories": ["Género/LGBT+"],
                           "description": "First national basic plan under the LGBT Understanding Promotion Law.",

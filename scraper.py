@@ -578,8 +578,11 @@ def add_existing_corpus():
          "url": "https://www.mofa.go.jp/policy/other/bluebook/2010/html/index.html",
          "status": "no_vigente", "lang": "en"},
 
+        
         {"title": "外交青書2010", "organization": "MOFA", "date": "2010-07-01",
          "categories": ["Política Exterior"],
+
+         
          "description": "2010年版外交青書（日本語版）。",
          "url": "https://www.mofa.go.jp/mofaj/gaiko/bluebook/2010/index.html",
          "status": "no_vigente", "lang": "ja"},
@@ -588,6 +591,7 @@ def add_existing_corpus():
         {"title": "New Plan for Free and Open Indo-Pacific (2023)", "organization": "MOFA", "date": "2023-03-20",
          "categories": ["Política Exterior", "Estrategia"],
          "description": "Japan's updated FOIP vision. Current version.",
+                     "url": "https://www.mofa.go.jp/policy/page1e_000403.html",
         "status": "no_vigente", "lang": "en"},
                  {"title": "Updated Free and Open Indo-Pacific (2026)", "organization": "MOFA", "date": "2026-05-02",
                           "categories": ["Política Exterior", "Estrategia"],

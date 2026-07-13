@@ -1745,5 +1745,185 @@
         "url": "https://www.nids.mod.go.jp/publication/chinareport/pdf/china_report_JP_web_A01.pdf",
         "status": "vigente",
         "lang": "ja"
+    },
+    {
+        "title": "中国安全保障报告 2026",
+        "organization": "NIDS",
+        "date": "2026-01-01",
+        "categories": [
+            "nids_china_report"
+        ],
+        "description": "",
+        "url": "https://www.nids.mod.go.jp./pdf/china_report_EN_web_2025_A01.pdf",
+        "status": "vigente",
+        "lang": "zh"
+    },
+    {
+        "title": "中国安全保障报告 2025",
+        "organization": "NIDS",
+        "date": "2025-01-01",
+        "categories": [
+            "nids_china_report"
+        ],
+        "description": "",
+        "url": "https://www.nids.mod.go.jp/publication/chinareport/pdf/china_report_EN_web_2024_A01.pdf",
+        "status": "vigente",
+        "lang": "zh"
+    },
+    {
+        "title": "中国安全保障报告 2024",
+        "organization": "NIDS",
+        "date": "2024-01-01",
+        "categories": [
+            "nids_china_report"
+        ],
+        "description": "",
+        "url": "https://www.nids.mod.go.jp/publication/chinareport/pdf/china_report_2023_errata.pdf",
+        "status": "vigente",
+        "lang": "zh"
+    },
+    {
+        "title": "中国安全保障报告 2023",
+        "organization": "NIDS",
+        "date": "2023-01-01",
+        "categories": [
+            "nids_china_report"
+        ],
+        "description": "",
+        "url": "https://www.nids.mod.go.jp/publication/chinareport/pdf/china_report_EN_web_2022_A01.pdf",
+        "status": "vigente",
+        "lang": "zh"
+    },
+    {
+        "title": "中国安全保障报告 2022",
+        "organization": "NIDS",
+        "date": "2022-01-01",
+        "categories": [
+            "nids_china_report"
+        ],
+        "description": "",
+        "url": "https://www.nids.mod.go.jp/publication/chinareport/pdf/china_report_EN_web_2021_A01.pdf",
+        "status": "vigente",
+        "lang": "zh"
+    },
+    {
+        "title": "中国安全保障报告 2021",
+        "organization": "NIDS",
+        "date": "2021-01-01",
+        "categories": [
+            "nids_china_report"
+        ],
+        "description": "",
+        "url": "https://www.nids.mod.go.jp/publication/chinareport/pdf/china_report_EN_web_2020_A01.pdf",
+        "status": "vigente",
+        "lang": "zh"
+    },
+    {
+        "title": "中国安全保障报告 2020",
+        "organization": "NIDS",
+        "date": "2020-01-01",
+        "categories": [
+            "nids_china_report"
+        ],
+        "description": "",
+        "url": "https://www.nids.mod.go.jp/publication/chinareport/pdf/china_report_EN_web_2019_A01.pdf",
+        "status": "vigente",
+        "lang": "zh"
+    },
+    {
+        "title": "中国安全保障报告 2019",
+        "organization": "NIDS",
+        "date": "2019-01-01",
+        "categories": [
+            "nids_china_report"
+        ],
+        "description": "",
+        "url": "https://www.nids.mod.go.jp/publication/chinareport/pdf/china_report_EN_web_2018_A01.pdf",
+        "status": "vigente",
+        "lang": "zh"
+    },
+    {
+        "title": "中国安全保障报告 2018",
+        "organization": "NIDS",
+        "date": "2018-01-01",
+        "categories": [
+            "nids_china_report"
+        ],
+        "description": "",
+        "url": "https://www.nids.mod.go.jp/publication/chinareport/pdf/china_report_EN_web_2017_A01.pdf",
+        "status": "vigente",
+        "lang": "zh"
+    },
+    {
+        "title": "中国安全保障报告 2017",
+        "organization": "NIDS",
+        "date": "2017-01-01",
+        "categories": [
+            "nids_china_report"
+        ],
+        "description": "",
+        "url": "https://www.nids.mod.go.jp/publication/chinareport/pdf/china_report_EN_web_2016_A01.pdf",
+        "status": "vigente",
+        "lang": "zh"
+    },
+    {
+        "title": "中国安全保障报告 2016",
+        "organization": "NIDS",
+        "date": "2016-01-01",
+        "categories": [
+            "nids_china_report"
+        ],
+        "description": "",
+        "url": "https://www.nids.mod.go.jp/publication/chinareport/pdf/china_report_EN_web_2014_A01.pdf",
+        "status": "vigente",
+        "lang": "zh"
+    },
+    {
+        "title": "中国安全保障报告 2014",
+        "organization": "NIDS",
+        "date": "2014-01-01",
+        "categories": [
+            "nids_china_report"
+        ],
+        "description": "",
+        "url": "https://www.nids.mod.go.jp/publication/chinareport/pdf/china_report_EN_web_2013_A01.pdf",
+        "status": "vigente",
+        "lang": "zh"
+    },
+    {
+        "title": "中国安全保障报告 2013",
+        "organization": "NIDS",
+        "date": "2013-01-01",
+        "categories": [
+            "nids_china_report"
+        ],
+        "description": "",
+        "url": "https://www.nids.mod.go.jp/english/publication/chinareport/pdf/china_report_EN_web_2012_A01.pdf",
+        "status": "vigente",
+        "lang": "zh"
+    },
+    {
+        "title": "中国安全保障报告 2012",
+        "organization": "NIDS",
+        "date": "2012-01-01",
+        "categories": [
+            "nids_china_report"
+        ],
+        "description": "",
+        "url": "https://www.nids.mod.go.jp/english/publication/chinareport/pdf/china_report_EN_web_2011_A01.pdf",
+        "status": "vigente",
+        "lang": "zh"
+    },
+    {
+        "title": "中国安全保障报告 2011",
+        "organization": "NIDS",
+        "date": "2011-01-01",
+        "categories": [
+            "nids_china_report"
+        ],
+        "description": "",
+        "url": "https://www.nids.mod.go.jp/english/publication/chinareport/pdf/china_report_EN_4C_A01.pdf",
+        "status": "vigente",
+        "lang": "zh"
     }
 ]

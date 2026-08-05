@@ -169,7 +169,7 @@ def discover_diplomatic_bluebooks():
 
 
 
-def discover_cybersecurity(documents):
+def discover_cybersecurity_strategy(documents):
     """Discover Japan Cybersecurity Strategy documents (NISC)."""
     url = "https://www.nisc.go.jp/policy/index.html"
     try:

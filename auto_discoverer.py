@@ -425,3 +425,189 @@ if __name__ == "__main__":
         print(f"  {category_name}: {year}")
     
     print(f"\nTotal documents found: {len(all_docs)} across all categories and languages")
+
+
+
+def discover_cybersecurity_strategy():
+    """Scrape NISC website for the current Cybersecurity Strategy (EN and JA).
+
+    Returns:
+        list: Lista de dict con {"year": int, "url": str, "title": str, "lang": str}
+    """
+    documents = []
+
+    url_en = "https://www.nisc.go.jp/eng/index.html"
+    try:
+        soup = fetch_soup(url_en)
+        for link in soup.find_all("a", href=True):
+            link_text = link.get_text(strip=True)
+            match = re.search(r"Cybersecurity Strategy.*?(\d{4})", link_text, re.IGNORECASE)
+            if match:
+                year = int(match.group(1))
+                href = link.get("href", "")
+                if href and ".pdf" in href.lower():
+                    url_doc = href if href.startswith("http") else f"https://www.nisc.go.jp{href}"
+                    documents.append({
+                        "year": year,
+                        "url": url_doc,
+                        "title": f"Cybersecurity Strategy ({year})",
+                        "lang": "en",
+                        "organization": "NISC",
+                        "category": "cybersecurity_strategy"
+                    })
+    except Exception as e:
+        print(f"Error scraping Cybersecurity Strategy (EN): {e}")
+
+    url_ja = "https://www.nisc.go.jp/index.html"
+    try:
+        soup = fetch_soup(url_ja)
+        for link in soup.find_all("a", href=True):
+            link_text = link.get_text(strip=True)
+            match = re.search(r"サイバーセキュリティ戦略.*?(\d{4})", link_text)
+            if match:
+                year = int(match.group(1))
+                href = link.get("href", "")
+                if href and ".pdf" in href.lower():
+                    url_doc = href if href.startswith("http") else f"https://www.nisc.go.jp{href}"
+                    if not any(d["year"] == year and d["lang"] == "ja" for d in documents):
+                        documents.append({
+                            "year": year,
+                            "url": url_doc,
+                            "title": f"サイバーセキュリティ戦略（{year}年）",
+                            "lang": "ja",
+                            "organization": "NISC",
+                            "category": "cybersecurity_strategy"
+                        })
+    except Exception as e:
+        print(f"Error scraping Cybersecurity Strategy (JA): {e}")
+
+    return documents
+
+
+def discover_economic_security():
+    """Scrape METI website for Economic Security Promotion Act updates.
+
+    Returns:
+        list: Lista de dict con {"year": int, "url": str, "title": str, "lang": str}
+    """
+    documents = []
+    url = "https://www.meti.go.jp/policy/economy/economic_security/index.html"
+
+    try:
+        soup = fetch_soup(url)
+        for link in soup.find_all("a", href=True):
+            link_text = link.get_text(strip=True)
+            match = re.search(r"(20\d{2})", link_text)
+            if match and ("economic security" in link_text.lower() or "経済安全保障" in link_text):
+                year = int(match.group(1))
+                href = link.get("href", "")
+                if href:
+                    lang = "ja" if re.search(r"[\u3040-\u30ff\u4e00-\u9fff]", link_text) else "en"
+                    url_doc = href if href.startswith("http") else f"https://www.meti.go.jp{href}"
+                    if not any(d["year"] == year and d["lang"] == lang for d in documents):
+                        title = f"経済安全保障推進法（{year}年）" if lang == "ja" else f"Economic Security Promotion Act ({year})"
+                        documents.append({
+                            "year": year,
+                            "url": url_doc,
+                            "title": title,
+                            "lang": lang,
+                            "organization": "METI",
+                            "category": "economic_security"
+                        })
+    except Exception as e:
+        print(f"Error scraping Economic Security updates: {e}")
+
+    return documents
+
+
+def discover_gender_equality_plans():
+    """Scrape Gender Equality Bureau / Cabinet Office for Basic Plans (EN and JA).
+
+    Returns:
+        list: Lista de dict con {"year": int, "url": str, "title": str, "lang": str}
+    """
+    documents = []
+
+    url_en = "https://www.gender.go.jp/english_contents/index.html"
+    try:
+        soup = fetch_soup(url_en)
+        for link in soup.find_all("a", href=True):
+            link_text = link.get_text(strip=True)
+            match = re.search(r"Basic Plan for Gender Equality.*?(\d{4})", link_text, re.IGNORECASE)
+            if match:
+                year = int(match.group(1))
+                href = link.get("href", "")
+                if href:
+                    url_doc = href if href.startswith("http") else f"https://www.gender.go.jp{href}"
+                    documents.append({
+                        "year": year,
+                        "url": url_doc,
+                        "title": link_text,
+                        "lang": "en",
+                        "organization": "Gabinete",
+                        "category": "gender_equality_plan"
+                    })
+    except Exception as e:
+        print(f"Error scraping Gender Equality Plans (EN): {e}")
+
+    url_ja = "https://www.gender.go.jp/about_danjo/basic_plans/index.html"
+    try:
+        soup = fetch_soup(url_ja)
+        for link in soup.find_all("a", href=True):
+            link_text = link.get_text(strip=True)
+            match = re.search(r"男女共同参画基本計画.*?(\d{4})|第(\d+)次男女共同参画基本計画", link_text)
+            if match:
+                href = link.get("href", "")
+                if not href:
+                    continue
+                year_match = re.search(r"(20\d{2})", link_text)
+                if not year_match:
+                    continue
+                year = int(year_match.group(1))
+                url_doc = href if href.startswith("http") else f"https://www.gender.go.jp{href}"
+                if not any(d["year"] == year and d["lang"] == "ja" for d in documents):
+                    documents.append({
+                        "year": year,
+                        "url": url_doc,
+                        "title": link_text,
+                        "lang": "ja",
+                        "organization": "Gabinete",
+                        "category": "gender_equality_plan"
+                    })
+    except Exception as e:
+        print(f"Error scraping Gender Equality Plans (JA): {e}")
+
+    return documents
+
+
+def discover_foip():
+    """Scrape MOFA website for Free and Open Indo-Pacific (FOIP) updates.
+
+    Returns:
+        list: Lista de dict con {"year": int, "url": str, "title": str, "lang": str}
+    """
+    documents = []
+
+    url_en = "https://www.mofa.go.jp/policy/page1e_000278.html"
+    try:
+        soup = fetch_soup(url_en)
+        for link in soup.find_all("a", href=True):
+            link_text = link.get_text(strip=True)
+            match = re.search(r"Free and Open Indo-Pacific.*?(\d{4})", link_text, re.IGNORECASE)
+            if match:
+                year = int(match.group(1))
+                href = link.get("href", "")
+                if href:
+                    url_doc = href if href.startswith("http") else f"https://www.mofa.go.jp{href}"
+                    documents.append({
+                        "year": year,
+                        "url": url_doc,
+                        "title": link_text,
+                        "lang": "en",
+                        "organization": "MOFA",
+                        "category": "foip"
+                    })
+    except Exception as e:
+        print(f"Error scraping FOIP (EN): {e}")
+
+    return documents

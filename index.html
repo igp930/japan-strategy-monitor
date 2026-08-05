@@ -17,43 +17,93 @@
     h1 { font-size: 2.5em; color: #58a6ff; margin-bottom: 10px; }
     .subtitle { color: #8b949e; font-size: 1.1em; }
     .controls {
-      display: flex; gap: 16px; margin-bottom: 30px; flex-wrap: wrap;
-      background: #161b22; padding: 20px; border-radius: 6px; border: 1px solid #30363d;
+      display: flex;
+      gap: 16px;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+      background: #161b22;
+      padding: 20px;
+      border-radius: 6px;
+      border: 1px solid #30363d;
     }
     .search-box { flex: 2; min-width: 250px; }
     .filter-box { flex: 1; min-width: 170px; }
     input, select {
-      width: 100%; padding: 10px 15px; background: #0d1117; border: 1px solid #30363d;
-      border-radius: 6px; color: #c9d1d9; font-size: 1em;
+      width: 100%;
+      padding: 10px 15px;
+      background: #0d1117;
+      border: 1px solid #30363d;
+      border-radius: 6px;
+      color: #c9d1d9;
+      font-size: 1em;
     }
     input:focus, select:focus { outline: none; border-color: #58a6ff; }
+    .stats {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+      color: #8b949e;
+      font-size: 0.92em;
+    }
     .last-updated { font-size: 0.9em; color: #8b949e; margin-bottom: 20px; }
     .doc-card {
-      background: #161b22; border: 1px solid #30363d; border-radius: 6px;
-      padding: 20px; margin-bottom: 20px; transition: transform 0.2s, border-color 0.2s;
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 6px;
+      padding: 20px;
+      margin-bottom: 20px;
+      transition: transform 0.2s, border-color 0.2s;
     }
     .doc-card:hover { transform: translateY(-2px); border-color: #58a6ff; }
     .doc-card.lang-ja { border-left: 3px solid #e3b341; }
-    .doc-title { font-size: 1.3em; color: #58a6ff; margin-bottom: 10px; font-weight: 600; line-height: 1.35; }
-    .doc-meta { display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap; align-items: center; }
-    .badge {
-      padding: 4px 12px; border-radius: 12px; font-size: 0.8em; font-weight: 500;
-      border: 1px solid transparent; white-space: nowrap;
+    .doc-title {
+      font-size: 1.3em;
+      color: #58a6ff;
+      margin-bottom: 10px;
+      font-weight: 600;
+      line-height: 1.35;
     }
-    .badge-org  { background: #23863620; color: #3fb950; border-color: #3fb95040; }
-    .badge-cat  { background: #1f6feb20; color: #58a6ff; border-color: #58a6ff40; }
+    .doc-meta {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 15px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .badge {
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 0.8em;
+      font-weight: 500;
+      border: 1px solid transparent;
+      white-space: nowrap;
+    }
+    .badge-org { background: #23863620; color: #3fb950; border-color: #3fb95040; }
+    .badge-cat { background: #1f6feb20; color: #58a6ff; border-color: #58a6ff40; }
     .badge-date { background: #a371f720; color: #a371f7; border-color: #a371f740; }
-    .badge-ja   { background: #e3b34120; color: #e3b341; border-color: #e3b34140; font-weight: 700; }
+    .badge-ja { background: #e3b34120; color: #e3b341; border-color: #e3b34140; font-weight: 700; }
     .doc-desc { color: #8b949e; margin-bottom: 15px; line-height: 1.5; }
     .doc-link {
-      display: inline-block; color: #58a6ff; text-decoration: none; padding: 8px 16px;
-      border: 1px solid #30363d; border-radius: 6px; font-size: 0.9em;
+      display: inline-block;
+      color: #58a6ff;
+      text-decoration: none;
+      padding: 8px 16px;
+      border: 1px solid #30363d;
+      border-radius: 6px;
+      font-size: 0.9em;
     }
     .doc-link:hover { background: #21262d; border-color: #8b949e; }
     .no-results { text-align: center; padding: 40px; color: #8b949e; }
     .tag-novigente {
-      display: inline-block; background: #da3633; color: white; padding: 2px 8px;
-      border-radius: 4px; font-size: 0.75rem; margin-left: 8px; vertical-align: middle;
+      display: inline-block;
+      background: #da3633;
+      color: white;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      margin-left: 8px;
+      vertical-align: middle;
     }
     @media (max-width: 700px) {
       body { padding: 24px 14px; }
@@ -102,97 +152,158 @@
       </div>
     </div>
 
-    <div id="lastUpdated" class="last-updated"></div>
+    <div class="stats">
+      <span id="docCount">0 documentos</span>
+      <span id="visibleCount">0 visibles</span>
+    </div>
+
+    <div id="lastUpdated" class="last-updated">Cargando…</div>
     <div id="docList"></div>
   </div>
 
   <script>
     let allDocuments = [];
 
+    const categoryAliases = {
+      'politica exterior': 'Política Exterior',
+      'política exterior': 'Política Exterior',
+      'defensa': 'Defensa',
+      'estrategia': 'Estrategia',
+      'seguridad economica': 'Seguridad Económica',
+      'seguridad económica': 'Seguridad Económica',
+      'ciberseguridad': 'Ciberseguridad',
+      'cooperacion internacional': 'Cooperación Internacional',
+      'cooperación internacional': 'Cooperación Internacional',
+      'inteligencia': 'Inteligencia',
+      'genero/lgbt+': 'Género/LGBT+',
+      'género/lgbt+': 'Género/LGBT+',
+      'defense_white_paper': 'Defensa',
+      'nids_china_report': 'Inteligencia'
+    };
+
+    function stripAccents(str) {
+      return String(str || '')
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '');
+    }
+
+    function normalizeText(str) {
+      return stripAccents(str).toLowerCase().trim();
+    }
+
+    function canonicalCategory(cat) {
+      const key = normalizeText(cat);
+      return categoryAliases[key] || String(cat || '').trim();
+    }
+
     function normalizeCategories(doc) {
-      if (Array.isArray(doc.categories)) return doc.categories;
-      if (doc.category) return [doc.category];
-      return [];
+      const raw = Array.isArray(doc.categories)
+        ? doc.categories
+        : (doc.category ? [doc.category] : []);
+      return [...new Set(raw.map(canonicalCategory).filter(Boolean))];
+    }
+
+    function normalizeDocument(doc) {
+      return {
+        ...doc,
+        categories: normalizeCategories(doc),
+        lang: doc.lang === 'ja' ? 'ja' : 'en',
+        status: doc.status === 'no_vigente' ? 'no_vigente' : 'vigente',
+        description: doc.description || ''
+      };
     }
 
     async function fetchData() {
       try {
-        const response = await fetch("documents.json?t=" + Date.now(), { cache: "no-store" });
-        if (!response.ok) throw new Error("No se pudo cargar documents.json");
+        const response = await fetch('documents.json?t=' + Date.now(), { cache: 'no-store' });
+        if (!response.ok) throw new Error('No se pudo cargar documents.json');
+
         const data = await response.json();
-        allDocuments = Array.isArray(data.documents) ? data.documents : [];
-        document.getElementById("lastUpdated").textContent =
-          "Última actualización: " + new Date(data.last_updated).toLocaleString();
+        const docs = Array.isArray(data) ? data : (Array.isArray(data.documents) ? data.documents : []);
+        allDocuments = docs.map(normalizeDocument);
+
+        const lastUpdatedText = data && data.last_updated
+          ? new Date(data.last_updated).toLocaleString('es-ES')
+          : 'Datos cargados desde documents.json';
+
+        document.getElementById('lastUpdated').textContent = 'Última actualización: ' + lastUpdatedText;
+        document.getElementById('docCount').textContent = allDocuments.length + ' documentos';
         renderDocuments(allDocuments);
       } catch (error) {
-        document.getElementById("docList").innerHTML = '<p class="no-results">Error al cargar datos.</p>';
+        document.getElementById('lastUpdated').textContent = 'Error al cargar documents.json';
+        document.getElementById('docList').innerHTML = '<p class="no-results">Error al cargar datos.</p>';
         console.error(error);
       }
     }
 
     function renderDocuments(docs) {
-      const container = document.getElementById("docList");
+      const container = document.getElementById('docList');
+      document.getElementById('visibleCount').textContent = docs.length + ' visibles';
+
       if (!docs.length) {
         container.innerHTML = '<p class="no-results">No se encontraron documentos.</p>';
         return;
       }
+
       container.innerHTML = docs.map(doc => {
-        const isJa = doc.lang === "ja";
+        const isJa = doc.lang === 'ja';
         const categories = normalizeCategories(doc);
-        const categoryBadges = categories.map(cat =>
-          `<span class="badge badge-cat">${escapeHtml(cat)}</span>`).join("");
-        const langBadge = isJa ? '<span class="badge badge-ja">🇯🇵 日本語</span>' : "";
-        const statusTag = doc.status === "no_vigente"
-          ? '<span class="tag-novigente">No vigente</span>' : "";
+        const categoryBadges = categories.map(cat => `<span class="badge badge-cat">${escapeHtml(cat)}</span>`).join('');
+        const langBadge = isJa ? '<span class="badge badge-ja">🇯🇵 日本語</span>' : '';
+        const statusTag = doc.status === 'no_vigente' ? '<span class="tag-novigente">No vigente</span>' : '';
+
         return `
-          <article class="doc-card${isJa ? " lang-ja" : ""}">
-            <h2 class="doc-title">${escapeHtml(doc.title || "")}${statusTag}</h2>
+          <article class="doc-card${isJa ? ' lang-ja' : ''}">
+            <h2 class="doc-title">${escapeHtml(doc.title || '')}${statusTag}</h2>
             <div class="doc-meta">
-              <span class="badge badge-org">${escapeHtml(doc.organization || "")}</span>
+              <span class="badge badge-org">${escapeHtml(doc.organization || '')}</span>
               ${categoryBadges}
-              <span class="badge badge-date">${escapeHtml(doc.date || "")}</span>
+              <span class="badge badge-date">${escapeHtml(doc.date || '')}</span>
               ${langBadge}
             </div>
-            <p class="doc-desc">${escapeHtml(doc.description || "")}</p>
-            <a href="${escapeAttribute(doc.url || "#")}" target="_blank" rel="noopener noreferrer" class="doc-link">Ver Documento →</a>
+            <p class="doc-desc">${escapeHtml(doc.description || '')}</p>
+            <a href="${escapeAttribute(doc.url || '#')}" target="_blank" rel="noopener noreferrer" class="doc-link">Ver Documento →</a>
           </article>`;
-      }).join("");
+      }).join('');
     }
 
     function filterDocs() {
-      const searchTerm = document.getElementById("searchInput").value.toLowerCase().trim();
-      const category = document.getElementById("categoryFilter").value;
-      const lang = document.getElementById("langFilter").value;
-      const status = document.getElementById("statusFilter").value;
+      const searchTerm = normalizeText(document.getElementById('searchInput').value);
+      const category = document.getElementById('categoryFilter').value;
+      const lang = document.getElementById('langFilter').value;
+      const status = document.getElementById('statusFilter').value;
+
       const filtered = allDocuments.filter(doc => {
         const categories = normalizeCategories(doc);
-        const docLang = doc.lang === "ja" ? "ja" : "en";
         const matchesSearch =
-          (doc.title || "").toLowerCase().includes(searchTerm) ||
-          (doc.description || "").toLowerCase().includes(searchTerm);
-        const matchesCategory = category === "all" || categories.includes(category);
-        const matchesLang = lang === "all" || docLang === lang;
-        const matchesStatus = status === "all" || doc.status === status;
+          normalizeText(doc.title).includes(searchTerm) ||
+          normalizeText(doc.description).includes(searchTerm);
+        const matchesCategory = category === 'all' || categories.includes(category);
+        const matchesLang = lang === 'all' || doc.lang === lang;
+        const matchesStatus = status === 'all' || doc.status === status;
         return matchesSearch && matchesCategory && matchesLang && matchesStatus;
       });
+
       renderDocuments(filtered);
     }
 
     function escapeHtml(str) {
       return String(str)
-        .replaceAll("&", "&amp;").replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;").replaceAll('"', "&quot;")
-        .replaceAll("'", "&#39;");
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
     }
 
     function escapeAttribute(str) {
-      return String(str).replaceAll('"', "&quot;");
+      return String(str).replaceAll('"', '&quot;');
     }
 
-    document.getElementById("searchInput").addEventListener("input", filterDocs);
-    document.getElementById("categoryFilter").addEventListener("change", filterDocs);
-    document.getElementById("langFilter").addEventListener("change", filterDocs);
-    document.getElementById("statusFilter").addEventListener("change", filterDocs);
+    document.getElementById('searchInput').addEventListener('input', filterDocs);
+    document.getElementById('categoryFilter').addEventListener('change', filterDocs);
+    document.getElementById('langFilter').addEventListener('change', filterDocs);
+    document.getElementById('statusFilter').addEventListener('change', filterDocs);
 
     fetchData();
   </script>

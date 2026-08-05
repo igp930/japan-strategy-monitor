@@ -793,6 +793,10 @@ def main():
             all_docs.extend(auto_discoverer.discover_diplomatic_bluebooks())
             all_docs.extend(auto_discoverer.discover_nids_china_reports())
             all_docs.extend(auto_discoverer.discover_oda_white_papers())
+            all_docs.extend(auto_discoverer.discover_cybersecurity_strategy())
+            all_docs.extend(auto_discoverer.discover_economic_security())
+            all_docs.extend(auto_discoverer.discover_gender_equality_plans())
+            all_docs.extend(auto_discoverer.discover_foip())
             
             # Obtener los años más recientes de los documentos descubiertos
             latest_years = auto_discoverer.get_latest_years(all_docs)

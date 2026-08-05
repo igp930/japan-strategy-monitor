@@ -1,7 +1,11 @@
 """Funciones de auto-descubrimiento para documentos japoneses.
 
-Este módulo contiene scrapers automáticos que buscan nuevos documentos
-en las páginas oficiales del gobierno japonés, en múltiples idiomas.
+Este modulo contiene scrapers automaticos que buscan nuevos documentos
+en las paginas oficiales del gobierno japones, en multiples idiomas.
+
+Todas las funciones publicas devuelven una lista de dicts con:
+{"year": int, "url": str, "title": str, "lang": str, "organization": str, "category": str}
+No reciben argumentos, y cada llamada crea su propia lista de resultados.
 """
 import re
 import requests
@@ -19,14 +23,20 @@ def fetch_soup(url):
     return BeautifulSoup(r.text, "html.parser")
 
 
+def get_latest_years(documents):
+    """Devuelve un dict {category: max_year} a partir de una lista de documentos."""
+    latest = {}
+    for doc in documents:
+        cat = doc.get("category", "unknown")
+        year = doc.get("year", 0)
+        if cat not in latest or year > latest[cat]:
+            latest[cat] = year
+    return latest
+
+
 def discover_defense_white_papers():
-    """Scrape MOD website for Defense White Papers in EN and JA.
-
-    Returns:
-        list: Lista de dict con {"year": int, "url": str, "title": str, "lang": str}
-    """
+    """Scrape MOD website for Defense White Papers in EN and JA."""
     documents = []
-
     url_en = "https://www.mod.go.jp/en/publ/w_paper/index.html"
     try:
         soup = fetch_soup(url_en)
@@ -50,7 +60,7 @@ def discover_defense_white_papers():
                                 "organization": "MOD",
                                 "category": "defense_white_paper"
                             })
-                    break
+                            break
     except Exception as e:
         print(f"Error scraping Defense White Papers (EN): {e}")
 
@@ -59,7 +69,7 @@ def discover_defense_white_papers():
         soup = fetch_soup(url_ja)
         for heading in soup.find_all(["h2", "h3"]):
             text = heading.get_text(strip=True)
-            match = re.search(r"令和(\d+)年|防衛白書.*(\d{4})", text)
+            match = re.search(r"\u4ee4\u548c(\d+)\u5e74|\u9632\u885b\u767d\u66f8.*(\d{4})", text)
             if match:
                 if match.group(1):
                     reiwa_year = int(match.group(1))
@@ -68,7 +78,6 @@ def discover_defense_white_papers():
                     year = int(match.group(2))
                 else:
                     continue
-
                 section = heading.find_parent(["div", "section"])
                 if section:
                     links = section.find_all("a", href=re.compile(r"\.pdf|/wp/"))
@@ -84,21 +93,15 @@ def discover_defense_white_papers():
                                 "organization": "MOD",
                                 "category": "defense_white_paper"
                             })
-                    break
+                            break
     except Exception as e:
         print(f"Error scraping Defense White Papers (JA): {e}")
-
     return documents
 
 
 def discover_diplomatic_bluebooks():
-    """Scrape MOFA website for Diplomatic Bluebooks in EN and JA.
-
-    Returns:
-        list: Lista de dict con {"year": int, "url": str, "title": str, "lang": str}
-    """
+    """Scrape MOFA website for Diplomatic Bluebooks in EN and JA."""
     documents = []
-
     url_en = "https://www.mofa.go.jp/policy/other/bluebook/index.html"
     try:
         soup = fetch_soup(url_en)
@@ -126,7 +129,7 @@ def discover_diplomatic_bluebooks():
                                     "organization": "MOFA",
                                     "category": "diplomatic_bluebook"
                                 })
-                    break
+                                break
     except Exception as e:
         print(f"Error scraping Diplomatic Bluebooks (EN): {e}")
 
@@ -135,13 +138,13 @@ def discover_diplomatic_bluebooks():
         soup = fetch_soup(url_ja)
         for link in soup.find_all("a", href=True):
             link_text = link.get_text(strip=True)
-            match = re.search(r"(令和|平成)(\d+)年.*外交青書|外交青書.*(\d{4})", link_text)
+            match = re.search(r"(\u4ee4\u548c|\u5e73\u6210)(\d+)\u5e74.*\u5916\u4ea4\u9752\u66f8|\u5916\u4ea4\u9752\u66f8.*(\d{4})", link_text)
             if match:
                 if match.group(2):
                     era_year = int(match.group(2))
-                    if "令和" in link_text:
+                    if "\u4ee4\u548c" in link_text:
                         year = 2018 + era_year if era_year > 1 else 2019
-                    elif "平成" in link_text:
+                    elif "\u5e73\u6210" in link_text:
                         year = 1988 + era_year
                     else:
                         continue
@@ -149,7 +152,6 @@ def discover_diplomatic_bluebooks():
                     year = int(match.group(3))
                 else:
                     continue
-
                 href = link.get("href", "")
                 if href:
                     url_doc = href if href.startswith("http") else f"https://www.mofa.go.jp{href}"
@@ -164,13 +166,68 @@ def discover_diplomatic_bluebooks():
                         })
     except Exception as e:
         print(f"Error scraping Diplomatic Bluebooks (JA): {e}")
-
     return documents
 
 
+def discover_nids_china_reports():
+    """Discover NIDS China Security Report documents."""
+    documents = []
+    url = "https://www.nids.mod.go.jp/english/publication/chinareport/index.html"
+    try:
+        soup = fetch_soup(url)
+        for link in soup.find_all("a", href=True):
+            link_text = link.get_text(strip=True)
+            match = re.search(r"China Security Report (20\d{2})", link_text, re.IGNORECASE)
+            if match:
+                year = int(match.group(1))
+                href = link.get("href", "")
+                if href:
+                    url_doc = href if href.startswith("http") else f"https://www.nids.mod.go.jp{href}"
+                    if not any(d["year"] == year for d in documents):
+                        documents.append({
+                            "year": year,
+                            "url": url_doc,
+                            "title": f"NIDS China Security Report {year}",
+                            "lang": "en",
+                            "organization": "NIDS",
+                            "category": "nids_china_report"
+                        })
+    except Exception as e:
+        print(f"Error scraping NIDS China Reports: {e}")
+    return documents
 
-def discover_cybersecurity_strategy(documents):
+
+def discover_oda_white_papers():
+    """Discover ODA (Official Development Assistance) White Papers."""
+    documents = []
+    url = "https://www.mofa.go.jp/policy/oda/white/index.html"
+    try:
+        soup = fetch_soup(url)
+        for link in soup.find_all("a", href=True):
+            link_text = link.get_text(strip=True)
+            match = re.search(r"(20\d{2})", link_text)
+            if match and ("Development Cooperation" in link_text or "ODA" in link_text):
+                year = int(match.group(1))
+                href = link.get("href", "")
+                if href:
+                    url_doc = href if href.startswith("http") else f"https://www.mofa.go.jp{href}"
+                    if not any(d["year"] == year for d in documents):
+                        documents.append({
+                            "year": year,
+                            "url": url_doc,
+                            "title": f"White Paper on Development Cooperation {year}",
+                            "lang": "en",
+                            "organization": "MOFA",
+                            "category": "oda_white_paper"
+                        })
+    except Exception as e:
+        print(f"Error scraping ODA White Papers: {e}")
+    return documents
+
+
+def discover_cybersecurity_strategy():
     """Discover Japan Cybersecurity Strategy documents (NISC)."""
+    documents = []
     url = "https://www.nisc.go.jp/policy/index.html"
     try:
         soup = fetch_soup(url)
@@ -189,7 +246,7 @@ def discover_cybersecurity_strategy(documents):
                 if href:
                     url_doc = href if href.startswith("http") else f"https://www.nisc.go.jp{href}"
                     lang = "en" if "Cybersecurity Strategy" in link_text else "ja"
-                    if not any(d["year"] == year and d["lang"] == lang and d.get("category") == "cybersecurity_strategy" for d in documents):
+                    if not any(d["year"] == year and d["lang"] == lang for d in documents):
                         documents.append({
                             "year": year,
                             "url": url_doc,
@@ -203,8 +260,9 @@ def discover_cybersecurity_strategy(documents):
     return documents
 
 
-def discover_economic_security(documents):
-    """Discover Economic Security policy documents (METI/Cabinet Secretariat)."""
+def discover_economic_security():
+    """Discover Economic Security policy documents (Cabinet Secretariat)."""
+    documents = []
     url = "https://www.cas.go.jp/jp/seisaku/keizai_anzen_hosho/index.html"
     try:
         soup = fetch_soup(url)
@@ -223,7 +281,7 @@ def discover_economic_security(documents):
                 href = link.get("href", "")
                 if href:
                     url_doc = href if href.startswith("http") else f"https://www.cas.go.jp{href}"
-                    if not any(d["year"] == year and d.get("category") == "economic_security" for d in documents):
+                    if not any(d["year"] == year for d in documents):
                         documents.append({
                             "year": year,
                             "url": url_doc,
@@ -237,8 +295,9 @@ def discover_economic_security(documents):
     return documents
 
 
-def discover_gender_equality_plans(documents):
+def discover_gender_equality_plans():
     """Discover Gender Equality Basic Plans (Gender Equality Bureau, Cabinet Office)."""
+    documents = []
     url = "https://www.gender.go.jp/about_danjo/basic_plans/index.html"
     try:
         soup = fetch_soup(url)
@@ -246,17 +305,18 @@ def discover_gender_equality_plans(documents):
             link_text = link.get_text(strip=True)
             if "男女共同参画基本計画" in link_text:
                 match = re.search(r"第(\d+)次", link_text)
-                year_match = re.search(r"(20\d{2}|令和\d+)", link_text)
+                year_match = re.search(r"(20\d{2})", link_text)
                 href = link.get("href", "")
                 if not href:
                     continue
                 url_doc = href if href.startswith("http") else f"https://www.gender.go.jp{href}"
                 plan_number = match.group(1) if match else "unknown"
-                if not any(d.get("title") == link_text for d in documents):
+                title = link_text if link_text else f"男女共同参画基本計画 第{plan_number}次"
+                if not any(d.get("title") == title for d in documents):
                     documents.append({
-                        "year": int(year_match.group(1)) if year_match and year_match.group(1).isdigit() else 0,
+                        "year": int(year_match.group(1)) if year_match else 0,
                         "url": url_doc,
-                        "title": link_text if link_text else f"男女共同参画基本計画 第{plan_number}次",
+                        "title": title,
                         "lang": "ja",
                         "organization": "Gender Equality Bureau",
                         "category": "gender_equality_plan"
@@ -266,8 +326,9 @@ def discover_gender_equality_plans(documents):
     return documents
 
 
-def discover_foip(documents):
+def discover_foip():
     """Discover Free and Open Indo-Pacific (FOIP) related documents (MOFA)."""
+    documents = []
     url = "https://www.mofa.go.jp/policy/page25e_000278.html"
     try:
         soup = fetch_soup(url)

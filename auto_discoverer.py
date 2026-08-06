@@ -69,7 +69,7 @@ def discover_defense_white_papers():
         soup = fetch_soup(url_ja)
         for heading in soup.find_all(["h2", "h3"]):
             text = heading.get_text(strip=True)
-            match = re.search(r"\u4ee4\u548c(\d+)\u5e74|\u9632\u885b\u767d\u66f8.*(\d{4})", text)
+            match = re.search(r"令和(\d+)年|防衛白書.*(\d{4})", text)
             if match:
                 if match.group(1):
                     reiwa_year = int(match.group(1))
@@ -97,7 +97,6 @@ def discover_defense_white_papers():
     except Exception as e:
         print(f"Error scraping Defense White Papers (JA): {e}")
     return documents
-
 
 def discover_diplomatic_bluebooks():
     """Scrape MOFA website for Diplomatic Bluebooks in EN and JA."""
@@ -129,7 +128,7 @@ def discover_diplomatic_bluebooks():
                                     "organization": "MOFA",
                                     "category": "diplomatic_bluebook"
                                 })
-                                break
+                            break
     except Exception as e:
         print(f"Error scraping Diplomatic Bluebooks (EN): {e}")
 
@@ -138,13 +137,13 @@ def discover_diplomatic_bluebooks():
         soup = fetch_soup(url_ja)
         for link in soup.find_all("a", href=True):
             link_text = link.get_text(strip=True)
-            match = re.search(r"(\u4ee4\u548c|\u5e73\u6210)(\d+)\u5e74.*\u5916\u4ea4\u9752\u66f8|\u5916\u4ea4\u9752\u66f8.*(\d{4})", link_text)
+            match = re.search(r"(令和|平成)(\d+)年.*外交青書|外交青書.*(\d{4})", link_text)
             if match:
                 if match.group(2):
                     era_year = int(match.group(2))
-                    if "\u4ee4\u548c" in link_text:
+                    if "令和" in link_text:
                         year = 2018 + era_year if era_year > 1 else 2019
-                    elif "\u5e73\u6210" in link_text:
+                    elif "平成" in link_text:
                         year = 1988 + era_year
                     else:
                         continue
@@ -167,7 +166,6 @@ def discover_diplomatic_bluebooks():
     except Exception as e:
         print(f"Error scraping Diplomatic Bluebooks (JA): {e}")
     return documents
-
 
 def discover_nids_china_reports():
     """Discover NIDS China Security Report documents."""
@@ -259,41 +257,45 @@ def discover_cybersecurity_strategy():
         print(f"Error scraping Cybersecurity Strategy: {e}")
     return documents
 
-
 def discover_economic_security():
-    """Discover Economic Security policy documents (Cabinet Secretariat)."""
+    """Discover Economic Security policy documents (Cabinet Secretariat).
+
+    Nota: la URL fue corregida de keizai_anzen_hosho (404) a
+    keizai_anzen_hosyo, que es la ruta real usada por cas.go.jp.
+    La pagina lista reuniones "第N回" con fechas en era Reiwa; se
+    extraen como documentos los enlaces a las actas (gijisidai.html).
+    """
     documents = []
-    url = "https://www.cas.go.jp/jp/seisaku/keizai_anzen_hosho/index.html"
+    url = "https://www.cas.go.jp/jp/seisaku/keizai_anzen_hosyo/index.html"
     try:
         soup = fetch_soup(url)
-        for link in soup.find_all("a", href=True):
-            link_text = link.get_text(strip=True)
-            if "経済安全保障" in link_text and re.search(r"\d{4}|令和\d+", link_text):
-                match = re.search(r"(令和)(\d+)年|(\d{4})", link_text)
-                if not match:
-                    continue
-                if match.group(2):
-                    year = 2018 + int(match.group(2))
-                elif match.group(3):
-                    year = int(match.group(3))
-                else:
-                    continue
+        for row in soup.find_all("tr"):
+            cells = row.find_all("td")
+            if len(cells) < 2:
+                continue
+            row_text = row.get_text(strip=True)
+            match = re.search(r"令和(\d+)年", row_text)
+            if not match:
+                continue
+            reiwa_year = int(match.group(1))
+            year = 2018 + reiwa_year
+            for link in row.find_all("a", href=True):
                 href = link.get("href", "")
-                if href:
-                    url_doc = href if href.startswith("http") else f"https://www.cas.go.jp{href}"
-                    if not any(d["year"] == year for d in documents):
-                        documents.append({
-                            "year": year,
-                            "url": url_doc,
-                            "title": f"経済安全保障推進法関連文書 {year}",
-                            "lang": "ja",
-                            "organization": "Cabinet Secretariat",
-                            "category": "economic_security"
-                        })
+                if not href or "gijisidai" not in href:
+                    continue
+                url_doc = href if href.startswith("http") else f"https://www.cas.go.jp{href}"
+                if not any(d["url"] == url_doc for d in documents):
+                    documents.append({
+                        "year": year,
+                        "url": url_doc,
+                        "title": f"経済安全保障推進会議 議事次第・資料 {year}",
+                        "lang": "ja",
+                        "organization": "Cabinet Secretariat",
+                        "category": "economic_security"
+                    })
     except Exception as e:
         print(f"Error scraping Economic Security documents: {e}")
     return documents
-
 
 def discover_gender_equality_plans():
     """Discover Gender Equality Basic Plans (Gender Equality Bureau, Cabinet Office)."""
@@ -354,7 +356,6 @@ def discover_foip():
     except Exception as e:
         print(f"Error scraping FOIP documents: {e}")
     return documents
-
 
 
 ALL_DISCOVERERS = [

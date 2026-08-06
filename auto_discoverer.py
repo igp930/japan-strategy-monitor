@@ -10,7 +10,9 @@ las peticiones que provienen de las IPs de los runners de GitHub Actions,
 independientemente del User-Agent usado. Para evitar perder estos
 documentos, fetch_soup_with_fallback intenta primero la peticion directa
 y, si falla con 403, recurre a una copia archivada en Wayback Machine
-(web.archive.org), que no esta bloqueada.
+(web.archive.org), que no esta bloqueada. Se usa el modificador "id_"
+en la URL del snapshot para obtener el HTML original sin la barra de
+herramientas de Wayback (que en algunos casos causaba un 498).
 """
 import re
 import requests
@@ -37,7 +39,10 @@ def fetch_soup_via_wayback(url):
 
     Se usa como fallback cuando la peticion directa devuelve 403, algo
     que ocurre de forma sistematica con www.mofa.go.jp desde las IPs de
-    los runners de GitHub Actions.
+    los runners de GitHub Actions. Se inserta el modificador "id_"
+    despues del timestamp para pedir el HTML original (sin reescribir
+    enlaces ni inyectar la barra de herramientas de archive.org), lo
+    que evita errores 498 al descargar snapshots grandes.
     """
     api_url = f"https://archive.org/wayback/available?url={url}"
     r = requests.get(api_url, headers=HEADERS, timeout=TIMEOUT)
@@ -47,6 +52,9 @@ def fetch_soup_via_wayback(url):
     if not snapshot or not snapshot.get("available"):
         raise ValueError(f"No hay snapshot disponible en Wayback Machine para {url}")
     archive_url = snapshot["url"]
+    match = re.search(r"(/web/(\d+))/", archive_url)
+    if match:
+        archive_url = archive_url.replace(match.group(1), f"{match.group(1)}id_")
     r2 = requests.get(archive_url, headers=HEADERS, timeout=TIMEOUT)
     r2.raise_for_status()
     return BeautifulSoup(r2.text, "html.parser"), archive_url

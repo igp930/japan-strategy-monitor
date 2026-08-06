@@ -4,7 +4,6 @@ en las paginas oficiales del gobierno japones, en multiples idiomas.
 Todas las funciones publicas devuelven una lista de dicts con:
 {"year": int, "url": str, "title": str, "lang": str, "organization": str, "category": str}
 No reciben argumentos, y cada llamada crea su propia lista de resultados.
-
 Nota sobre MOFA (www.mofa.go.jp): este dominio bloquea con 403 Forbidden
 las peticiones que provienen de las IPs de los runners de GitHub Actions,
 independientemente del User-Agent usado. Para evitar perder estos
@@ -13,8 +12,13 @@ y, si falla con 403, recurre a una copia archivada en Wayback Machine
 (web.archive.org), que no esta bloqueada. Se usa el modificador "id_"
 en la URL del snapshot para obtener el HTML original sin la barra de
 herramientas de Wayback (que en algunos casos causaba un 498).
+Como la API de disponibilidad de Wayback (archive.org/wayback/available)
+devuelve 429 Too Many Requests con facilidad, fetch_soup_via_wayback
+reintenta con backoff exponencial (y respeta el header Retry-After si
+esta presente) antes de rendirse.
 """
 import re
+import time
 import requests
 from bs4 import BeautifulSoup
 from datetime import datetime
@@ -25,6 +29,8 @@ HEADERS = {
     "Accept-Language": "ja,en-US;q=0.9,en;q=0.8",
 }
 TIMEOUT = 30
+WAYBACK_MAX_RETRIES = 4
+WAYBACK_BASE_DELAY = 5
 
 
 def fetch_soup(url):
@@ -32,6 +38,42 @@ def fetch_soup(url):
     r = requests.get(url, headers=HEADERS, timeout=TIMEOUT)
     r.raise_for_status()
     return BeautifulSoup(r.text, "html.parser")
+
+
+def _get_with_retry(url, max_retries=WAYBACK_MAX_RETRIES, base_delay=WAYBACK_BASE_DELAY):
+    """GET con reintentos y backoff exponencial ante 429 Too Many Requests.
+
+    Si la respuesta incluye el header Retry-After, se respeta ese valor
+    en lugar del backoff calculado. Tras agotar los reintentos, se
+    relanza la ultima excepcion.
+    """
+    last_exc = None
+    for attempt in range(max_retries + 1):
+        try:
+            r = requests.get(url, headers=HEADERS, timeout=TIMEOUT)
+            if r.status_code == 429:
+                retry_after = r.headers.get("Retry-After")
+                delay = float(retry_after) if retry_after else base_delay * (2 ** attempt)
+                print(f"429 en {url}, esperando {delay:.0f}s antes de reintentar "
+                      f"(intento {attempt + 1}/{max_retries + 1})...")
+                time.sleep(delay)
+                continue
+            r.raise_for_status()
+            return r
+        except requests.exceptions.HTTPError as e:
+            last_exc = e
+            if e.response is not None and e.response.status_code == 429:
+                delay = base_delay * (2 ** attempt)
+                time.sleep(delay)
+                continue
+            raise
+        except requests.exceptions.RequestException as e:
+            last_exc = e
+            delay = base_delay * (2 ** attempt)
+            time.sleep(delay)
+    if last_exc:
+        raise last_exc
+    raise requests.exceptions.RequestException(f"No se pudo obtener {url}")
 
 
 def fetch_soup_via_wayback(url):
@@ -42,11 +84,12 @@ def fetch_soup_via_wayback(url):
     los runners de GitHub Actions. Se inserta el modificador "id_"
     despues del timestamp para pedir el HTML original (sin reescribir
     enlaces ni inyectar la barra de herramientas de archive.org), lo
-    que evita errores 498 al descargar snapshots grandes.
+    que evita errores 498 al descargar snapshots grandes. Las peticiones
+    a la API de disponibilidad usan reintentos con backoff ya que es
+    frecuente recibir 429 Too Many Requests.
     """
     api_url = f"https://archive.org/wayback/available?url={url}"
-    r = requests.get(api_url, headers=HEADERS, timeout=TIMEOUT)
-    r.raise_for_status()
+    r = _get_with_retry(api_url)
     data = r.json()
     snapshot = data.get("archived_snapshots", {}).get("closest")
     if not snapshot or not snapshot.get("available"):
@@ -55,8 +98,7 @@ def fetch_soup_via_wayback(url):
     match = re.search(r"(/web/(\d+))/", archive_url)
     if match:
         archive_url = archive_url.replace(match.group(1), f"{match.group(1)}id_")
-    r2 = requests.get(archive_url, headers=HEADERS, timeout=TIMEOUT)
-    r2.raise_for_status()
+    r2 = _get_with_retry(archive_url)
     return BeautifulSoup(r2.text, "html.parser"), archive_url
 
 
@@ -72,8 +114,12 @@ def fetch_soup_with_fallback(url):
     except requests.exceptions.HTTPError as e:
         if e.response is not None and e.response.status_code == 403:
             print(f"403 en {url}, probando Wayback Machine...")
-            soup, archive_url = fetch_soup_via_wayback(url)
-            return soup, url
+            try:
+                soup, archive_url = fetch_soup_via_wayback(url)
+                return soup, url
+            except Exception as wayback_error:
+                print(f"Fallback a Wayback Machine tambien fallo para {url}: {wayback_error}")
+                raise
         raise
 
 
@@ -114,7 +160,7 @@ def discover_defense_white_papers():
                                 "organization": "MOD",
                                 "category": "defense_white_paper"
                             })
-                break
+                            break
     except Exception as e:
         print(f"Error scraping Defense White Papers (EN): {e}")
     url_ja = "https://www.mod.go.jp/j/publication/wp/index.html"
@@ -146,10 +192,11 @@ def discover_defense_white_papers():
                                 "organization": "MOD",
                                 "category": "defense_white_paper"
                             })
-                break
+                            break
     except Exception as e:
         print(f"Error scraping Defense White Papers (JA): {e}")
     return documents
+
 
 def discover_diplomatic_bluebooks():
     """Scrape MOFA website for Diplomatic Bluebooks in EN and JA.
@@ -186,7 +233,7 @@ def discover_diplomatic_bluebooks():
                                     "organization": "MOFA",
                                     "category": "diplomatic_bluebook"
                                 })
-                    break
+                            break
     except Exception as e:
         print(f"Error scraping Diplomatic Bluebooks (EN): {e}")
     url_ja = "https://www.mofa.go.jp/mofaj/gaiko/bluebook/index.html"
@@ -284,6 +331,7 @@ def discover_oda_white_papers():
         print(f"Error scraping ODA White Papers: {e}")
     return documents
 
+
 def discover_cybersecurity_strategy():
     """Discover Japan Cybersecurity Strategy documents (NISC)."""
     documents = []
@@ -321,10 +369,11 @@ def discover_cybersecurity_strategy():
 
 def discover_economic_security():
     """Discover Economic Security policy documents (Cabinet Secretariat).
+
     Nota: la URL fue corregida de keizai_anzen_hosho (404) a
-    keizai_anzen_hosyo, que es la ruta real usada por cas.go.jp.
-    La pagina lista reuniones "第N回" con fechas en era Reiwa; se
-    extraen como documentos los enlaces a las actas (gijisidai.html).
+    keizai_anzen_hosyo, que es la ruta real usada por cas.go.jp. La
+    pagina lista reuniones "第N回" con fechas en era Reiwa; se extraen
+    como documentos los enlaces a las actas (gijisidai.html).
     """
     documents = []
     url = "https://www.cas.go.jp/jp/seisaku/keizai_anzen_hosyo/index.html"

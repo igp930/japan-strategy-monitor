@@ -354,3 +354,36 @@ def discover_foip():
     except Exception as e:
         print(f"Error scraping FOIP documents: {e}")
     return documents
+
+
+
+ALL_DISCOVERERS = [
+    discover_defense_white_papers,
+    discover_diplomatic_bluebooks,
+    discover_nids_china_reports,
+    discover_oda_white_papers,
+    discover_cybersecurity_strategy,
+    discover_economic_security,
+    discover_gender_equality_plans,
+    discover_foip,
+]
+
+
+def discover_all():
+    """Ejecuta todas las funciones de auto-descubrimiento y devuelve una lista combinada."""
+    all_documents = []
+    for discoverer in ALL_DISCOVERERS:
+        try:
+            all_documents.extend(discoverer())
+        except Exception as e:
+            print(f"Error running {discoverer.__name__}: {e}")
+    return all_documents
+
+
+if __name__ == "__main__":
+    docs = discover_all()
+    print(f"Total documentos encontrados: {len(docs)}")
+    latest = get_latest_years(docs)
+    print("Ultimo anio por categoria:")
+    for cat, year in latest.items():
+        print(f"  {cat}: {year}")

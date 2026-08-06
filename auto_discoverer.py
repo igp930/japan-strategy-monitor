@@ -1,9 +1,11 @@
 """Funciones de auto-descubrimiento para documentos japoneses.
+
 Este modulo contiene scrapers automaticos que buscan nuevos documentos
 en las paginas oficiales del gobierno japones, en multiples idiomas.
 Todas las funciones publicas devuelven una lista de dicts con:
 {"year": int, "url": str, "title": str, "lang": str, "organization": str, "category": str}
 No reciben argumentos, y cada llamada crea su propia lista de resultados.
+
 Nota sobre MOFA (www.mofa.go.jp): este dominio bloquea con 403 Forbidden
 las peticiones que provienen de las IPs de los runners de GitHub Actions,
 independientemente del User-Agent usado. Para evitar perder estos
@@ -15,7 +17,10 @@ herramientas de Wayback (que en algunos casos causaba un 498).
 Como la API de disponibilidad de Wayback (archive.org/wayback/available)
 devuelve 429 Too Many Requests con facilidad, fetch_soup_via_wayback
 reintenta con backoff exponencial (y respeta el header Retry-After si
-esta presente) antes de rendirse.
+esta presente) antes de rendirse. Ademas de 429, tambien se reintenta
+ante 498/502/503/504, ya que Wayback puede devolver estos codigos de
+forma transitoria (p.ej. cuando el snapshot es grande o el servicio
+esta sobrecargado) y normalmente se resuelven tras una breve espera.
 
 Documentos estrategicos fijos (STATIC_STRATEGIC_DOCUMENTS): ademas de los
 scrapers dinamicos, se incluye una lista curada de documentos clave cuyas
@@ -39,12 +44,13 @@ from datetime import datetime
 
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
-    "(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+                  "(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
     "Accept-Language": "ja,en-US;q=0.9,en;q=0.8",
 }
 TIMEOUT = 30
 WAYBACK_MAX_RETRIES = 4
 WAYBACK_BASE_DELAY = 5
+RETRYABLE_STATUS_CODES = {429, 498, 502, 503, 504}
 
 
 def fetch_soup(url):
@@ -55,27 +61,31 @@ def fetch_soup(url):
 
 
 def _get_with_retry(url, max_retries=WAYBACK_MAX_RETRIES, base_delay=WAYBACK_BASE_DELAY):
-    """GET con reintentos y backoff exponencial ante 429 Too Many Requests.
-    Si la respuesta incluye el header Retry-After, se respeta ese valor
-    en lugar del backoff calculado. Tras agotar los reintentos, se
-    relanza la ultima excepcion.
+    """GET con reintentos y backoff exponencial ante codigos transitorios.
+
+    Ademas de 429 Too Many Requests, se reintenta ante 498/502/503/504,
+    codigos que Wayback Machine puede devolver de forma intermitente sin
+    que ello implique que el recurso no exista. Si la respuesta incluye
+    el header Retry-After, se respeta ese valor en lugar del backoff
+    calculado. Tras agotar los reintentos, se relanza la ultima excepcion.
     """
     last_exc = None
     for attempt in range(max_retries + 1):
         try:
             r = requests.get(url, headers=HEADERS, timeout=TIMEOUT)
-            if r.status_code == 429:
+            if r.status_code in RETRYABLE_STATUS_CODES:
                 retry_after = r.headers.get("Retry-After")
                 delay = float(retry_after) if retry_after else base_delay * (2 ** attempt)
-                print(f"429 en {url}, esperando {delay:.0f}s antes de reintentar "
+                print(f"{r.status_code} en {url}, esperando {delay:.0f}s antes de reintentar "
                       f"(intento {attempt + 1}/{max_retries + 1})...")
                 time.sleep(delay)
+                last_exc = requests.exceptions.HTTPError(f"{r.status_code} Client Error", response=r)
                 continue
             r.raise_for_status()
             return r
         except requests.exceptions.HTTPError as e:
             last_exc = e
-            if e.response is not None and e.response.status_code == 429:
+            if e.response is not None and e.response.status_code in RETRYABLE_STATUS_CODES:
                 delay = base_delay * (2 ** attempt)
                 time.sleep(delay)
                 continue
@@ -91,14 +101,16 @@ def _get_with_retry(url, max_retries=WAYBACK_MAX_RETRIES, base_delay=WAYBACK_BAS
 
 def fetch_soup_via_wayback(url):
     """Fetch the latest archived snapshot of url from the Wayback Machine.
-    Se usa como fallback cuando la peticion directa devuelve 403, algo
-    que ocurre de forma sistematica con www.mofa.go.jp desde las IPs de
-    los runners de GitHub Actions. Se inserta el modificador "id_"
-    despues del timestamp para pedir el HTML original (sin reescribir
-    enlaces ni inyectar la barra de herramientas de archive.org), lo
-    que evita errores 498 al descargar snapshots grandes. Las peticiones
-    a la API de disponibilidad usan reintentos con backoff ya que es
-    frecuente recibir 429 Too Many Requests.
+
+    Se usa como fallback cuando la peticion directa devuelve 403, algo que
+    ocurre de forma sistematica con www.mofa.go.jp desde las IPs de los
+    runners de GitHub Actions. Se inserta el modificador "id_" despues del
+    timestamp para pedir el HTML original (sin reescribir enlaces ni
+    inyectar la barra de herramientas de archive.org), lo que evita errores
+    498 al descargar snapshots grandes. Las peticiones a la API de
+    disponibilidad y a los propios snapshots usan reintentos con backoff
+    ya que es frecuente recibir 429 Too Many Requests o 498/502/503/504
+    de forma transitoria.
     """
     api_url = f"https://archive.org/wayback/available?url={url}"
     r = _get_with_retry(api_url)
@@ -116,6 +128,7 @@ def fetch_soup_via_wayback(url):
 
 def fetch_soup_with_fallback(url):
     """Intenta fetch_soup(url) y si falla con 403 usa Wayback Machine.
+
     Devuelve (soup, base_url) donde base_url es la URL original si la
     peticion directa funciono, o la URL de archive.org si se uso el
     fallback. base_url se usa para resolver enlaces relativos.
@@ -174,6 +187,7 @@ def discover_defense_white_papers():
                     break
     except Exception as e:
         print(f"Error scraping Defense White Papers (EN): {e}")
+
     url_ja = "https://www.mod.go.jp/j/publication/wp/index.html"
     try:
         soup = fetch_soup(url_ja)
@@ -211,9 +225,9 @@ def discover_defense_white_papers():
 
 def discover_diplomatic_bluebooks():
     """Scrape MOFA website for Diplomatic Bluebooks in EN and JA.
-    Usa fetch_soup_with_fallback porque MOFA bloquea con 403 las
-    peticiones desde runners de GitHub Actions; en ese caso se recurre
-    a Wayback Machine.
+
+    Usa fetch_soup_with_fallback porque MOFA bloquea con 403 las peticiones
+    desde runners de GitHub Actions; en ese caso se recurre a Wayback Machine.
     """
     documents = []
     url_en = "https://www.mofa.go.jp/policy/other/bluebook/index.html"
@@ -243,9 +257,10 @@ def discover_diplomatic_bluebooks():
                                     "organization": "MOFA",
                                     "category": "diplomatic_bluebook"
                                 })
-                    break
+                            break
     except Exception as e:
         print(f"Error scraping Diplomatic Bluebooks (EN): {e}")
+
     url_ja = "https://www.mofa.go.jp/mofaj/gaiko/bluebook/index.html"
     try:
         soup, _ = fetch_soup_with_fallback(url_ja)
@@ -312,8 +327,9 @@ def discover_nids_china_reports():
 
 def discover_oda_white_papers():
     """Discover ODA (Official Development Assistance) White Papers.
-    Usa fetch_soup_with_fallback porque MOFA bloquea con 403 las
-    peticiones desde runners de GitHub Actions.
+
+    Usa fetch_soup_with_fallback porque MOFA bloquea con 403 las peticiones
+    desde runners de GitHub Actions.
     """
     documents = []
     url = "https://www.mofa.go.jp/policy/oda/white/index.html"
@@ -378,10 +394,11 @@ def discover_cybersecurity_strategy():
 
 def discover_economic_security():
     """Discover Economic Security policy documents (Cabinet Secretariat).
+
     Nota: la URL fue corregida de keizai_anzen_hosho (404) a
-    keizai_anzen_hosyo, que es la ruta real usada por cas.go.jp. La
-    pagina lista reuniones "第N回" con fechas en era Reiwa; se extraen
-    como documentos los enlaces a las actas (gijisidai.html).
+    keizai_anzen_hosyo, que es la ruta real usada por cas.go.jp. La pagina
+    lista reuniones "第N回" con fechas en era Reiwa; se extraen como
+    documentos los enlaces a las actas (gijisidai.html).
     """
     documents = []
     url = "https://www.cas.go.jp/jp/seisaku/keizai_anzen_hosyo/index.html"
@@ -449,10 +466,11 @@ def discover_gender_equality_plans():
 
 def discover_foip():
     """Discover Free and Open Indo-Pacific (FOIP) related documents (MOFA),
-    incluyendo el "New Plan for a Free and Open Indo-Pacific" (FOIP 3.0,
-    2023) y las actualizaciones posteriores (FOIP evolucionado 2026).
-    Usa fetch_soup_with_fallback porque MOFA bloquea con 403 las
-    peticiones desde runners de GitHub Actions.
+    incluyendo el "New Plan for a Free and Open Indo-Pacific" (FOIP 3.0, 2023)
+    y las actualizaciones posteriores (FOIP evolucionado 2026).
+
+    Usa fetch_soup_with_fallback porque MOFA bloquea con 403 las peticiones
+    desde runners de GitHub Actions.
     """
     documents = []
     url = "https://www.mofa.go.jp/policy/page25e_000278.html"
@@ -460,9 +478,9 @@ def discover_foip():
         soup, _ = fetch_soup_with_fallback(url)
         for link in soup.find_all("a", href=True):
             link_text = link.get_text(strip=True)
-            if ("Free and Open Indo-Pacific" in link_text or "FOIP" in link_text
-                    or "New Plan" in link_text or "自由で開かれたインド太平洋" in link_text
-                    or "新しいプラン" in link_text):
+            if ("Free and Open Indo-Pacific" in link_text or "FOIP" in link_text or
+                    "New Plan" in link_text or "自由で開かれたインド太平洋" in link_text or
+                    "新しいプラン" in link_text):
                 match = re.search(r"(20\d{2})", link_text)
                 year = int(match.group(1)) if match else 0
                 href = link.get("href", "")
@@ -486,6 +504,7 @@ def discover_foip():
 
 def discover_meti_trade_white_papers():
     """Discover METI's White Paper on International Economy and Trade.
+
     La pagina indice usa un acordeon por anio con enlaces del tipo
     /english/report/data/gIT{year}maine.html.
     """
@@ -567,6 +586,7 @@ STATIC_STRATEGIC_DOCUMENTS = [
 
 def discover_static_strategic_documents():
     """Devuelve la lista curada de documentos estrategicos con URLs estables.
+
     Ver docstring del modulo para el listado completo y su justificacion.
     """
     return list(STATIC_STRATEGIC_DOCUMENTS)

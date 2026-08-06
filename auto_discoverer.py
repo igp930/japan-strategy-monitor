@@ -1,11 +1,16 @@
 """Funciones de auto-descubrimiento para documentos japoneses.
-
 Este modulo contiene scrapers automaticos que buscan nuevos documentos
 en las paginas oficiales del gobierno japones, en multiples idiomas.
-
 Todas las funciones publicas devuelven una lista de dicts con:
 {"year": int, "url": str, "title": str, "lang": str, "organization": str, "category": str}
 No reciben argumentos, y cada llamada crea su propia lista de resultados.
+
+Nota sobre MOFA (www.mofa.go.jp): este dominio bloquea con 403 Forbidden
+las peticiones que provienen de las IPs de los runners de GitHub Actions,
+independientemente del User-Agent usado. Para evitar perder estos
+documentos, fetch_soup_with_fallback intenta primero la peticion directa
+y, si falla con 403, recurre a una copia archivada en Wayback Machine
+(web.archive.org), que no esta bloqueada.
 """
 import re
 import requests
@@ -14,7 +19,7 @@ from datetime import datetime
 
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
-                  "(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+    "(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
     "Accept-Language": "ja,en-US;q=0.9,en;q=0.8",
 }
 TIMEOUT = 30
@@ -25,6 +30,43 @@ def fetch_soup(url):
     r = requests.get(url, headers=HEADERS, timeout=TIMEOUT)
     r.raise_for_status()
     return BeautifulSoup(r.text, "html.parser")
+
+
+def fetch_soup_via_wayback(url):
+    """Fetch the latest archived snapshot of url from the Wayback Machine.
+
+    Se usa como fallback cuando la peticion directa devuelve 403, algo
+    que ocurre de forma sistematica con www.mofa.go.jp desde las IPs de
+    los runners de GitHub Actions.
+    """
+    api_url = f"https://archive.org/wayback/available?url={url}"
+    r = requests.get(api_url, headers=HEADERS, timeout=TIMEOUT)
+    r.raise_for_status()
+    data = r.json()
+    snapshot = data.get("archived_snapshots", {}).get("closest")
+    if not snapshot or not snapshot.get("available"):
+        raise ValueError(f"No hay snapshot disponible en Wayback Machine para {url}")
+    archive_url = snapshot["url"]
+    r2 = requests.get(archive_url, headers=HEADERS, timeout=TIMEOUT)
+    r2.raise_for_status()
+    return BeautifulSoup(r2.text, "html.parser"), archive_url
+
+
+def fetch_soup_with_fallback(url):
+    """Intenta fetch_soup(url) y si falla con 403 usa Wayback Machine.
+
+    Devuelve (soup, base_url) donde base_url es la URL original si la
+    peticion directa funciono, o la URL de archive.org si se uso el
+    fallback. base_url se usa para resolver enlaces relativos.
+    """
+    try:
+        return fetch_soup(url), url
+    except requests.exceptions.HTTPError as e:
+        if e.response is not None and e.response.status_code == 403:
+            print(f"403 en {url}, probando Wayback Machine...")
+            soup, archive_url = fetch_soup_via_wayback(url)
+            return soup, url
+        raise
 
 
 def get_latest_years(documents):
@@ -64,10 +106,9 @@ def discover_defense_white_papers():
                                 "organization": "MOD",
                                 "category": "defense_white_paper"
                             })
-                            break
+                break
     except Exception as e:
         print(f"Error scraping Defense White Papers (EN): {e}")
-
     url_ja = "https://www.mod.go.jp/j/publication/wp/index.html"
     try:
         soup = fetch_soup(url_ja)
@@ -97,17 +138,22 @@ def discover_defense_white_papers():
                                 "organization": "MOD",
                                 "category": "defense_white_paper"
                             })
-                            break
+                break
     except Exception as e:
         print(f"Error scraping Defense White Papers (JA): {e}")
     return documents
 
 def discover_diplomatic_bluebooks():
-    """Scrape MOFA website for Diplomatic Bluebooks in EN and JA."""
+    """Scrape MOFA website for Diplomatic Bluebooks in EN and JA.
+
+    Usa fetch_soup_with_fallback porque MOFA bloquea con 403 las
+    peticiones desde runners de GitHub Actions; en ese caso se recurre
+    a Wayback Machine.
+    """
     documents = []
     url_en = "https://www.mofa.go.jp/policy/other/bluebook/index.html"
     try:
-        soup = fetch_soup(url_en)
+        soup, _ = fetch_soup_with_fallback(url_en)
         rows = soup.find_all("tr")
         for row in rows:
             cells = row.find_all("td")
@@ -132,13 +178,12 @@ def discover_diplomatic_bluebooks():
                                     "organization": "MOFA",
                                     "category": "diplomatic_bluebook"
                                 })
-                            break
+                    break
     except Exception as e:
         print(f"Error scraping Diplomatic Bluebooks (EN): {e}")
-
     url_ja = "https://www.mofa.go.jp/mofaj/gaiko/bluebook/index.html"
     try:
-        soup = fetch_soup(url_ja)
+        soup, _ = fetch_soup_with_fallback(url_ja)
         for link in soup.find_all("a", href=True):
             link_text = link.get_text(strip=True)
             match = re.search(r"(令和|平成)(\d+)年.*外交青書|外交青書.*(\d{4})", link_text)
@@ -171,6 +216,7 @@ def discover_diplomatic_bluebooks():
         print(f"Error scraping Diplomatic Bluebooks (JA): {e}")
     return documents
 
+
 def discover_nids_china_reports():
     """Discover NIDS China Security Report documents."""
     documents = []
@@ -200,11 +246,15 @@ def discover_nids_china_reports():
 
 
 def discover_oda_white_papers():
-    """Discover ODA (Official Development Assistance) White Papers."""
+    """Discover ODA (Official Development Assistance) White Papers.
+
+    Usa fetch_soup_with_fallback porque MOFA bloquea con 403 las
+    peticiones desde runners de GitHub Actions.
+    """
     documents = []
     url = "https://www.mofa.go.jp/policy/oda/white/index.html"
     try:
-        soup = fetch_soup(url)
+        soup, _ = fetch_soup_with_fallback(url)
         for link in soup.find_all("a", href=True):
             link_text = link.get_text(strip=True)
             match = re.search(r"(20\d{2})", link_text)
@@ -225,7 +275,6 @@ def discover_oda_white_papers():
     except Exception as e:
         print(f"Error scraping ODA White Papers: {e}")
     return documents
-
 
 def discover_cybersecurity_strategy():
     """Discover Japan Cybersecurity Strategy documents (NISC)."""
@@ -261,9 +310,9 @@ def discover_cybersecurity_strategy():
         print(f"Error scraping Cybersecurity Strategy: {e}")
     return documents
 
+
 def discover_economic_security():
     """Discover Economic Security policy documents (Cabinet Secretariat).
-
     Nota: la URL fue corregida de keizai_anzen_hosho (404) a
     keizai_anzen_hosyo, que es la ruta real usada por cas.go.jp.
     La pagina lista reuniones "第N回" con fechas en era Reiwa; se
@@ -301,6 +350,7 @@ def discover_economic_security():
         print(f"Error scraping Economic Security documents: {e}")
     return documents
 
+
 def discover_gender_equality_plans():
     """Discover Gender Equality Basic Plans (Gender Equality Bureau, Cabinet Office)."""
     documents = []
@@ -333,11 +383,15 @@ def discover_gender_equality_plans():
 
 
 def discover_foip():
-    """Discover Free and Open Indo-Pacific (FOIP) related documents (MOFA)."""
+    """Discover Free and Open Indo-Pacific (FOIP) related documents (MOFA).
+
+    Usa fetch_soup_with_fallback porque MOFA bloquea con 403 las
+    peticiones desde runners de GitHub Actions.
+    """
     documents = []
     url = "https://www.mofa.go.jp/policy/page25e_000278.html"
     try:
-        soup = fetch_soup(url)
+        soup, _ = fetch_soup_with_fallback(url)
         for link in soup.find_all("a", href=True):
             link_text = link.get_text(strip=True)
             if "Free and Open Indo-Pacific" in link_text or "FOIP" in link_text or "自由で開かれたインド太平洋" in link_text:

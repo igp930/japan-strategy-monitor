@@ -16,6 +16,20 @@ Como la API de disponibilidad de Wayback (archive.org/wayback/available)
 devuelve 429 Too Many Requests con facilidad, fetch_soup_via_wayback
 reintenta con backoff exponencial (y respeta el header Retry-After si
 esta presente) antes de rendirse.
+
+Documentos estrategicos fijos (STATIC_STRATEGIC_DOCUMENTS): ademas de los
+scrapers dinamicos, se incluye una lista curada de documentos clave cuyas
+URLs oficiales son estables (leyes, estrategias con fecha de publicacion
+fija, etc.) y que no siempre se pueden descubrir de forma fiable mediante
+scraping (paginas con estructura variable, JS, o PDFs sueltos). Estos se
+agregan siempre en discover_all() para asegurar su presencia:
+- National Security Strategy 2022
+- National Defense Program Guidelines 2018
+- National Defense Strategy 2022
+- Defense Buildup Program 2022
+- New Plan for a FOIP (2023, FOIP 3.0)
+- White Paper on International Economy and Trade (METI)
+- Economic Security Promotion Act (2022)
 """
 import re
 import time
@@ -42,7 +56,6 @@ def fetch_soup(url):
 
 def _get_with_retry(url, max_retries=WAYBACK_MAX_RETRIES, base_delay=WAYBACK_BASE_DELAY):
     """GET con reintentos y backoff exponencial ante 429 Too Many Requests.
-
     Si la respuesta incluye el header Retry-After, se respeta ese valor
     en lugar del backoff calculado. Tras agotar los reintentos, se
     relanza la ultima excepcion.
@@ -78,7 +91,6 @@ def _get_with_retry(url, max_retries=WAYBACK_MAX_RETRIES, base_delay=WAYBACK_BAS
 
 def fetch_soup_via_wayback(url):
     """Fetch the latest archived snapshot of url from the Wayback Machine.
-
     Se usa como fallback cuando la peticion directa devuelve 403, algo
     que ocurre de forma sistematica con www.mofa.go.jp desde las IPs de
     los runners de GitHub Actions. Se inserta el modificador "id_"
@@ -104,7 +116,6 @@ def fetch_soup_via_wayback(url):
 
 def fetch_soup_with_fallback(url):
     """Intenta fetch_soup(url) y si falla con 403 usa Wayback Machine.
-
     Devuelve (soup, base_url) donde base_url es la URL original si la
     peticion directa funciono, o la URL de archive.org si se uso el
     fallback. base_url se usa para resolver enlaces relativos.
@@ -160,7 +171,7 @@ def discover_defense_white_papers():
                                 "organization": "MOD",
                                 "category": "defense_white_paper"
                             })
-                            break
+                    break
     except Exception as e:
         print(f"Error scraping Defense White Papers (EN): {e}")
     url_ja = "https://www.mod.go.jp/j/publication/wp/index.html"
@@ -192,7 +203,7 @@ def discover_defense_white_papers():
                                 "organization": "MOD",
                                 "category": "defense_white_paper"
                             })
-                            break
+                    break
     except Exception as e:
         print(f"Error scraping Defense White Papers (JA): {e}")
     return documents
@@ -200,7 +211,6 @@ def discover_defense_white_papers():
 
 def discover_diplomatic_bluebooks():
     """Scrape MOFA website for Diplomatic Bluebooks in EN and JA.
-
     Usa fetch_soup_with_fallback porque MOFA bloquea con 403 las
     peticiones desde runners de GitHub Actions; en ese caso se recurre
     a Wayback Machine.
@@ -233,7 +243,7 @@ def discover_diplomatic_bluebooks():
                                     "organization": "MOFA",
                                     "category": "diplomatic_bluebook"
                                 })
-                            break
+                    break
     except Exception as e:
         print(f"Error scraping Diplomatic Bluebooks (EN): {e}")
     url_ja = "https://www.mofa.go.jp/mofaj/gaiko/bluebook/index.html"
@@ -302,7 +312,6 @@ def discover_nids_china_reports():
 
 def discover_oda_white_papers():
     """Discover ODA (Official Development Assistance) White Papers.
-
     Usa fetch_soup_with_fallback porque MOFA bloquea con 403 las
     peticiones desde runners de GitHub Actions.
     """
@@ -369,7 +378,6 @@ def discover_cybersecurity_strategy():
 
 def discover_economic_security():
     """Discover Economic Security policy documents (Cabinet Secretariat).
-
     Nota: la URL fue corregida de keizai_anzen_hosho (404) a
     keizai_anzen_hosyo, que es la ruta real usada por cas.go.jp. La
     pagina lista reuniones "第N回" con fechas en era Reiwa; se extraen
@@ -440,8 +448,9 @@ def discover_gender_equality_plans():
 
 
 def discover_foip():
-    """Discover Free and Open Indo-Pacific (FOIP) related documents (MOFA).
-
+    """Discover Free and Open Indo-Pacific (FOIP) related documents (MOFA),
+    incluyendo el "New Plan for a Free and Open Indo-Pacific" (FOIP 3.0,
+    2023) y las actualizaciones posteriores (FOIP evolucionado 2026).
     Usa fetch_soup_with_fallback porque MOFA bloquea con 403 las
     peticiones desde runners de GitHub Actions.
     """
@@ -451,14 +460,16 @@ def discover_foip():
         soup, _ = fetch_soup_with_fallback(url)
         for link in soup.find_all("a", href=True):
             link_text = link.get_text(strip=True)
-            if "Free and Open Indo-Pacific" in link_text or "FOIP" in link_text or "自由で開かれたインド太平洋" in link_text:
+            if ("Free and Open Indo-Pacific" in link_text or "FOIP" in link_text
+                    or "New Plan" in link_text or "自由で開かれたインド太平洋" in link_text
+                    or "新しいプラン" in link_text):
                 match = re.search(r"(20\d{2})", link_text)
                 year = int(match.group(1)) if match else 0
                 href = link.get("href", "")
                 if not href:
                     continue
                 url_doc = href if href.startswith("http") else f"https://www.mofa.go.jp{href}"
-                lang = "ja" if "インド太平洋" in link_text else "en"
+                lang = "ja" if "インド太平洋" in link_text or "プラン" in link_text else "en"
                 if not any(d.get("url") == url_doc for d in documents):
                     documents.append({
                         "year": year,
@@ -473,6 +484,94 @@ def discover_foip():
     return documents
 
 
+def discover_meti_trade_white_papers():
+    """Discover METI's White Paper on International Economy and Trade.
+    La pagina indice usa un acordeon por anio con enlaces del tipo
+    /english/report/data/gIT{year}maine.html.
+    """
+    documents = []
+    url = "https://www.meti.go.jp/english/report/index_whitepaper.html"
+    try:
+        soup = fetch_soup(url)
+        for link in soup.find_all("a", href=True):
+            link_text = link.get_text(strip=True)
+            href = link.get("href", "")
+            if re.fullmatch(r"20\d{2}", link_text) and "gIT" in href:
+                year = int(link_text)
+                url_doc = href if href.startswith("http") else f"https://www.meti.go.jp{href}"
+                if not any(d["year"] == year for d in documents):
+                    documents.append({
+                        "year": year,
+                        "url": url_doc,
+                        "title": f"White Paper on International Economy and Trade {year}",
+                        "lang": "en",
+                        "organization": "METI",
+                        "category": "trade_white_paper"
+                    })
+    except Exception as e:
+        print(f"Error scraping METI Trade White Papers: {e}")
+    return documents
+
+
+STATIC_STRATEGIC_DOCUMENTS = [
+    {
+        "year": 2022,
+        "url": "https://www.cas.go.jp/jp/siryou/221216anzenhoshou/nss-e.pdf",
+        "title": "National Security Strategy of Japan (2022)",
+        "lang": "en",
+        "organization": "Cabinet Secretariat",
+        "category": "national_security_strategy"
+    },
+    {
+        "year": 2018,
+        "url": "https://www.cas.go.jp/jp/siryou/pdf/2019boueikeikaku_e.pdf",
+        "title": "National Defense Program Guidelines for FY 2019 and beyond (2018)",
+        "lang": "en",
+        "organization": "Cabinet Secretariat",
+        "category": "national_defense_program_guidelines"
+    },
+    {
+        "year": 2022,
+        "url": "https://japan.kantei.go.jp/content/000120033.pdf",
+        "title": "National Defense Strategy (2022)",
+        "lang": "en",
+        "organization": "Ministry of Defense",
+        "category": "national_defense_strategy"
+    },
+    {
+        "year": 2022,
+        "url": "https://www.mod.go.jp/j/policy/agenda/guideline/plan/pdf/program_en.pdf",
+        "title": "Defense Buildup Program (2022)",
+        "lang": "en",
+        "organization": "Ministry of Defense",
+        "category": "defense_buildup_program"
+    },
+    {
+        "year": 2023,
+        "url": "https://www.mofa.go.jp/fp/pc/page3e_001336.html",
+        "title": "New Plan for a \u201cFree and Open Indo-Pacific (FOIP)\u201d (FOIP 3.0, 2023)",
+        "lang": "en",
+        "organization": "MOFA",
+        "category": "foip"
+    },
+    {
+        "year": 2022,
+        "url": "https://www.japaneselawtranslation.go.jp/en/laws/view/4716/en",
+        "title": "Act on the Promotion of Ensuring National Security through Integrated Implementation of Economic Measures (Economic Security Promotion Act, Act No. 43 of 2022)",
+        "lang": "en",
+        "organization": "Cabinet Secretariat",
+        "category": "economic_security_law"
+    },
+]
+
+
+def discover_static_strategic_documents():
+    """Devuelve la lista curada de documentos estrategicos con URLs estables.
+    Ver docstring del modulo para el listado completo y su justificacion.
+    """
+    return list(STATIC_STRATEGIC_DOCUMENTS)
+
+
 ALL_DISCOVERERS = [
     discover_defense_white_papers,
     discover_diplomatic_bluebooks,
@@ -482,6 +581,8 @@ ALL_DISCOVERERS = [
     discover_economic_security,
     discover_gender_equality_plans,
     discover_foip,
+    discover_meti_trade_white_papers,
+    discover_static_strategic_documents,
 ]
 
 

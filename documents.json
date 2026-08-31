@@ -1397,5 +1397,173 @@
         "url": "https://www.mod.go.jp/j/press/wp/wp2026/pdf/DOJ2026_Digest_CH.pdf",
         "status": "vigente",
         "lang": "en"
+    },
+    {
+        "title": "White Paper on Development Cooperation 2007",
+        "organization": "MOFA",
+        "date": "2007-01-01",
+        "categories": [
+            "oda_white_paper"
+        ],
+        "description": "",
+        "url": "https://www.mofa.go.jp/policy/oda/white/2007/index.htm",
+        "status": "vigente",
+        "lang": "en"
+    },
+    {
+        "title": "White Paper on Development Cooperation 2006",
+        "organization": "MOFA",
+        "date": "2006-01-01",
+        "categories": [
+            "oda_white_paper"
+        ],
+        "description": "",
+        "url": "https://www.mofa.go.jp/policy/oda/white/2006/index.htm",
+        "status": "vigente",
+        "lang": "en"
+    },
+    {
+        "title": "White Paper on Development Cooperation 2005",
+        "organization": "MOFA",
+        "date": "2005-01-01",
+        "categories": [
+            "oda_white_paper"
+        ],
+        "description": "",
+        "url": "https://www.mofa.go.jp/policy/oda/white/2005/index.htm",
+        "status": "vigente",
+        "lang": "en"
+    },
+    {
+        "title": "White Paper on Development Cooperation 2004",
+        "organization": "MOFA",
+        "date": "2004-01-01",
+        "categories": [
+            "oda_white_paper"
+        ],
+        "description": "",
+        "url": "https://www.mofa.go.jp/policy/oda/white/2004/index.html",
+        "status": "vigente",
+        "lang": "en"
+    },
+    {
+        "title": "White Paper on Development Cooperation 2003",
+        "organization": "MOFA",
+        "date": "2003-01-01",
+        "categories": [
+            "oda_white_paper"
+        ],
+        "description": "",
+        "url": "https://www.mofa.go.jp/policy/oda/white/2003/index03.html",
+        "status": "vigente",
+        "lang": "en"
+    },
+    {
+        "title": "White Paper on Development Cooperation 2002",
+        "organization": "MOFA",
+        "date": "2002-01-01",
+        "categories": [
+            "oda_white_paper"
+        ],
+        "description": "",
+        "url": "https://www.mofa.go.jp/policy/oda/white/2002/index02.html",
+        "status": "vigente",
+        "lang": "en"
+    },
+    {
+        "title": "White Paper on Development Cooperation 2001",
+        "organization": "MOFA",
+        "date": "2001-01-01",
+        "categories": [
+            "oda_white_paper"
+        ],
+        "description": "",
+        "url": "https://www.mofa.go.jp/policy/oda/white/2001/contents.pdf",
+        "status": "vigente",
+        "lang": "en"
+    },
+    {
+        "title": "the updated “Free and Open Indo-Pacific (FOIP)”",
+        "organization": "MOFA",
+        "date": "0-01-01",
+        "categories": [
+            "foip"
+        ],
+        "description": "",
+        "url": "https://www.mofa.go.jp/policy/pageite_000001_01612.html",
+        "status": "vigente",
+        "lang": "en"
+    },
+    {
+        "title": "(Video) Free and Open Indo-Pacific (FOIP)",
+        "organization": "MOFA",
+        "date": "0-01-01",
+        "categories": [
+            "foip"
+        ],
+        "description": "",
+        "url": "https://www.youtube.com/watch?v=HnqjGNu6yZo",
+        "status": "vigente",
+        "lang": "en"
+    },
+    {
+        "title": "(Video) Japan's Efforts toward Free and Open Indo-Pacific",
+        "organization": "MOFA",
+        "date": "0-01-01",
+        "categories": [
+            "foip"
+        ],
+        "description": "",
+        "url": "https://www.youtube.com/watch?v=J6WtVi_-edE",
+        "status": "vigente",
+        "lang": "en"
+    },
+    {
+        "title": "(Video) Japan's Connectivity Support for a Free and Open Indo-Pacific",
+        "organization": "MOFA",
+        "date": "0-01-01",
+        "categories": [
+            "foip"
+        ],
+        "description": "",
+        "url": "https://www.youtube.com/watch?v=166Yqga1GCM",
+        "status": "vigente",
+        "lang": "en"
+    },
+    {
+        "title": "Diplomatic Bluebook 2019 Special Feature: To achieve a “Free and Open Indo-Pacific”",
+        "organization": "MOFA",
+        "date": "2019-01-01",
+        "categories": [
+            "foip"
+        ],
+        "description": "",
+        "url": "https://www.mofa.go.jp/policy/other/bluebook/2019/html/chapter1/c0102.html#sf01",
+        "status": "vigente",
+        "lang": "en"
+    },
+    {
+        "title": "Diplomatic Bluebook 2018 Special Feature: Free and Open Indo-Pacific Strategy",
+        "organization": "MOFA",
+        "date": "2018-01-01",
+        "categories": [
+            "foip"
+        ],
+        "description": "",
+        "url": "https://www.mofa.go.jp/policy/other/bluebook/2018/html/chapter1/c0102.html#sf01",
+        "status": "vigente",
+        "lang": "en"
+    },
+    {
+        "title": "Diplomatic Bluebook 2017 Special Feature: Free and Open Indo-Pacific Strategy",
+        "organization": "MOFA",
+        "date": "2017-01-01",
+        "categories": [
+            "foip"
+        ],
+        "description": "",
+        "url": "https://www.mofa.go.jp/policy/other/bluebook/2017/html/chapter1/c0102.html#sf03",
+        "status": "vigente",
+        "lang": "en"
     }
 ]
